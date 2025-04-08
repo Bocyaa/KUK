@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+
+/* Custom Global Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.dark-mode {
+  background-color: #1a202c;
+  color: #ffffff;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
