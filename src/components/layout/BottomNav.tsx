@@ -1,37 +1,89 @@
-import { Home, PlusCircle, Search, User } from 'lucide-react';
+import type { SVGProps, FC } from 'react';
 import { NavLink } from 'react-router-dom';
-// import { useState } from 'react';
+
+import {
+  HomeIcon as HomeOutline,
+  PlusCircleIcon as AddOutline,
+  AdjustmentsHorizontalIcon,
+} from '@heroicons/react/24/outline';
+
+import {
+  HomeIcon as HomeSolid,
+  PlusCircleIcon as AddSolid,
+} from '@heroicons/react/24/solid';
+
+import CustomMagnifyingGlass from '../ui/CustomMagnifyingGlass';
+
+type StandardIcon = FC<{ className?: string }>;
+type CustomIcon = FC<SVGProps<SVGSVGElement> & { bold?: boolean }>;
+
+interface NavItem {
+  key: string;
+  label: string;
+  isCustom?: boolean;
+  icon: {
+    outline: StandardIcon | CustomIcon;
+    solid: StandardIcon | CustomIcon;
+  };
+}
 
 function BottomNav() {
-  // const [active, setActive] = useState('home');
-
-  const navItems = [
-    { key: 'dashboard', icon: <Home />, label: 'Home' },
-    { key: 'recipes', icon: <Search />, label: 'Search' },
-    { key: 'addRecipe', icon: <PlusCircle />, label: 'Add' },
-    { key: 'account', icon: <User />, label: 'Profile' },
+  const navItems: NavItem[] = [
+    {
+      key: 'dashboard',
+      label: 'Home',
+      icon: { outline: HomeOutline, solid: HomeSolid },
+    },
+    {
+      key: 'recipes',
+      label: 'Search',
+      icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
+      isCustom: true,
+    },
+    {
+      key: 'addRecipe',
+      label: 'Add',
+      icon: { outline: AddOutline, solid: AddSolid },
+    },
+    {
+      key: 'settings',
+      label: 'Settings',
+      icon: {
+        outline: AdjustmentsHorizontalIcon,
+        solid: AdjustmentsHorizontalIcon,
+      },
+    },
   ];
 
   return (
-    <nav className='fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-md flex justify-around items-center pt-3 pb-2'>
+    <nav className='fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-md flex justify-around items-center pt-3 pb-2 z-50'>
       {navItems.map((item) => (
-        <NavLink to={`/${item.key}`} key={item.key}>
-          <div className='flex flex-col items-center gap-2'>
-            <span className='w-6 h-6'>{item.icon}</span>
-            <span className='text-xs'>{item.label}</span>
-          </div>
-        </NavLink>
+        <NavLink
+          to={`/${item.key}`}
+          key={item.key}
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 text-xs ${
+              isActive
+                ? 'text-gray-800 dark:text-white'
+                : 'text-gray-400 dark:text-gray-500'
+            }`
+          }
+        >
+          {({ isActive }) => {
+            const Icon = item.icon[isActive ? 'solid' : 'outline'];
 
-        // <button
-        //   key={item.key}
-        //   onClick={() => setActive(item.key)}
-        //   className={`flex flex-col items-center gap-2 ${
-        //     active === item.key ? 'text-gray-900' : 'text-gray-400'
-        //   }`}
-        // >
-        //   <span className='w-6 h-6'>{item.icon}</span>
-        //   <span className='text-xs'>{item.label}</span>
-        // </button>
+            return (
+              <>
+                {item.isCustom ? (
+                  <Icon className='w-6 h-6' bold={isActive} />
+                ) : (
+                  <Icon className='w-6 h-6' />
+                )}
+                <span>{item.label}</span>
+              </>
+            );
+          }}
+        </NavLink>
       ))}
     </nav>
   );

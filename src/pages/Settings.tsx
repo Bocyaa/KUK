@@ -1,7 +1,7 @@
 function Settings() {
   return (
-    <div>
-        Settings
+    <div className='mt-20'>
+      <p>Settings</p>
     </div>
   );
 }
