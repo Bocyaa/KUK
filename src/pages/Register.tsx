@@ -13,6 +13,7 @@ import Logo from '../components/ui/Logo';
 import { useGoogleAuth } from '../features/auth/useGoogleAuth';
 import { validateForm } from '../features/auth/validateAuthForm';
 import { handleSignup } from '../features/auth/useSignup';
+import { useAppleAuth } from '../features/auth/useAppleAuth';
 
 function Register() {
   // Controlled input states
@@ -23,6 +24,7 @@ function Register() {
   // Custom hooks
   const navigate = useNavigate();
   const { signInWithGoogle } = useGoogleAuth();
+  const { signInWithApple } = useAppleAuth();
 
   // FrontEnd form validation
   const isFormValid = validateForm(email, password, passwordConfirm);
@@ -40,7 +42,8 @@ function Register() {
 
   // SignIn via Apple
   async function handleAppleSignIn() {
-    // TODO
+    const { error } = await signInWithApple();
+    if (error) toast.error('Something went wrong. Please try again.');
   }
 
   return (

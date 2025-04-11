@@ -11,7 +11,7 @@ import AddRecipe from './pages/AddRecipe.tsx';
 import Profile from './pages/Profile.tsx';
 import { AuthProvider } from './contexts/AuthProvider.tsx';
 import CompleteProfile from './pages/CompleteProfile.tsx';
-import AuthCallbackRedirect from './features/auth/authCallbackRedirect.tsx';
+import AuthCallbackRedirect from './features/auth/AuthCallbackRedirect.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 

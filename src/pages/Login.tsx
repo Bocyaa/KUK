@@ -12,6 +12,7 @@ import AuthDivider from '../components/ui/AuthDivider';
 import { validateForm } from '../features/auth/validateAuthForm';
 import { useLogin } from '../features/auth/useLogin';
 import { useGoogleAuth } from '../features/auth/useGoogleAuth';
+import { useAppleAuth } from '../features/auth/useAppleAuth';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,6 +20,7 @@ function Login() {
 
   const { login, isPending } = useLogin();
   const { signInWithGoogle } = useGoogleAuth();
+  const { signInWithApple } = useAppleAuth();
 
   const isFormValid = validateForm(email, password);
 
@@ -33,6 +35,11 @@ function Login() {
 
   async function handleGoogleSignIn() {
     const { error } = await signInWithGoogle();
+    if (error) toast.error('Something went wrong. Please try again.');
+  }
+
+  async function handleAppleSignIn() {
+    const { error } = await signInWithApple();
     if (error) toast.error('Something went wrong. Please try again.');
   }
 
@@ -97,7 +104,10 @@ function Login() {
 
               <AuthDivider
                 providers={['google', 'apple']}
-                onClickHandlers={{ google: handleGoogleSignIn }}
+                onClickHandlers={{
+                  google: handleGoogleSignIn,
+                  apple: handleAppleSignIn,
+                }}
               />
             </div>
           </form>
