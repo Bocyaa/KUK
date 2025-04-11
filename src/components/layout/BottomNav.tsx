@@ -41,7 +41,7 @@ function BottomNav() {
       isCustom: true,
     },
     {
-      key: 'addRecipe',
+      key: 'add-recipe',
       label: 'Add',
       icon: { outline: AddOutline, solid: AddSolid },
     },

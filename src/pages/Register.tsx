@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import AuthTitle from '../components/ui/AuthTitle';
 import InputLabel from '../components/ui/InputLabel';
@@ -8,44 +9,38 @@ import Input from '../components/ui/Input';
 import SubmitButton from '../components/ui/SubmitButton';
 import AuthDivider from '../components/ui/AuthDivider';
 import Logo from '../components/ui/Logo';
-import { NavLink, useNavigate } from 'react-router-dom';
+
+import { useGoogleAuth } from '../features/auth/useGoogleAuth';
+import { validateForm } from '../features/auth/validateAuthForm';
+import { handleSignup } from '../features/auth/useSignup';
 
 function Register() {
+  // Controlled input states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const isFormValid = email.trim() !== '' && password.trim().length >= 6;
-
+  // Custom hooks
   const navigate = useNavigate();
+  const { signInWithGoogle } = useGoogleAuth();
 
-  async function handleRegistration(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  // FrontEnd form validation
+  const isFormValid = validateForm(email, password, passwordConfirm);
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) {
-      if (error.message.includes('User already registered')) {
-        setMessage('email');
-      } else {
-        setMessage(error.message);
-      }
-    } else {
-      navigate('/complete-profile');
-    }
+  // SignUp via Email
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    await handleSignup(e, email, password, navigate);
   }
 
+  // SignIn via Google
   async function handleGoogleSignIn() {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    console.log(error);
+    const { error } = await signInWithGoogle();
+    if (error) toast.error('Something went wrong. Please try again.');
+  }
+
+  // SignIn via Apple
+  async function handleAppleSignIn() {
+    // TODO
   }
 
   return (
@@ -57,31 +52,18 @@ function Register() {
         </div>
 
         <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form onSubmit={handleRegistration} className='space-y-6'>
+          <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
               <InputLabel>Email address</InputLabel>
               <div className='mt-2'>
                 <Input
                   id='email'
-                  name='email'
                   type='email'
                   autoComplete='email'
                   placeholder='name@example.com'
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {message === 'email' && (
-                  <span className='text-xs pl-2 text-red-600'>
-                    An account with this email already exists. Please{' '}
-                    <NavLink
-                      to='/login'
-                      className='text-blue-500 hover:text-blue-500'
-                    >
-                      login
-                    </NavLink>{' '}
-                    instead.
-                  </span>
-                )}
               </div>
             </div>
 
@@ -93,23 +75,21 @@ function Register() {
                 <div className='rounded-tl rounded-tr border border-gray-300'>
                   <Input
                     id='password'
-                    name='password'
                     type='password'
                     placeholder='New password'
                     required
-                    onChange={(e) => setPassword(e.target.value)}
                     top={true}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className='rounded-bl rounded-br border-b border-l border-r border-gray-300'>
                   <Input
                     id='passwordConfirm'
-                    name='password'
                     type='password'
                     placeholder='Confirm new password'
                     required
-                    autoComplete='current-password'
                     bottom={true}
+                    onChange={(e) => setPasswordConfirm(e.target.value)}
                   />
                 </div>
               </div>
@@ -121,13 +101,16 @@ function Register() {
 
             <AuthDivider
               providers={['google', 'apple']}
-              onClickHandlers={{ google: handleGoogleSignIn }}
+              onClickHandlers={{
+                google: handleGoogleSignIn,
+                apple: handleAppleSignIn,
+              }}
             />
           </form>
 
           <SwitchAuthLink
-            question='Already a member?'
-            linkText='Login'
+            question='Already have an account?'
+            linkText='Log in'
             to='login'
           />
         </div>

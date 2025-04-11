@@ -12,29 +12,62 @@ import Profile from './pages/Profile.tsx';
 import { AuthProvider } from './contexts/AuthProvider.tsx';
 import CompleteProfile from './pages/CompleteProfile.tsx';
 import AuthCallbackRedirect from './features/auth/authCallbackRedirect.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0, // data is considered as not fresh (in 0 milliseconds)
+    },
+  },
+});
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<Navigate replace to='dashboard' />} />
-            <Route path='dashboard' element={<Dashboard />} />
-            <Route path='recipes' element={<Recipes />} />
-            <Route path='recipe' element={<Recipe />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='settings' element={<Settings />} />
-            <Route path='addRecipe' element={<AddRecipe />} />
-          </Route>
-          <Route path='complete-profile' element={<CompleteProfile />} />
-          <Route path='auth/callback' element={<AuthCallbackRedirect />} />
-          <Route path='register' element={<Register />} />
-          <Route path='login' element={<Login />} />
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route index element={<Navigate replace to='dashboard' />} />
+              <Route path='dashboard' element={<Dashboard />} />
+              <Route path='recipes' element={<Recipes />} />
+              <Route path='recipe' element={<Recipe />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='settings' element={<Settings />} />
+              <Route path='add-recipe' element={<AddRecipe />} />
+            </Route>
+            <Route path='complete-profile' element={<CompleteProfile />} />
+            <Route path='auth/callback' element={<AuthCallbackRedirect />} />
+            <Route path='register' element={<Register />} />
+            <Route path='login' element={<Login />} />
+            <Route path='*' element={<PageNotFound />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+
+      <Toaster
+        position='top-center'
+        gutter={12}
+        containerStyle={{ margin: '8px' }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: '16px',
+            maxWidth: '500px',
+            padding: '16px 24px',
+            backgroundColor: 'white',
+            color: 'black',
+          },
+        }}
+      />
+    </QueryClientProvider>
   );
 }
 

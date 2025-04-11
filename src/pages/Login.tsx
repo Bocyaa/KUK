@@ -1,26 +1,39 @@
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+
 import AuthTitle from '../components/ui/AuthTitle';
 import InputLabel from '../components/ui/InputLabel';
 import Input from '../components/ui/Input';
 import SubmitButton from '../components/ui/SubmitButton';
 import SwitchAuthLink from '../components/ui/SwitchAuthLink';
 import Logo from '../components/ui/Logo';
-import { useState } from 'react';
 import AuthDivider from '../components/ui/AuthDivider';
-import { useQueryClient } from '@tanstack/react-query';
 
+import { validateForm } from '../features/auth/validateAuthForm';
 import { useLogin } from '../features/auth/useLogin';
+import { useGoogleAuth } from '../features/auth/useGoogleAuth';
 
 function Login() {
-  // const { login, isLoading } = useLogin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const isFormValid = email.trim() !== '' && password.trim().length >= 6;
+  const { login, isPending } = useLogin();
+  const { signInWithGoogle } = useGoogleAuth();
+
+  const isFormValid = validateForm(email, password);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !password) return;
-    // login({ email, password });
+    login({ email, password });
+
+    setEmail('');
+    setPassword('');
+  }
+
+  async function handleGoogleSignIn() {
+    const { error } = await signInWithGoogle();
+    if (error) toast.error('Something went wrong. Please try again.');
   }
 
   return (
@@ -39,12 +52,11 @@ function Login() {
                 <div className='mt-2'>
                   <Input
                     id='email'
-                    name='email'
                     type='email'
                     autoComplete='email'
                     placeholder='example@gmail.com'
+                    disabled={isPending}
                     required
-                    // disabled={isLoading}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -55,7 +67,10 @@ function Login() {
                 <div className='flex items-center justify-between'>
                   <InputLabel>Password</InputLabel>
                   <div className='text-sm'>
-                    <a href='#' className='text-blue-500 hover:text-blue-500'>
+                    <a
+                      href='#'
+                      className='text-blue-500 hover:underline font-semibold'
+                    >
                       Forgot password?
                     </a>
                   </div>
@@ -69,7 +84,7 @@ function Login() {
                     placeholder='•••••••••'
                     autoComplete='current-password'
                     required
-                    // disabled={isLoading}
+                    disabled={isPending}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -82,14 +97,14 @@ function Login() {
 
               <AuthDivider
                 providers={['google', 'apple']}
-                // onClickHandlers={{ google: handleLogin }}
+                onClickHandlers={{ google: handleGoogleSignIn }}
               />
             </div>
           </form>
 
           <SwitchAuthLink
-            question='Not a member?'
-            linkText='Register'
+            question="Don't have an account?"
+            linkText='Sign up'
             to='register'
           />
         </div>
