@@ -94,13 +94,13 @@ export default function CompleteProfile() {
   if (loading) return <div className='p-4 text-center'>Loading...</div>;
 
   return (
-    <div className='max-w-md mx-auto mt-10'>
+    <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
       <AuthTitle>Tell us about you</AuthTitle>
       <form
         onSubmit={handleSubmit}
         className='space-y-6 mt-10 sm:mx-auto sm:w-full sm:max-w-sm'
       >
-        <div>
+        <div className='flex flex-col gap-2'>
           <InputLabel>First Name</InputLabel>
           <Input
             id='first_name'
@@ -110,7 +110,7 @@ export default function CompleteProfile() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <InputLabel>Last Name</InputLabel>
           <Input
             id='last_name'
@@ -120,7 +120,7 @@ export default function CompleteProfile() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <InputLabel>Username</InputLabel>
           <Input
             id='username'
@@ -130,19 +130,20 @@ export default function CompleteProfile() {
           />
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <InputLabel>Birthday</InputLabel>
           <Input
             id='birthdate'
             type='date'
             required
+            placeholder='dd/mm/yyyy'
             value={form.birthdate}
             onChange={handleChange}
             onKeyDown={(e) => e.preventDefault()} // block typing
           />
         </div>
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <InputLabel>Country</InputLabel>
           <Input
             id='country'

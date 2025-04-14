@@ -13,6 +13,7 @@ import { validateForm } from '../features/auth/validateAuthForm';
 import { useLogin } from '../features/auth/useLogin';
 import { useGoogleAuth } from '../features/auth/useGoogleAuth';
 import { useAppleAuth } from '../features/auth/useAppleAuth';
+import { NavLink } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -74,12 +75,12 @@ function Login() {
                 <div className='flex items-center justify-between'>
                   <InputLabel>Password</InputLabel>
                   <div className='text-sm'>
-                    <a
-                      href='#'
+                    <NavLink
+                      to='/forgot-password'
                       className='text-blue-500 hover:underline font-semibold'
                     >
                       Forgot password?
-                    </a>
+                    </NavLink>
                   </div>
                 </div>
 

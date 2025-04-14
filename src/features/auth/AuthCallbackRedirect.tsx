@@ -1,26 +1,33 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 
 function AuthCallbackRedirect() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get('type');
 
   useEffect(() => {
-    const checkProfile = async () => {
+    async function handleCallback() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
-      const user = session?.user;
-      if (!user) {
+      if (!session?.user) {
         navigate('/login');
         return;
       }
 
+      if (type === 'recovery') {
+        navigate('/reset-password');
+        return;
+      }
+
+      // Existing profile check logic
       const { data: profile } = await supabase
         .from('profiles')
         .select('username, birthdate, country')
-        .eq('id', user.id)
+        .eq('id', session.user.id)
         .single();
 
       if (profile?.username && profile?.birthdate && profile?.country) {
@@ -28,10 +35,10 @@ function AuthCallbackRedirect() {
       } else {
         navigate('/complete-profile');
       }
-    };
+    }
 
-    checkProfile();
-  }, [navigate]);
+    handleCallback();
+  }, [navigate, type]);
 
   return <div className='text-center p-4'>Redirecting...</div>;
 }
