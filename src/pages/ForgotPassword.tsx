@@ -6,16 +6,20 @@ import SubmitButton from '../components/ui/SubmitButton';
 import AuthTitle from '../components/ui/AuthTitle';
 import Logo from '../components/ui/Logo';
 import SwitchAuthLink from '../components/ui/SwitchAuthLink';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const { sendResetLink, isPending } = useForgotPassword();
+  const navigate = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email) return;
+
     await sendResetLink(email);
     setEmail('');
+    navigate('/login');
   }
 
   return (

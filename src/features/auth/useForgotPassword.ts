@@ -13,7 +13,7 @@ export function useForgotPassword() {
 
       const { error: supabaseError } =
         await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/auth/reset-password`,
+          redirectTo: `${window.location.origin}/auth/callback?type=recovery`,
         });
 
       if (supabaseError) {
@@ -22,7 +22,7 @@ export function useForgotPassword() {
         return;
       }
 
-      toast.success('Reset link sent! Check your email.');
+      toast.success('Reset link sent! Check your email inbox and spam folder.');
     } catch {
       setError('An unexpected error occurred!');
       toast.error('An unexpected error occurred!');
