@@ -1,7 +1,7 @@
 function Recipes() {
   return (
-    <div>
-        Recipes
+    <div className='mt-20'>
+      <p>Search</p>
     </div>
   );
 }

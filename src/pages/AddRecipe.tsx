@@ -1,5 +1,9 @@
 function AddRecipe() {
-  return <div>Add Recipe Form</div>;
+  return (
+    <div className='mt-20'>
+      <p>Add recipe</p>
+    </div>
+  );
 }
 
 export default AddRecipe;

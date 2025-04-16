@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import ForgotPassword from './pages/ForgotPassword.tsx';
 import ResetPassword from './pages/ResetPassword.tsx';
+import ConfirmEmail from './pages/ConfirmEmail.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,10 +41,11 @@ function App() {
               <Route path='settings' element={<Settings />} />
               <Route path='add-recipe' element={<AddRecipe />} />
             </Route>
+            <Route path='auth/callback' element={<AuthCallbackRedirect />} />
             <Route path='forgot-password' element={<ForgotPassword />} />
             <Route path='reset-password' element={<ResetPassword />} />
             <Route path='complete-profile' element={<CompleteProfile />} />
-            <Route path='auth/callback' element={<AuthCallbackRedirect />} />
+            <Route path='confirm-email' element={<ConfirmEmail />} />
             <Route path='register' element={<Register />} />
             <Route path='login' element={<Login />} />
             <Route path='*' element={<PageNotFound />} />
@@ -57,10 +59,10 @@ function App() {
         containerStyle={{ margin: '8px' }}
         toastOptions={{
           success: {
-            duration: 3000,
+            duration: 6000,
           },
           error: {
-            duration: 5000,
+            duration: 6000,
           },
           style: {
             fontSize: '16px',

@@ -1,30 +1,14 @@
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthProvider';
+
 function Dashboard() {
+  const { isEmailVerified } = useAuth();
+  if (!isEmailVerified) {
+    return <Navigate to='/confirm-email' replace />;
+  }
+
   return (
     <div className='mt-20'>
-      <p>Dashboard First</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
-      <p>Dashboard</p>
       <p>Dashboard</p>
     </div>
   );

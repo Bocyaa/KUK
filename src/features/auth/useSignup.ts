@@ -11,9 +11,32 @@ export async function handleSignup(
 ) {
   e.preventDefault();
 
-  const { error } = await supabase.auth.signUp({
+  // Check if the email already exists in the profiles table
+  const { data: existingProfile, error: fetchError } = await supabase
+    .from('profiles')
+    .select('email')
+    .eq('email', email)
+    .maybeSingle();
+
+  if (fetchError) {
+    toast.error('Unexpected error occurred, please try again.');
+    return;
+  }
+
+  if (existingProfile) {
+    toast.error(
+      'An account with this email already exists. Please login instead.'
+    );
+    return;
+  }
+
+  // Proceed with sign up since no profile exists with the given email
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      emailRedirectTo: `${window.location.origin}/auth/callback?type=signup`,
+    },
   });
 
   if (error) {
@@ -23,9 +46,13 @@ export async function handleSignup(
       );
     } else {
       toast.error('Something went wrong. Please try again.');
-      return;
     }
+    return;
   }
 
-  navigate('/complete-profile');
+  if (data.user && !data.user.email_confirmed_at) {
+    navigate('/confirm-email');
+  } else {
+    navigate('/complete-profile');
+  }
 }
