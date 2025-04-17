@@ -42,7 +42,7 @@ function BottomNav() {
     },
     {
       key: 'add-recipe',
-      label: 'Add',
+      label: 'Create',
       icon: { outline: AddOutline, solid: AddSolid },
     },
     {
@@ -56,7 +56,9 @@ function BottomNav() {
   ];
 
   return (
-    <nav className='fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-md flex justify-around items-center pt-2 pb-7 z-50 h-[90px]'>
+    <nav
+      className={`bottom-nav fixed bottom-0 inset-x-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-md flex justify-around items-center pt-2 z-50 h-[70px] standalone:h-[90px] pb-3 standalone:pb-7`}
+    >
       {navItems.map((item) => (
         <NavLink
           to={`/${item.key}`}

@@ -1,22 +1,25 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './contexts/AuthProvider.tsx';
+
+import AppLayout from './components/layout/AppLayout.tsx';
+
 import Dashboard from './pages/Dashboard.tsx';
 import Recipes from './pages/Recipes.tsx';
 import Recipe from './pages/Recipe.tsx';
-import Settings from './pages/Settings.tsx';
-import PageNotFound from './pages/PageNotFound.tsx';
-import Register from './pages/Register.tsx';
-import Login from './pages/Login.tsx';
-import AppLayout from './components/layout/AppLayout.tsx';
-import AddRecipe from './pages/AddRecipe.tsx';
 import Profile from './pages/Profile.tsx';
-import { AuthProvider } from './contexts/AuthProvider.tsx';
-import CompleteProfile from './pages/CompleteProfile.tsx';
-import AuthCallbackRedirect from './features/auth/AuthCallbackRedirect.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
-import ForgotPassword from './pages/ForgotPassword.tsx';
-import ResetPassword from './pages/ResetPassword.tsx';
-import ConfirmEmail from './pages/ConfirmEmail.tsx';
+import Settings from './pages/Settings.tsx';
+import AddRecipe from './pages/AddRecipe.tsx';
+import PageNotFound from './pages/PageNotFound.tsx';
+
+import Register from '@app/pages/auth/Register.tsx';
+import Login from '@app/pages/auth/Login.tsx';
+import CompleteProfile from '@app/pages/auth/CompleteProfile.tsx';
+import AuthCallbackRedirect from '@app/pages/auth/AuthCallbackRedirect.tsx';
+import ForgotPassword from '@app/pages/auth/ForgotPassword.tsx';
+import ResetPassword from '@app/pages/auth/ResetPassword.tsx';
+import ConfirmEmail from '@app/pages/auth/ConfirmEmail.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {

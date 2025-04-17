@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { useResetPassword } from '../features/auth/useResetPassword';
+
 import toast from 'react-hot-toast';
-import Logo from '../components/ui/Logo';
-import AuthTitle from '../components/ui/AuthTitle';
-import InputLabel from '../components/ui/InputLabel';
-import Input from '../components/ui/Input';
-import SubmitButton from '../components/ui/SubmitButton';
+
+import Logo from '@app/components/ui/Logo';
+import AuthTitle from '@app/components/ui/AuthTitle';
+import InputLabel from '@app/components/ui/InputLabel';
+import Input from '@app/components/ui/Input';
+import SubmitButton from '@app/components/ui/SubmitButton';
+
+import { useResetPassword } from '@app/hooks/auth/useResetPassword';
 
 function ResetPassword() {
   const [password, setPassword] = useState('');

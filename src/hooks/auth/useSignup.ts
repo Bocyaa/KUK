@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { supabase } from '../../lib/supabaseClient';
 import toast from 'react-hot-toast';
+import { supabase } from '@app/lib/supabaseClient';
 
 export async function handleSignup(
   e: React.FormEvent<HTMLFormElement>,

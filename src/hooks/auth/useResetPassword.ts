@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '@app/lib/supabaseClient';
 import toast from 'react-hot-toast';
 
 export function useResetPassword() {

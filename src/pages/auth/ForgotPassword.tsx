@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { useForgotPassword } from '../features/auth/useForgotPassword';
-import InputLabel from '../components/ui/InputLabel';
-import Input from '../components/ui/Input';
-import SubmitButton from '../components/ui/SubmitButton';
-import AuthTitle from '../components/ui/AuthTitle';
-import Logo from '../components/ui/Logo';
-import SwitchAuthLink from '../components/ui/SwitchAuthLink';
 import { useNavigate } from 'react-router-dom';
+
+import InputLabel from '@app/components/ui/InputLabel';
+import Input from '@app/components/ui/Input';
+import SubmitButton from '@app/components/ui/SubmitButton';
+import AuthTitle from '@app/components/ui/AuthTitle';
+import Logo from '@app/components/ui/Logo';
+import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
+
+import { useForgotPassword } from '@app/hooks/auth/useForgotPassword';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

@@ -1,19 +1,20 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
 import toast from 'react-hot-toast';
 
-import AuthTitle from '../components/ui/AuthTitle';
-import InputLabel from '../components/ui/InputLabel';
-import Input from '../components/ui/Input';
-import SubmitButton from '../components/ui/SubmitButton';
-import SwitchAuthLink from '../components/ui/SwitchAuthLink';
-import Logo from '../components/ui/Logo';
-import AuthDivider from '../components/ui/AuthDivider';
+import AuthTitle from '@app/components/ui/AuthTitle';
+import InputLabel from '@app/components/ui/InputLabel';
+import Input from '@app/components/ui/Input';
+import SubmitButton from '@app/components/ui/SubmitButton';
+import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
+import Logo from '@app/components/ui/Logo';
+import AuthDivider from '@app/components/ui/AuthDivider';
 
-import { validateForm } from '../features/auth/validateAuthForm';
-import { useLogin } from '../features/auth/useLogin';
-import { useGoogleAuth } from '../features/auth/useGoogleAuth';
-import { useAppleAuth } from '../features/auth/useAppleAuth';
-import { NavLink } from 'react-router-dom';
+import { validateForm } from '@app/hooks/auth/validateAuthForm';
+import { useLogin } from '@app/hooks/auth/useLogin';
+import { useGoogleAuth } from '@app/hooks/auth/useGoogleAuth';
+import { useAppleAuth } from '@app/hooks/auth/useAppleAuth';
 
 function Login() {
   const [email, setEmail] = useState('');

@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import debounce from 'lodash/debounce';
-import { supabase } from '../lib/supabaseClient';
-
-import AuthTitle from '../components/ui/AuthTitle';
-import InputLabel from '../components/ui/InputLabel';
-import Input from '../components/ui/Input';
-import SubmitButton from '../components/ui/SubmitButton';
 import toast from 'react-hot-toast';
 import ReactSelect from 'react-select';
 import countryList from 'react-select-country-list';
+import debounce from 'lodash/debounce';
+
+import AuthTitle from '@app/components/ui/AuthTitle';
+import InputLabel from '@app/components/ui/InputLabel';
+import Input from '@app/components/ui/Input';
+import SubmitButton from '@app/components/ui/SubmitButton';
+
+import { supabase } from '@app/lib/supabaseClient';
 
 interface FormState {
   first_name: string;

@@ -1,7 +1,11 @@
-function Logo() {
+interface LogoProps {
+  height?: string;
+}
+
+function Logo({ height }: LogoProps) {
   return (
     <svg
-      className='mx-auto h-16 w-auto'
+      className={`mx-auto w-auto ${height ? height : 'h-16'}`}
       viewBox='0 0 202 218'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

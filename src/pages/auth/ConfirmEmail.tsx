@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
+
 import toast from 'react-hot-toast';
-import { useAuth } from '../contexts/AuthProvider';
-import Logo from '../components/ui/Logo';
-import SubmitButton from '../components/ui/SubmitButton';
-import InputLabel from '../components/ui/InputLabel';
-import SwitchAuthLink from '../components/ui/SwitchAuthLink';
+
+import Logo from '@app/components/ui/Logo';
+import SubmitButton from '@app/components/ui/SubmitButton';
+import InputLabel from '@app/components/ui/InputLabel';
+import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
+
+import { useAuth } from '@app/contexts/AuthProvider';
+import { supabase } from '@app/lib/supabaseClient';
 
 function ConfirmEmail() {
   const [isResending, setIsResending] = useState(false);

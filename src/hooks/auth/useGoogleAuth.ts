@@ -1,5 +1,5 @@
 import { AuthError } from '@supabase/supabase-js';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '@app/lib/supabaseClient';
 
 export function useGoogleAuth() {
   async function signInWithGoogle() {

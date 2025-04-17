@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '../../lib/supabaseClient';
+
 import toast from 'react-hot-toast';
+import { supabase } from '@app/lib/supabaseClient';
 
 function AuthCallbackRedirect() {
   const navigate = useNavigate();

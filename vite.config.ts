@@ -8,4 +8,9 @@ export default defineConfig({
       'a4dc-2a02-810d-a914-6f00-8d53-aa1b-5126-730c.ngrok-free.app',
     ],
   },
+  resolve: {
+    alias: {
+      '@app': '/src',
+    },
+  },
 });

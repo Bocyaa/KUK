@@ -20,6 +20,10 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
+.bottom-nav {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+}
+
 /* Google Icon */
 .gsi-material-button {
   -moz-user-select: none;

@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-import AuthTitle from '../components/ui/AuthTitle';
-import InputLabel from '../components/ui/InputLabel';
-import SwitchAuthLink from '../components/ui/SwitchAuthLink';
-import Input from '../components/ui/Input';
-import SubmitButton from '../components/ui/SubmitButton';
-import AuthDivider from '../components/ui/AuthDivider';
-import Logo from '../components/ui/Logo';
+import AuthTitle from '@app/components/ui/AuthTitle';
+import InputLabel from '@app/components/ui/InputLabel';
+import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
+import Input from '@app/components/ui/Input';
+import SubmitButton from '@app/components/ui/SubmitButton';
+import AuthDivider from '@app/components/ui/AuthDivider';
+import Logo from '@app/components/ui/Logo';
 
-import { useGoogleAuth } from '../features/auth/useGoogleAuth';
-import { validateForm } from '../features/auth/validateAuthForm';
-import { handleSignup } from '../features/auth/useSignup';
-import { useAppleAuth } from '../features/auth/useAppleAuth';
+import { useGoogleAuth } from '@app/hooks/auth/useGoogleAuth';
+import { validateForm } from '@app/hooks/auth/validateAuthForm';
+import { handleSignup } from '@app/hooks/auth/useSignup';
+import { useAppleAuth } from '@app/hooks/auth/useAppleAuth';
 
 function Register() {
   // Controlled input states
