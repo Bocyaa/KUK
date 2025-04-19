@@ -42,7 +42,7 @@ function App() {
               <Route path='recipe' element={<Recipe />} />
               <Route path='profile' element={<Profile />} />
               <Route path='settings' element={<Settings />} />
-              <Route path='add-recipe' element={<AddRecipe />} />
+              <Route path='create-recipe' element={<AddRecipe />} />
             </Route>
             <Route path='auth/callback' element={<AuthCallbackRedirect />} />
             <Route path='forgot-password' element={<ForgotPassword />} />

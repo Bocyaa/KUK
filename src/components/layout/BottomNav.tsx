@@ -1,18 +1,20 @@
-import type { SVGProps, FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import type { SVGProps, FC } from "react";
+import { NavLink } from "react-router-dom";
 
 import {
   HomeIcon as HomeOutline,
   PlusCircleIcon as AddOutline,
-  AdjustmentsHorizontalIcon,
-} from '@heroicons/react/24/outline';
+  UserIcon as UserOutline,
+  // AdjustmentsHorizontalIcon,
+} from "@heroicons/react/24/outline";
 
 import {
   HomeIcon as HomeSolid,
   PlusCircleIcon as AddSolid,
-} from '@heroicons/react/24/solid';
+  UserIcon as UserSolid,
+} from "@heroicons/react/24/solid";
 
-import CustomMagnifyingGlass from '../ui/CustomMagnifyingGlass';
+import CustomMagnifyingGlass from "../ui/CustomMagnifyingGlass";
 
 type StandardIcon = FC<{ className?: string }>;
 type CustomIcon = FC<SVGProps<SVGSVGElement> & { bold?: boolean }>;
@@ -30,34 +32,36 @@ interface NavItem {
 function BottomNav() {
   const navItems: NavItem[] = [
     {
-      key: 'dashboard',
-      label: 'Home',
+      key: "dashboard",
+      label: "Home",
       icon: { outline: HomeOutline, solid: HomeSolid },
     },
     {
-      key: 'recipes',
-      label: 'Search',
+      key: "recipes",
+      label: "Search",
       icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
       isCustom: true,
     },
     {
-      key: 'add-recipe',
-      label: 'Create',
+      key: "create-recipe",
+      label: "Create",
       icon: { outline: AddOutline, solid: AddSolid },
     },
     {
-      key: 'settings',
-      label: 'Settings',
+      key: "settings",
+      label: "You",
       icon: {
-        outline: AdjustmentsHorizontalIcon,
-        solid: AdjustmentsHorizontalIcon,
+        outline: UserOutline,
+        solid: UserSolid,
       },
     },
   ];
 
   return (
     <nav
-      className={`bottom-nav fixed bottom-0 inset-x-0 bg-white dark:bg-gray-900 border-t dark:border-gray-700 shadow-md flex justify-around items-center pt-2 z-50 h-[70px] standalone:h-[90px] pb-3 standalone:pb-7`}
+      className={
+        "bottom-nav fixed inset-x-0 bottom-0 z-50 flex h-[70px] items-center justify-around border-t border-gray-300 bg-gray-50 pb-3 pt-2 dark:border-[#212121] dark:bg-black standalone:h-[90px] standalone:pb-7"
+      }
     >
       {navItems.map((item) => (
         <NavLink
@@ -66,20 +70,20 @@ function BottomNav() {
           className={({ isActive }) =>
             `flex flex-col items-center gap-1 text-xs ${
               isActive
-                ? 'text-gray-800 dark:text-white'
-                : 'text-gray-400 dark:text-gray-500'
+                ? "text-gray-800 dark:text-[#f3f3f3]"
+                : "text-gray-400 dark:text-[#666666]"
             }`
           }
         >
           {({ isActive }) => {
-            const Icon = item.icon[isActive ? 'solid' : 'outline'];
+            const Icon = item.icon[isActive ? "solid" : "outline"];
 
             return (
               <>
                 {item.isCustom ? (
-                  <Icon className='w-6 h-6' bold={isActive} />
+                  <Icon className="h-6 w-6" bold={isActive} />
                 ) : (
-                  <Icon className='w-6 h-6' />
+                  <Icon className="h-6 w-6" />
                 )}
                 <span>{item.label}</span>
               </>

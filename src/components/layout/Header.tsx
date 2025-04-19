@@ -1,24 +1,9 @@
-import {
-  // ArrowRightStartOnRectangleIcon,
-  Bars3Icon,
-} from '@heroicons/react/24/solid';
-// import { useNavigate } from 'react-router-dom';
-// import { supabase } from '../../lib/supabaseClient';
-// import Logo from '../ui/Logo';
-// import { useEffect, useRef } from 'react';
-
 function Header() {
-  // const navigate = useNavigate();
-
-  // async function handleLogout() {
-  //   await supabase.auth.signOut();
-  //   navigate('/login');
-  // }
-
   return (
-    <header className='fixed right-0 left-0 flex items-center justify-between p-5 border-b bg-white dark:bg-gray-900 dark:text-white z-50'>
-      <h1 className='text-xl font-bold'>KÜK</h1>
-      <Bars3Icon className='w-7 h-7' />
+    <header className="fixed left-0 right-0 z-50 flex items-center justify-between gap-5 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#212121] dark:bg-black dark:text-gray-200">
+      <span className="h-5 w-5">&nbsp;</span>
+      <span className="h-5 font-semibold">Settings</span>
+      <span className="h-5 w-5">&nbsp;</span>
     </header>
   );
 }
