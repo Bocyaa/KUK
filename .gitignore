@@ -10,7 +10,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-database-specification.txt
 *.local
 
 # Editor directories and files
@@ -23,3 +22,6 @@ database-specification.txt
 *.njsproj
 *.sln
 *.sw?
+
+database-specification.txt
+design_decisions.txt

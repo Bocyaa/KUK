@@ -3,6 +3,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   BellAlertIcon,
   ChevronRightIcon,
+  FingerPrintIcon,
   ItalicIcon,
   LanguageIcon,
   LockClosedIcon,
@@ -10,10 +11,14 @@ import {
   PresentationChartLineIcon,
   RectangleGroupIcon,
   SunIcon,
+  UserIcon,
+  UserPlusIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 import { supabase } from "@app/lib/supabaseClient";
+import { UserMinusIcon } from "@heroicons/react/24/solid";
+import { useInvalidateUserPofile } from "@app/hooks/useUserProfile";
 
 type SettingItemProps = {
   settingKey: string;
@@ -26,8 +31,11 @@ interface SettingItems {
   handleClick?: () => Promise<void>;
 }
 
+const dangerZones: string[] = ["logout", "deleteAccount"];
+
 function SettingItem({ settingKey }: SettingItemProps) {
   const navigate = useNavigate();
+  const invalidate = useInvalidateUserPofile();
 
   const settingItems: SettingItems[] = [
     {
@@ -76,11 +84,32 @@ function SettingItem({ settingKey }: SettingItemProps) {
       icon: <ItalicIcon />,
     },
     {
+      key: "personalInfo",
+      label: "Personal Information",
+      icon: <UserIcon />,
+    },
+    {
+      key: "contactDemographics",
+      label: "Contact & Demographics",
+      icon: <UserPlusIcon />,
+    },
+    {
+      key: "passwordUpdate",
+      label: "Update Password",
+      icon: <FingerPrintIcon />,
+    },
+    {
+      key: "deleteAccount",
+      label: "Delete Account",
+      icon: <UserMinusIcon />,
+    },
+    {
       key: "logout",
       label: "Log out",
       icon: <ArrowLeftStartOnRectangleIcon />,
       handleClick: async () => {
         await supabase.auth.signOut();
+        invalidate();
         navigate("/login");
       },
     },
@@ -92,16 +121,25 @@ function SettingItem({ settingKey }: SettingItemProps) {
         (item) =>
           item.key === settingKey && (
             <div
+              key={item.key}
               onClick={item.handleClick}
               className="flex items-center justify-between py-[0.65rem] pl-4 pr-2"
             >
               <div
-                className={`flex items-center gap-5 ${item.key === "logout" ? "text-red-600" : "text-[#0b0b0b]"}`}
+                className={`flex items-center gap-5 text-[#0b0b0b] dark:text-[#f9f9f9]`}
               >
-                <span className="h-5 w-5">{item.icon}</span>
-                <span>{item.label}</span>
+                <span
+                  className={`h-5 w-5 ${dangerZones.includes(item.key) && "text-red-600 dark:text-red-600"}`}
+                >
+                  {item.icon}
+                </span>
+                <span
+                  className={`${dangerZones.includes(item.key) && "text-red-600 dark:text-red-600"}`}
+                >
+                  {item.label}
+                </span>
               </div>
-              {item.key !== "logout" && (
+              {!dangerZones.includes(item.key) && (
                 <ChevronRightIcon className="h-4 stroke-[3] text-[#c0c0c0] dark:text-[#59585e]" />
               )}
             </div>

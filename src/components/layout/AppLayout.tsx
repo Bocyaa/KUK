@@ -20,7 +20,7 @@ function AppLayout() {
     <div className="flex h-screen flex-col dark:bg-slate-700">
       <Header />
 
-      <main className="flex-1 overflow-y-auto bg-[#f3f2f8] px-4 py-2 pb-16 text-white dark:bg-black dark:text-[#f3f3f3]">
+      <main className="flex-1 overflow-y-auto bg-[#f3f2f8] px-4 py-2 pb-16 dark:bg-black dark:text-[#f3f3f3]">
         <Outlet />
       </main>
 

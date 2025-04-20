@@ -37,7 +37,7 @@ function BottomNav() {
       icon: { outline: HomeOutline, solid: HomeSolid },
     },
     {
-      key: "recipes",
+      key: "search",
       label: "Search",
       icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
       isCustom: true,

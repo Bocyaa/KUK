@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-function Profile() {
+function SettingsLayout() {
   return <Outlet />;
 }
 
-export default Profile;
+export default SettingsLayout;
