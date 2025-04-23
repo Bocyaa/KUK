@@ -10,7 +10,7 @@ const FormInput: React.FC<FormInputProps> = ({ label, ...props }) => (
       {label}
     </label>
     <input
-      className="rounded-none border-b border-gray-300 bg-transparent px-0 py-2 text-base text-gray-900 placeholder-gray-400 transition-all focus:border-blue-500 focus:outline-none dark:border-[#a0a0a0] dark:text-[#f9f9f9]"
+      className="rounded-none border-b border-gray-300 bg-transparent px-0 py-2 text-base text-gray-900 placeholder-gray-300 transition-all focus:border-gray-100 focus:outline-none dark:border-[#a0a0a0] dark:text-[#f9f9f9] dark:placeholder-gray-500"
       {...props}
     />
   </div>

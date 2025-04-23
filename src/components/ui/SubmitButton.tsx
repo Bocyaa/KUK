@@ -16,7 +16,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
     <button
       type={type}
       disabled={disabled}
-      className={`shadow-xs flex w-full justify-center rounded-2xl px-3 py-1.5 text-sm/6 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
+      className={`shadow-xs flex w-full justify-center rounded-md px-3 py-1.5 text-sm/6 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${
         disabled
           ? "cursor-not-allowed bg-gray-200 text-gray-400 dark:border dark:border-[#1c1c1c] dark:bg-[#1c1c1e] dark:text-[]"
           : "bg-gray-800 text-white hover:bg-gray-500"

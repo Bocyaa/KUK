@@ -1,17 +1,14 @@
-import Avatar from "@app/components/ui/settings/Avatar";
-import SectionBg from "@app/components/ui/settings/SectionBg";
-import SettingItem from "@app/components/ui/settings/SettingItem";
-import {
-  useInvalidateUserPofile,
-  useUserProfile,
-} from "@app/hooks/useUserProfile";
-import { supabase } from "@app/lib/supabaseClient";
-import React, { useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { NavLink } from "react-router-dom";
+import Avatar from '@app/components/ui/settings/Avatar';
+import SectionBg from '@app/components/ui/settings/SectionBg';
+import SettingItem from '@app/components/ui/settings/SettingItem';
+import { useInvalidateUserPofile, useGetUserProfile } from '@app/hooks/useGetUserProfile';
+import { supabase } from '@app/lib/supabaseClient';
+import React, { useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { NavLink } from 'react-router-dom';
 
 function ProfileMain() {
-  const { data: profile, isPending } = useUserProfile();
+  const { data: profile, isPending } = useGetUserProfile();
   const invalidateProfile = useInvalidateUserPofile();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -25,9 +22,9 @@ function ProfileMain() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/heic"];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/heic'];
     if (!allowedTypes.includes(file.type)) {
-      toast.error("Only JPEG, PNG, or HEIC images are allowed.");
+      toast.error('Only JPEG, PNG, or HEIC images are allowed.');
       return;
     }
 
@@ -35,7 +32,7 @@ function ProfileMain() {
 
     try {
       // Read file as image for cropping or dimension check
-      const img = document.createElement("img");
+      const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
 
       await new Promise((resolve, reject) => {
@@ -47,7 +44,7 @@ function ProfileMain() {
 
       // If already 640x640 JPEG and <=150KB, upload as is
       if (
-        file.type === "image/jpeg" &&
+        file.type === 'image/jpeg' &&
         img.width === 640 &&
         img.height === 640 &&
         file.size <= 150 * 1024
@@ -55,15 +52,14 @@ function ProfileMain() {
         // No processing needed
       } else {
         // Dynamically import browser-image-compression
-        const imageCompression = (await import("browser-image-compression"))
-          .default;
+        const imageCompression = (await import('browser-image-compression')).default;
 
         // Crop to center square 640x640
-        const canvas = document.createElement("canvas");
+        const canvas = document.createElement('canvas');
         const size = 640;
         canvas.width = size;
         canvas.height = size;
-        const ctx = canvas.getContext("2d")!;
+        const ctx = canvas.getContext('2d')!;
         const minDim = Math.min(img.width, img.height);
         const sx = (img.width - minDim) / 2;
         const sy = (img.height - minDim) / 2;
@@ -71,17 +67,17 @@ function ProfileMain() {
 
         // Convert canvas to blob (remove metadata)
         const croppedBlob: Blob | null = await new Promise((resolve) =>
-          canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.9),
+          canvas.toBlob((blob) => resolve(blob), 'image/jpeg', 0.9),
         );
 
         if (!croppedBlob) {
-          toast.error("Failed to process image. Please try a different image.");
+          toast.error('Failed to process image. Please try a different image.');
           setUploading(false);
           return;
         }
 
-        const croppedFile = new File([croppedBlob], "avatar.jpg", {
-          type: "image/jpeg",
+        const croppedFile = new File([croppedBlob], 'avatar.jpg', {
+          type: 'image/jpeg',
         });
 
         // Compress/cap to 150KB
@@ -89,14 +85,12 @@ function ProfileMain() {
           maxSizeMB: 0.15,
           maxWidthOrHeight: 640,
           useWebWorker: true,
-          fileType: "image/jpeg",
+          fileType: 'image/jpeg',
           initialQuality: 0.85,
         });
 
         if (compressedFile.size > 150 * 1024) {
-          toast.error(
-            "Image size is too big to be accepted. Try a different image.",
-          );
+          toast.error('Image size is too big to be accepted. Try a different image.');
           setUploading(false);
           return;
         }
@@ -104,62 +98,58 @@ function ProfileMain() {
         fileToUpload = compressedFile;
       }
 
-      const fileExt = "jpg";
+      const fileExt = 'jpg';
       const fileName = `${profile.id}_${Date.now()}.${fileExt}`;
       const filePath = `${fileName}`;
 
       // Remove old avatar if exists
       if (profile.avatar_url) {
-        const oldPath = profile.avatar_url.split(
-          "/storage/v1/object/public/",
-        )[1];
+        const oldPath = profile.avatar_url.split('/storage/v1/object/public/')[1];
         if (oldPath) {
-          await supabase.storage.from("avatars").remove([oldPath]);
+          await supabase.storage.from('avatars').remove([oldPath]);
         }
       }
 
-      console.log("File to upload:", fileToUpload);
-      console.log("File path:", filePath);
+      console.log('File to upload:', fileToUpload);
+      console.log('File path:', filePath);
       console.log(await supabase.auth.getSession());
 
       // Upload new avatar
       const { error: uploadError } = await supabase.storage
-        .from("avatars")
+        .from('avatars')
         .upload(filePath, fileToUpload);
 
       if (uploadError) {
-        toast.error("Failed to upload avatar.");
+        toast.error('Failed to upload avatar.');
         setUploading(false);
         return;
       }
 
       // Get public URL
-      const { data: publicUrlData } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(filePath);
+      const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
 
       const avatarUrl = publicUrlData?.publicUrl;
 
       // Update profile
       const { error: updateError } = await supabase
-        .from("profiles")
+        .from('profiles')
         .update({ avatar_url: avatarUrl })
-        .eq("id", profile.id);
+        .eq('id', profile.id);
 
       if (updateError) {
-        toast.error("Failed to update profile.");
+        toast.error('Failed to update profile.');
         setUploading(false);
         return;
       }
 
       invalidateProfile();
-      toast.success("Profile photo updated!");
+      toast.success('Profile photo updated!');
     } catch (err) {
       console.error(err);
-      toast.error("Failed to process image.");
+      toast.error('Failed to process image.');
     } finally {
       setUploading(false);
-      e.target.value = "";
+      e.target.value = '';
     }
   }
 
@@ -191,10 +181,7 @@ function ProfileMain() {
             tabIndex={0}
           >
             {uploading ? (
-              <svg
-                className="mr-2 inline h-5 w-5 animate-spin"
-                viewBox="0 0 24 24"
-              >
+              <svg className="mr-2 inline h-5 w-5 animate-spin" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
                   cx="12"
@@ -204,11 +191,7 @@ function ProfileMain() {
                   strokeWidth="4"
                   fill="none"
                 />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
             ) : (
               <span>Change photo</span>
@@ -228,11 +211,6 @@ function ProfileMain() {
         <NavLink to="personalInfo">
           <SettingItem settingKey="personalInfo" />
         </NavLink>
-        <NavLink to="contactDemographics">
-          <SettingItem settingKey="contactDemographics" />
-        </NavLink>
-      </SectionBg>
-      <SectionBg>
         <NavLink to="passwordUpdate">
           <SettingItem settingKey="passwordUpdate" />
         </NavLink>

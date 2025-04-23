@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import type { ReactElement } from "react";
 import { supabase } from "@app/lib/supabaseClient";
 import { UserMinusIcon } from "@heroicons/react/24/solid";
-import { useInvalidateUserPofile } from "@app/hooks/useUserProfile";
+import { useInvalidateUserPofile } from "@app/hooks/useGetUserProfile";
 
 type SettingItemProps = {
   settingKey: string;

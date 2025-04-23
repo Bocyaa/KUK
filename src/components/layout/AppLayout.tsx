@@ -1,9 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from 'react-router-dom';
 
-import Header from "./Header";
-import BottomNav from "./BottomNav";
+import Header from './Header';
+import BottomNav from './BottomNav';
 
-import { useAuth } from "../../contexts/AuthProvider";
+import { useAuth } from '@app/contexts/hooks/useAuth';
 
 function AppLayout() {
   const { session, loading } = useAuth();
@@ -12,7 +12,7 @@ function AppLayout() {
   if (loading) return <div className="p-4 text-center">Loading...</div>;
 
   if (!session) {
-    navigate("/login");
+    navigate('/login');
     return null;
   }
 

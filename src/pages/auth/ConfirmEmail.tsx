@@ -8,7 +8,7 @@ import SubmitButton from '@app/components/ui/SubmitButton';
 import InputLabel from '@app/components/ui/InputLabel';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 
-import { useAuth } from '@app/contexts/AuthProvider';
+import { useAuth } from '@app/contexts/hooks/useAuth';
 import { supabase } from '@app/lib/supabaseClient';
 
 function ConfirmEmail() {
@@ -58,27 +58,27 @@ function ConfirmEmail() {
   }
 
   return (
-    <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <Logo />
 
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-10'>
-        <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+      <div className="flex flex-col gap-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Check your email
         </h2>
-        <p className='mt-4 text-center text-gray-600'>
-          We've sent you a verification email. Please check your inbox or spam
-          folder and click the link to verify your account.
+        <p className="mt-4 text-center text-gray-600">
+          We've sent you a verification email. Please check your inbox or spam folder and click the
+          link to verify your account.
         </p>
-        <div className='flex flex-col gap-3 mt-6 text-center'>
+        <div className="mt-6 flex flex-col gap-3 text-center">
           {!isTimerActive && <InputLabel>Didn't receive the email?</InputLabel>}
 
-          <div className='relative'>
+          <div className="relative">
             {isTimerActive && (
               <>
-                <div className='absolute top-2 w-full'>
-                  <div className='w-full bg-gray-200 h-[2px]'>
+                <div className="absolute top-2 w-full">
+                  <div className="h-[2px] w-full bg-gray-200">
                     <div
-                      className='h-full bg-black transition-all duration-1000 ease-linear'
+                      className="h-full bg-black transition-all duration-1000 ease-linear"
                       style={{ width: `${(countdown / 30) * 100}%` }}
                     />
                   </div>
@@ -92,8 +92,8 @@ function ConfirmEmail() {
               isResending
                 ? 'Sending...'
                 : isTimerActive
-                ? `Resend available in ${countdown}s`
-                : 'Resend'
+                  ? `Resend available in ${countdown}s`
+                  : 'Resend'
             }
             onClick={handleResendEmail}
             disabled={isResending || isTimerActive}
@@ -101,7 +101,7 @@ function ConfirmEmail() {
         </div>
       </div>
 
-      <SwitchAuthLink question='Back to' linkText='Log in' to='login' />
+      <SwitchAuthLink question="Back to" linkText="Log in" to="login" />
     </div>
   );
 }

@@ -1,8 +1,8 @@
-import { useUserProfile } from "@app/hooks/useUserProfile";
+import { useGetUserProfile } from "@app/hooks/useGetUserProfile";
 import Avatar from "./Avatar";
 
 function ProfileCard() {
-  const { data: profile, isPending } = useUserProfile();
+  const { data: profile, isPending } = useGetUserProfile();
 
   if (isPending) return <div>Loading...</div>;
   if (!profile) return <div>No profile found.</div>;

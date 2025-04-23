@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 interface InputLabelProp {
   children: ReactNode;
@@ -6,10 +6,7 @@ interface InputLabelProp {
 
 function InputLabel({ children }: InputLabelProp) {
   return (
-    <label
-      htmlFor='email'
-      className='block text-sm/6 font-medium text-gray-900'
-    >
+    <label className="mb-1 text-xs uppercase tracking-wide text-gray-500 dark:text-[#a0a0a0]">
       {children}
     </label>
   );

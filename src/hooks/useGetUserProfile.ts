@@ -17,7 +17,7 @@ async function fetchUserProfile() {
   return data;
 }
 
-export function useUserProfile() {
+export function useGetUserProfile() {
   return useQuery({
     queryKey: ["userProfile"],
     queryFn: fetchUserProfile,
