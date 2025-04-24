@@ -25,7 +25,6 @@ import ConfirmEmail from '@app/pages/auth/ConfirmEmail.tsx';
 import SettingsLayout from './components/ui/settings/SettingsLayout.tsx';
 import PersonalInfo from './components/ui/settings/profile/PersonalInfo.tsx';
 import ProfileMain from './components/ui/settings/profile/ProfileMain.tsx';
-import ContactDemographics from './components/ui/settings/profile/ContactDemographics.tsx';
 import UpdatePassword from './components/ui/settings/profile/UpdatePassword.tsx';
 
 const queryClient = new QueryClient({
@@ -54,7 +53,6 @@ function App() {
                     <Route index element={<ProfileMain />} />
                     <Route path="personalInfo" element={<PersonalInfo />} />
                     <Route path="passwordUpdate" element={<UpdatePassword />} />
-                    <Route path="contactDemographics" element={<ContactDemographics />} />
                   </Route>
                 </Route>
                 <Route path="create-recipe" element={<AddRecipe />} />

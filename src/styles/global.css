@@ -5,7 +5,7 @@
 
 /* Custom Global Styles */
 body {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #ffffff;
   color: #000000;
 }
@@ -17,6 +17,13 @@ a {
 
 .bottom-nav {
   padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+}
+
+/* Background color of apple auto fill */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #000 !important;
 }
 
 /* Google Icon */
@@ -34,7 +41,7 @@ a {
   box-sizing: border-box;
   color: #1f1f1f;
   cursor: pointer;
-  font-family: "Roboto", arial, sans-serif;
+  font-family: 'Roboto', arial, sans-serif;
   font-size: 14px;
   height: 40px;
   letter-spacing: 0.25px;
@@ -82,7 +89,7 @@ a {
 .gsi-material-button .gsi-material-button-contents {
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  font-family: "Roboto", arial, sans-serif;
+  font-family: 'Roboto', arial, sans-serif;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;

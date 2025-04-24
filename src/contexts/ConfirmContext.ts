@@ -6,6 +6,10 @@ type ConfirmContextType = {
   setIsDirty: (dirty: boolean) => void;
   onConfirm: (() => void) | null;
   setOnConfirm: (fn: (() => void) | null) => void;
+  label: string;
+  setLabel: (label: string) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
 // 2. Declare Context

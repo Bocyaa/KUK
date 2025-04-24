@@ -4,8 +4,7 @@ import FormSection from '../../form/FormSection';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import React, { useEffect, useState } from 'react';
 import { useUpdateUserProfile } from '@app/hooks/useUpdateUserProfile';
-import toast from 'react-hot-toast';
-// import countryList from 'react-select-country-list';
+import AnimatedMessage from '../../AnimatedMessage';
 
 interface FormState {
   first_name: string;
@@ -18,12 +17,14 @@ interface FormState {
 
 function PersonalInfo() {
   const { data: profile, isPending } = useGetUserProfile();
-  const { updateProfile, loading, error } = useUpdateUserProfile();
+
+  const { updateProfile } = useUpdateUserProfile(); // loading, error
   const invalidateProfile = useInvalidateUserPofile();
 
-  const { setIsDirty, setOnConfirm } = useFormConfirm();
+  const { setIsDirty, setOnConfirm, setLabel, setIsLoading } = useFormConfirm();
 
-  // const countries = countryList().getData();
+  const [message, setMessage] = useState('');
+  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
 
   const [form, setForm] = useState<FormState>({
     first_name: '',
@@ -35,6 +36,7 @@ function PersonalInfo() {
   });
 
   useEffect(() => {
+    setLabel('Update');
     setOnConfirm(() => handleSubmit);
   }, [form]);
 
@@ -52,7 +54,9 @@ function PersonalInfo() {
     });
   }
 
-  const handleSubmit = React.useCallback(() => {
+  const handleSubmit = React.useCallback(async () => {
+    setIsLoading(true);
+
     // Skip update if no changes were made
     if (!form.first_name && !form.last_name && !form.username) {
       setIsDirty(false);
@@ -74,29 +78,50 @@ function PersonalInfo() {
     updateProfile(updatedFields).then(({ error }) => {
       if (error) {
         if (error.message.includes('profiles_username_key')) {
-          toast.error('This username is already taken');
+          setIsSuccessMsg(false);
+          setMessage('This username is already taken.');
         } else {
-          toast.error('Failed to update profile');
+          setIsSuccessMsg(false);
+          setMessage('Failed to update profile');
         }
         return;
       }
-      setIsDirty(false);
-      invalidateProfile();
-      setForm({
-        first_name: '',
-        last_name: '',
-        username: '',
-        birthdate: '',
-        gender: '',
-        country: '',
-      });
-      toast.success('Profile updated successfully');
     });
-  }, [form, updateProfile, setIsDirty, invalidateProfile]);
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setIsDirty(false);
+
+    setForm({
+      first_name: '',
+      last_name: '',
+      username: '',
+      birthdate: '',
+      gender: '',
+      country: '',
+    });
+
+    setIsLoading(false);
+    invalidateProfile();
+
+    setIsSuccessMsg(true);
+    setMessage('Profile updated successfully');
+  }, [form, updateProfile, setIsDirty, invalidateProfile, setIsLoading]);
+
+  // Message timer
+  useEffect(() => {
+    if (message !== '') {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 4500);
+      return () => clearTimeout(timer);
+    }
+  }, [message, setMessage]);
 
   if (isPending) return <div>Loading...</div>;
   if (!profile) return <div>No profile found.</div>;
 
+  // TODO: Need to work on colors
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
       <FormSection>
@@ -151,6 +176,8 @@ function PersonalInfo() {
           onChange={handleInputChange}
         /> */}
       </FormSection>
+
+      <AnimatedMessage message={message} isSuccess={isSuccessMsg} />
     </div>
   );
 }

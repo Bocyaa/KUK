@@ -8,6 +8,8 @@ function ConfirmProvider({ children }: { children: ReactNode }) {
   // 3. Declare global properties
   const [isDirty, setIsDirty] = useState(false);
   const [onConfirm, setOnConfirm] = useState<(() => void) | null>(null);
+  const [label, setLabel] = useState('Done');
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const prevPathRef = useRef(location.pathname);
@@ -23,7 +25,16 @@ function ConfirmProvider({ children }: { children: ReactNode }) {
   }, [location.pathname]);
 
   // 4. Declare values to pass through
-  const value: ConfirmContextType = { isDirty, setIsDirty, onConfirm, setOnConfirm };
+  const value: ConfirmContextType = {
+    isDirty,
+    setIsDirty,
+    onConfirm,
+    setOnConfirm,
+    label,
+    setLabel,
+    isLoading,
+    setIsLoading,
+  };
 
   // 5. Return ContextProvider with value and accept children
   return <ConfirmContext.Provider value={value}>{children}</ConfirmContext.Provider>;
