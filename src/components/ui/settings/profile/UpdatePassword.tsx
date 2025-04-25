@@ -21,6 +21,7 @@ function UpdatePassword() {
     setValue: setCurrPass,
     isVerifying,
     isVerified,
+    setIsVerified,
     attemptsLeft,
     message,
     setMessage,
@@ -35,13 +36,17 @@ function UpdatePassword() {
 
   const handleConfirm = useCallback(async () => {
     setIsLoading(true);
-    resetPassword(passConfirm);
+    const isSuccess = await resetPassword(passConfirm, { logoutAfter: false });
     await new Promise((resolve) => setTimeout(resolve, 2000));
+
     setPassNew('');
     setPassConfirm('');
     setIsLoading(false);
-  }, [resetPassword, passConfirm, setIsLoading]);
 
+    if (isSuccess) setMessage('Password has been successfully updated!');
+  }, [resetPassword, passConfirm, setIsLoading, setMessage]);
+
+  // Set Header Bar Properties Dynamically
   useEffect(() => {
     if (isVerified && passNew === passConfirm && passConfirm.length >= 6) {
       setLabel('Update');
@@ -68,8 +73,6 @@ function UpdatePassword() {
     return true;
   }
 
-  // TODO: Need to work on colors
-  // TODO: Avoid signout after updating password
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
       <FormSection>
@@ -81,7 +84,9 @@ function UpdatePassword() {
           isVerified={isVerified}
           attemptsLeft={attemptsLeft}
         />
-
+      </FormSection>
+      <FormSection>
+        {/* TODO: Visual red/green icon feedback with dynamic password verification */}
         <FormInput
           label="New Password"
           name="newPass"
@@ -90,6 +95,7 @@ function UpdatePassword() {
           disabled={!isVerified}
         />
 
+        {/* TODO: Visual red/green icon feedback with dynamic password verification */}
         <FormInput
           label="Confirm New Password"
           name="confirmPass"

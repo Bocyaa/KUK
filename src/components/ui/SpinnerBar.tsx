@@ -24,7 +24,7 @@ const SpinnerBar: React.FC<SpinnerBarProps> = ({ color, width = 50, height = 2 }
 
   let loaderColor = color;
   if (!loaderColor) {
-    loaderColor = isDark ? '#f9f9f9' : '#2563eb';
+    loaderColor = isDark ? '#f9f9f9' : '#0094f6';
   }
 
   return <BarLoader width={width} height={height} color={loaderColor} />;

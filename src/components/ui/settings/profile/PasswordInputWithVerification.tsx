@@ -48,11 +48,11 @@ export default function PasswordInputWithVerification({
         </span>
       ) : (
         // 1. Verify button is deactivated
-        <span className="absolute bottom-0 right-0 top-0 flex items-center justify-end pr-2 pt-5 text-xs font-semibold text-gray-300">
+        <span className="absolute bottom-0 right-0 top-0 flex items-center justify-end pr-2 pt-5 text-xs font-semibold text-gray-300 dark:text-[#6f6f6f76]">
           Verify
         </span>
       )}
-      {attemptsLeft < 3 && (
+      {attemptsLeft < 3 && !isVerified && (
         <span className="absolute right-0 top-0 flex items-center justify-end pr-2 text-xs text-gray-400">
           Attempts left: {attemptsLeft}
         </span>

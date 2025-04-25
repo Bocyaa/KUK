@@ -25,7 +25,7 @@ function Header() {
   }
 
   return (
-    <header className="fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#212121] dark:bg-black dark:text-gray-200">
+    <header className="fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#1c1c1c] dark:bg-black dark:text-gray-200">
       <div className="relative left-0 right-0 flex items-center justify-center">
         <span className="h-6 font-semibold">{title}</span>
       </div>

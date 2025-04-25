@@ -7,7 +7,13 @@ export function useResetPassword() {
   const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
 
-  async function resetPassword(newPassword: string) {
+  /**
+   * @param newPassword - The new password to set
+   * @param options - { logoutAfter?: boolean } (default: true)
+   */
+  async function resetPassword(newPassword: string, options?: { logoutAfter?: boolean }) {
+    const logoutAfter = options?.logoutAfter ?? true;
+
     try {
       setIsPending(true);
 
@@ -20,10 +26,15 @@ export function useResetPassword() {
         return;
       }
 
-      toast.success('Password reset successful!');
-      navigate('/login');
+      if (logoutAfter) {
+        toast.success('Password reset successful!');
+        navigate('/login');
+      } else {
+        return true;
+      }
     } catch {
       toast.error('Failed to reset password');
+      return false;
     } finally {
       setIsPending(false);
     }

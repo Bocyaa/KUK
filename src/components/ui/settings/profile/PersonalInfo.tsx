@@ -105,7 +105,7 @@ function PersonalInfo() {
     invalidateProfile();
 
     setIsSuccessMsg(true);
-    setMessage('Profile updated successfully');
+    setMessage('Profile updated successfully!');
   }, [form, updateProfile, setIsDirty, invalidateProfile, setIsLoading]);
 
   // Message timer
@@ -121,7 +121,6 @@ function PersonalInfo() {
   if (isPending) return <div>Loading...</div>;
   if (!profile) return <div>No profile found.</div>;
 
-  // TODO: Need to work on colors
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
       <FormSection>

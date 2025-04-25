@@ -6,15 +6,19 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormInput: React.FC<FormInputProps> = ({ label, addClass, disabled, ...props }) => (
-  <div className="flex flex-col gap-1">
+  <div className="parent flex flex-col gap-1">
     <label
-      className={`mb-1 text-xs uppercase tracking-wide ${disabled ? 'text-gray-300' : 'text-gray-500 dark:text-[#a0a0a0]'}`}
+      className={`mb-1 text-xs font-normal uppercase tracking-wide transition-colors ${disabled ? 'text-gray-300 dark:text-[#6f6f6f76]' : 'label-focus-within:text-custom text-gray-500 dark:text-[#7c7c7c]'} `}
     >
       {label}
     </label>
     <input
-      className={`rounded-none border-b bg-transparent px-0 py-2 text-base text-gray-900 transition-all focus:border-gray-100 focus:outline-none dark:border-[#a0a0a0] dark:text-[#f9f9f9] dark:placeholder-gray-500 ${addClass && addClass} ${disabled ? 'border-gray-200 placeholder-gray-200' : 'border-gray-300 placeholder-gray-300'}`}
       disabled={disabled}
+      className={`rounded-none border-b bg-transparent px-0 py-2 transition-all focus:border-[#0094f6] focus:outline-none dark:text-[#f9f9f9] dark:placeholder-[#6f6f6f64] ${addClass && addClass} ${
+        disabled
+          ? 'dark:border-[#4c4c4c]'
+          : 'border-[#c4c6ca] placeholder-gray-300 dark:border-[#4c4c4c]'
+      } `}
       {...props}
     />
   </div>

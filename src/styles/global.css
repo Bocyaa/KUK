@@ -4,10 +4,11 @@
 /* @import 'tailwindcss'; */
 
 /* Custom Global Styles */
+
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #f3f2f8;
+  color: #0b0b0b;
 }
 
 button,
@@ -17,6 +18,10 @@ a {
 
 .bottom-nav {
   padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+}
+
+.parent:focus-within .label-focus-within\:text-custom {
+  color: #0094f6;
 }
 
 /* Background color of apple auto fill */

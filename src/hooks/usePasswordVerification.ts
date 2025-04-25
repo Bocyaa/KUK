@@ -30,6 +30,7 @@ export function usePasswordVerification(email: string) {
     setValue,
     isVerifying,
     isVerified,
+    setIsVerified,
     attemptsLeft,
     message,
     setMessage,

@@ -1,9 +1,0 @@
-darker - dark:border-[#1c1c1c]
-lighter - dark:border-[#29292b]
-
-dark:text-[#f3f3f3]
-dark:text-[#a0a0a0]
-
-dark:bg-[#1c1c1c]
-
-icon-chevron - dark:text-[#59585e]
