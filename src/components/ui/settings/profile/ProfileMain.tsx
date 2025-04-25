@@ -8,11 +8,11 @@ import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 
 function ProfileMain() {
-  const { data: profile, isPending } = useGetUserProfile();
-  const invalidateProfile = useInvalidateUserPofile();
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+
+  const { data: profile, isPending } = useGetUserProfile();
+  const invalidateProfile = useInvalidateUserPofile();
 
   if (isPending) return <div>Loading...</div>;
   if (!profile) return <div>No profile found.</div>;
@@ -102,22 +102,10 @@ function ProfileMain() {
       const fileName = `${profile.id}_${Date.now()}.${fileExt}`;
       const filePath = `${fileName}`;
 
-      // Remove old avatar if exists
-      if (profile.avatar_url) {
-        const oldPath = profile.avatar_url.split('/storage/v1/object/public/')[1];
-        if (oldPath) {
-          await supabase.storage.from('avatars').remove([oldPath]);
-        }
-      }
-
-      console.log('File to upload:', fileToUpload);
-      console.log('File path:', filePath);
-      console.log(await supabase.auth.getSession());
-
       // Upload new avatar
       const { error: uploadError } = await supabase.storage
         .from('avatars')
-        .upload(filePath, fileToUpload);
+        .upload(filePath, fileToUpload, { upsert: true });
 
       if (uploadError) {
         toast.error('Failed to upload avatar.');
@@ -127,7 +115,6 @@ function ProfileMain() {
 
       // Get public URL
       const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
-
       const avatarUrl = publicUrlData?.publicUrl;
 
       // Update profile
@@ -139,7 +126,19 @@ function ProfileMain() {
       if (updateError) {
         toast.error('Failed to update profile.');
         setUploading(false);
+        // Delete the just-uploaded file to avoid orphaned files
+        await supabase.storage.from('avatars').remove([filePath]);
         return;
+      }
+
+      // Delete the old avatar if it exists and is different from the new one
+      if (profile.avatar_url) {
+        // Extract the path after '/avatars/' (handles double slashes)
+        const match = profile.avatar_url.match(/\/avatars\/+(.+)$/);
+        const oldPath = match ? match[1] : null;
+        if (oldPath && oldPath !== filePath) {
+          await supabase.storage.from('avatars').remove([oldPath]);
+        }
       }
 
       invalidateProfile();

@@ -16,16 +16,6 @@ interface FormState {
 }
 
 function PersonalInfo() {
-  const { data: profile, isPending } = useGetUserProfile();
-
-  const { updateProfile } = useUpdateUserProfile(); // loading, error
-  const invalidateProfile = useInvalidateUserPofile();
-
-  const { setIsDirty, setOnConfirm, setLabel, setIsLoading } = useFormConfirm();
-
-  const [message, setMessage] = useState('');
-  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
-
   const [form, setForm] = useState<FormState>({
     first_name: '',
     last_name: '',
@@ -34,7 +24,17 @@ function PersonalInfo() {
     gender: '',
     country: '',
   });
+  const [message, setMessage] = useState('');
+  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
 
+  const { data: profile, isPending } = useGetUserProfile();
+  const invalidateProfile = useInvalidateUserPofile();
+
+  const { updateProfile } = useUpdateUserProfile(); // loading, error
+
+  const { setIsDirty, setOnConfirm, setLabel, setIsLoading } = useFormConfirm();
+
+  // Show button on Header
   useEffect(() => {
     setLabel('Update');
     setOnConfirm(() => handleSubmit);
