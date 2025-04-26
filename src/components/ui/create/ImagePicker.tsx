@@ -39,6 +39,8 @@ function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
       URL.revokeObjectURL(localImage);
     }
 
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     // Create a local URL for preview
     const imageUrl = URL.createObjectURL(file);
     setLocalImage(imageUrl);

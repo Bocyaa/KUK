@@ -30,14 +30,17 @@ function Header() {
         <span className="h-6 font-semibold">{title}</span>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between px-5">
+      <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between pl-1 pr-5">
         {showBack ? (
           <button
             className="flex h-5 w-5 items-center"
             onClick={() => handleBackClick()}
             aria-label="Back"
           >
-            <ChevronLeftIcon className="h-5 w-5" />
+            <div className="flex items-center gap-1">
+              <ChevronLeftIcon className="h-5 w-5 stroke-[3]" />
+              <span>Back</span>
+            </div>
           </button>
         ) : (
           <span>&nbsp;</span>
@@ -66,13 +69,13 @@ function Header() {
               ) : (
                 <motion.span
                   key="placeholder"
-                  className=""
+                  className="font-semibold text-[#d1d5db] dark:text-[#6f6f6f64]"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span>&nbsp;</span>
+                  {onConfirm && <span>{label}</span>}
                 </motion.span>
               )}
             </AnimatePresence>
