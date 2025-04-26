@@ -13,12 +13,12 @@ import {
   SunIcon,
   UserIcon,
   UserPlusIcon,
-} from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
-import type { ReactElement } from "react";
-import { supabase } from "@app/lib/supabaseClient";
-import { UserMinusIcon } from "@heroicons/react/24/solid";
-import { useInvalidateUserPofile } from "@app/hooks/useGetUserProfile";
+} from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import type { ReactElement } from 'react';
+import { supabase } from '@app/lib/supabaseClient';
+import { UserMinusIcon } from '@heroicons/react/24/solid';
+import { useInvalidateUserPofile } from '@app/hooks/useGetUserProfile';
 
 type SettingItemProps = {
   settingKey: string;
@@ -31,7 +31,7 @@ interface SettingItems {
   handleClick?: () => Promise<void>;
 }
 
-const dangerZones: string[] = ["logout", "deleteAccount"];
+const dangerZones: string[] = ['logout', 'deleteAccount'];
 
 function SettingItem({ settingKey }: SettingItemProps) {
   const navigate = useNavigate();
@@ -39,78 +39,78 @@ function SettingItem({ settingKey }: SettingItemProps) {
 
   const settingItems: SettingItems[] = [
     {
-      key: "language",
-      label: "Language",
+      key: 'language',
+      label: 'Language',
       icon: <LanguageIcon />,
     },
     {
-      key: "notifications",
-      label: "Notifications",
+      key: 'notifications',
+      label: 'Notifications',
       icon: <BellAlertIcon />,
     },
     {
-      key: "privacyData",
-      label: "Privacy & Data",
+      key: 'privacyData',
+      label: 'Privacy & Data',
       icon: <LockClosedIcon />,
     },
     {
-      key: "dashboard",
-      label: "Dashboard",
+      key: 'dashboard',
+      label: 'Dashboard',
       icon: <PresentationChartLineIcon />,
     },
     {
-      key: "personalization",
-      label: "Personalization",
+      key: 'personalization',
+      label: 'Personalization',
       icon: <AdjustmentsVerticalIcon />,
     },
     {
-      key: "layout",
-      label: "Layout",
+      key: 'layout',
+      label: 'Layout',
       icon: <RectangleGroupIcon />,
     },
     {
-      key: "theme",
-      label: "Theme",
+      key: 'theme',
+      label: 'Theme',
       icon: <SunIcon />,
     },
     {
-      key: "accentColor",
-      label: "Accent Color",
+      key: 'accentColor',
+      label: 'Accent Color',
       icon: <PaintBrushIcon />,
     },
     {
-      key: "fontSize",
-      label: "Font Size",
+      key: 'fontSize',
+      label: 'Font Size',
       icon: <ItalicIcon />,
     },
     {
-      key: "personalInfo",
-      label: "Personal Information",
+      key: 'personalInfo',
+      label: 'Personal Information',
       icon: <UserIcon />,
     },
     {
-      key: "contactDemographics",
-      label: "Contact & Demographics",
+      key: 'contactDemographics',
+      label: 'Contact & Demographics',
       icon: <UserPlusIcon />,
     },
     {
-      key: "passwordUpdate",
-      label: "Update Password",
+      key: 'passwordUpdate',
+      label: 'Update Password',
       icon: <FingerPrintIcon />,
     },
     {
-      key: "deleteAccount",
-      label: "Delete Account",
+      key: 'deleteAccount',
+      label: 'Delete Account',
       icon: <UserMinusIcon />,
     },
     {
-      key: "logout",
-      label: "Log out",
+      key: 'logout',
+      label: 'Log out',
       icon: <ArrowLeftStartOnRectangleIcon />,
       handleClick: async () => {
         await supabase.auth.signOut();
         invalidate();
-        navigate("/login");
+        navigate('/login');
       },
     },
   ];
@@ -123,18 +123,16 @@ function SettingItem({ settingKey }: SettingItemProps) {
             <div
               key={item.key}
               onClick={item.handleClick}
-              className="flex items-center justify-between py-[0.65rem] pl-4 pr-2"
+              className="flex items-center justify-between bg-white py-[0.65rem] pl-4 pr-2 hover:bg-[#d2d1d7] active:bg-[##d2d1d7] dark:bg-[#1c1c1e] dark:hover:bg-[#3a3a3c] dark:active:bg-[#3a3a3c]"
             >
-              <div
-                className={`flex items-center gap-5 text-[#0b0b0b] dark:text-[#f9f9f9]`}
-              >
+              <div className={`flex items-center gap-5 text-[#0b0b0b] dark:text-[#f9f9f9]`}>
                 <span
-                  className={`h-5 w-5 ${dangerZones.includes(item.key) && "text-red-600 dark:text-red-600"}`}
+                  className={`h-5 w-5 ${dangerZones.includes(item.key) && 'text-red-600 dark:text-red-600'}`}
                 >
                   {item.icon}
                 </span>
                 <span
-                  className={`${dangerZones.includes(item.key) && "text-red-600 dark:text-red-600"}`}
+                  className={`${dangerZones.includes(item.key) && 'text-red-600 dark:text-red-600'}`}
                 >
                   {item.label}
                 </span>

@@ -47,14 +47,13 @@ function UpdatePassword() {
 
   // Set Header Bar Properties Dynamically
   useEffect(() => {
+    setLabel('Update');
+    setOnConfirm(() => handleConfirm);
+
     if (isVerified && passNew === passConfirm && passConfirm.length >= 6) {
-      // TODO: Update button is not showing up, FIX!!!!
-      setOnConfirm(() => handleConfirm);
-      setLabel('Update');
       setIsDirty(true);
     } else {
       setIsDirty(false);
-      setOnConfirm(null);
     }
   }, [isVerified, passNew, passConfirm, handleConfirm, setIsDirty, setOnConfirm, setLabel]);
 

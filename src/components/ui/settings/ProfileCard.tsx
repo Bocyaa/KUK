@@ -8,7 +8,7 @@ function ProfileCard() {
   if (!profile) return <div>No profile found.</div>;
 
   return (
-    <div className="flex h-24 items-center justify-between rounded-2xl bg-white px-5 dark:border-[#1c1c1c] dark:bg-[#1c1c1c] dark:text-[#f3f3f3]">
+    <div className="flex h-24 items-center justify-between rounded-2xl bg-white px-5 hover:bg-[#d2d1d7] active:bg-[##d2d1d7] dark:border-[#1c1c1c] dark:bg-[#1c1c1e] dark:text-[#f3f3f3] dark:hover:bg-[#3a3a3c] dark:active:bg-[#3a3a3c]">
       <div className="flex items-center gap-5">
         <Avatar src={profile.avatar_url} size={64} accent="bg-[#f6f6f6] dark:text-[#a0a0a0]" />
         <div className="flex flex-col">
