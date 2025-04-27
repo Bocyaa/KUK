@@ -215,7 +215,9 @@ function ProfileMain() {
         </NavLink>
       </SectionBg>
       <SectionBg>
-        <SettingItem settingKey="deleteAccount" />
+        <NavLink to="deleteAccount">
+          <SettingItem settingKey="deleteAccount" />
+        </NavLink>
       </SectionBg>
     </div>
   );

@@ -1,8 +1,8 @@
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { getPageMeta } from '@app/utility/getPageMeta';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ChevronBack from '../ChevronBack';
-import ConfirmButton from '../ConfirmButton';
+import ChevronBack from '../ui/ChevronBack';
+import ConfirmButton from '../ui/ConfirmButton';
 
 const ROOT_PATHS = ['/dashboard', '/search', '/settings', '/create-recipe'];
 

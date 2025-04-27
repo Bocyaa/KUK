@@ -26,6 +26,16 @@ import SettingsLayout from './components/ui/settings/SettingsLayout.tsx';
 import PersonalInfo from './components/ui/settings/profile/PersonalInfo.tsx';
 import ProfileMain from './components/ui/settings/profile/ProfileMain.tsx';
 import UpdatePassword from './components/ui/settings/profile/UpdatePassword.tsx';
+import Language from './components/ui/settings/Language.tsx';
+import Notifications from './components/ui/settings/Notifications.tsx';
+import PrivacyData from './components/ui/settings/PrivacyData.tsx';
+import DashboardSettings from './components/ui/settings/Dashboard.tsx';
+import Personalization from './components/ui/settings/Personalization.tsx';
+import Layout from './components/ui/settings/Layout.tsx';
+import Theme from './components/ui/settings/Theme.tsx';
+import AccentColor from './components/ui/settings/AccentColor.tsx';
+import FontSize from './components/ui/settings/FontSize.tsx';
+import DeleteAccount from './components/ui/settings/profile/DeleteAccount.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +63,17 @@ function App() {
                     <Route index element={<ProfileMain />} />
                     <Route path="personalInfo" element={<PersonalInfo />} />
                     <Route path="passwordUpdate" element={<UpdatePassword />} />
+                    <Route path="deleteAccount" element={<DeleteAccount />} />
                   </Route>
+                  <Route path="language" element={<Language />} />
+                  <Route path="notifications" element={<Notifications />} />
+                  <Route path="privacyData" element={<PrivacyData />} />
+                  <Route path="dashboard" element={<DashboardSettings />} />
+                  <Route path="personalization" element={<Personalization />} />
+                  <Route path="layout" element={<Layout />} />
+                  <Route path="theme" element={<Theme />} />
+                  <Route path="accentColor" element={<AccentColor />} />
+                  <Route path="fontSize" element={<FontSize />} />
                 </Route>
                 <Route path="create-recipe" element={<AddRecipe />} />
               </Route>
