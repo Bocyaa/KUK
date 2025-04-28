@@ -1,4 +1,7 @@
-import { useGetUserProfile, useInvalidateUserPofile } from '@app/hooks/useGetUserProfile';
+import {
+  useGetUserProfile,
+  useInvalidateUserPofile,
+} from '@app/hooks/useGetUserProfile';
 import FormInput from '../../form/FormInput';
 import FormSection from '../../form/FormSection';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
@@ -32,12 +35,13 @@ function PersonalInfo() {
 
   const { updateProfile } = useUpdateUserProfile(); // loading, error
 
-  const { setIsDirty, setOnConfirm, setLabel, setIsLoading } = useFormConfirm();
+  const { setIsDirty, setIsLoading } = useFormConfirm();
+  // setOnConfirm, setLabel,
 
   // Show button on Header
   useEffect(() => {
-    setLabel('Update');
-    setOnConfirm(() => handleSubmit);
+    // setLabel('Update');
+    // setOnConfirm(() => handleSubmit);
   }, [form]);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {

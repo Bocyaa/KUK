@@ -1,9 +1,13 @@
 import Avatar from '@app/components/ui/settings/Avatar';
 import SectionBg from '@app/components/ui/settings/SectionBg';
 import SettingItem from '@app/components/ui/settings/SettingItem';
-import { useInvalidateUserPofile, useGetUserProfile } from '@app/hooks/useGetUserProfile';
+import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
+import {
+  useInvalidateUserPofile,
+  useGetUserProfile,
+} from '@app/hooks/useGetUserProfile';
 import { supabase } from '@app/lib/supabaseClient';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 
@@ -13,9 +17,6 @@ function ProfileMain() {
 
   const { data: profile, isPending } = useGetUserProfile();
   const invalidateProfile = useInvalidateUserPofile();
-
-  if (isPending) return <div>Loading...</div>;
-  if (!profile) return <div>No profile found.</div>;
 
   // Handler for file input change
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -52,7 +53,8 @@ function ProfileMain() {
         // No processing needed
       } else {
         // Dynamically import browser-image-compression
-        const imageCompression = (await import('browser-image-compression')).default;
+        const imageCompression = (await import('browser-image-compression'))
+          .default;
 
         // Crop to center square 640x640
         const canvas = document.createElement('canvas');
@@ -90,7 +92,9 @@ function ProfileMain() {
         });
 
         if (compressedFile.size > 150 * 1024) {
-          toast.error('Image size is too big to be accepted. Try a different image.');
+          toast.error(
+            'Image size is too big to be accepted. Try a different image.',
+          );
           setUploading(false);
           return;
         }
@@ -114,7 +118,9 @@ function ProfileMain() {
       }
 
       // Get public URL
-      const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
+      const { data: publicUrlData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
       const avatarUrl = publicUrlData?.publicUrl;
 
       // Update profile
@@ -157,6 +163,17 @@ function ProfileMain() {
     fileInputRef.current?.click();
   }
 
+  // ---------- Header Control ----------
+  const { setLabelLeft } = useFormConfirm();
+
+  useEffect(() => {
+    setLabelLeft('Settings');
+  }, []);
+  // ------------------------------------
+
+  if (isPending) return <div>Loading...</div>;
+  if (!profile) return <div>No profile found.</div>;
+
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
       <div className="flex flex-col items-center justify-center gap-5">
@@ -180,7 +197,10 @@ function ProfileMain() {
             tabIndex={0}
           >
             {uploading ? (
-              <svg className="mr-2 inline h-5 w-5 animate-spin" viewBox="0 0 24 24">
+              <svg
+                className="mr-2 inline h-5 w-5 animate-spin"
+                viewBox="0 0 24 24"
+              >
                 <circle
                   className="opacity-25"
                   cx="12"
@@ -190,7 +210,11 @@ function ProfileMain() {
                   strokeWidth="4"
                   fill="none"
                 />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                />
               </svg>
             ) : (
               <span>Change photo</span>

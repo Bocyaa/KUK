@@ -1,9 +1,18 @@
-import ProfileCard from "@app/components/ui/settings/ProfileCard";
-import SectionBg from "@app/components/ui/settings/SectionBg";
-import SettingItem from "@app/components/ui/settings/SettingItem";
-import { NavLink } from "react-router-dom";
+import ProfileCard from '@app/components/ui/settings/ProfileCard';
+import SectionBg from '@app/components/ui/settings/SectionBg';
+import SettingItem from '@app/components/ui/settings/SettingItem';
+import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 function SettingsList() {
+  const { setLabelLeft, setLabelRight } = useFormConfirm();
+
+  useEffect(() => {
+    setLabelLeft('');
+    setLabelRight('');
+  }, [setLabelLeft, setLabelRight]);
+
   return (
     <div className="mt-14 flex w-full flex-col gap-5">
       <NavLink to="profile">

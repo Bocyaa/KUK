@@ -10,7 +10,7 @@ import AppLayout from './components/layout/AppLayout.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import Recipe from './pages/Recipe.tsx';
 import Profile from './pages/Profile.tsx';
-import AddRecipe from './pages/AddRecipe.tsx';
+import CreateRecipeFlow from './pages/CreateRecipeFlow.tsx';
 import PageNotFound from './pages/PageNotFound.tsx';
 import Search from './pages/Search.tsx';
 import SettingsList from './pages/SettingsList.tsx';
@@ -75,7 +75,7 @@ function App() {
                   <Route path="accentColor" element={<AccentColor />} />
                   <Route path="fontSize" element={<FontSize />} />
                 </Route>
-                <Route path="create-recipe" element={<AddRecipe />} />
+                <Route path="create-recipe" element={<CreateRecipeFlow />} />
               </Route>
               <Route path="auth/callback" element={<AuthCallbackRedirect />} />
               <Route path="forgot-password" element={<ForgotPassword />} />

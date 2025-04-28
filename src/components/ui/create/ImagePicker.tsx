@@ -6,9 +6,20 @@ import SpinnerBar from '../SpinnerBar';
 type ImagePickerPropTypes = {
   src?: string;
   alt?: string;
+  form: {
+    title: string;
+    description?: string;
+    difficulty: string;
+    image?: string;
+  };
+  updateForm: (fields: Partial<ImagePickerPropTypes['form']>) => void;
 };
 
-function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
+function ImagePicker({
+  src,
+  alt = 'Recipe image',
+  updateForm,
+}: ImagePickerPropTypes) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [localImage, setLocalImage] = useState<string | null>(null);
@@ -44,6 +55,7 @@ function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
     // Create a local URL for preview
     const imageUrl = URL.createObjectURL(file);
     setLocalImage(imageUrl);
+    updateForm({ image: imageUrl }); // sync with parent form
 
     setUploading(false);
   }
@@ -55,7 +67,7 @@ function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
     <div className="flex flex-col transition-all">
       <div className="relative">
         <div
-          className={`relative flex h-52 items-center justify-center overflow-hidden rounded-2xl bg-white transition-all hover:ring-1 hover:ring-blue-400 dark:border dark:border-[#1c1c1c] dark:bg-[#1c1c1e]`}
+          className={`relative flex h-52 items-center justify-center overflow-hidden rounded-2xl border bg-white transition-all hover:ring-1 hover:ring-blue-400 dark:border dark:border-[#1c1c1c] dark:bg-[#1c1c1e]`}
         >
           {imageToShow ? (
             <>
@@ -78,8 +90,10 @@ function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
             <SpinnerBar />
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <PhotoIcon className="h-28 w-28 text-[#6b7280] dark:text-[#5454625b]" />
-              <span className="text-xs text-[#6b7280] dark:text-[#545462]">Click to add image</span>
+              <PhotoIcon className="h-28 w-28 text-gray-200 dark:text-[#5454625b]" />
+              <span className="text-xs text-[#6b7280] dark:text-[#545462]">
+                Click to add image
+              </span>
             </div>
           )}
         </div>
@@ -95,8 +109,16 @@ function ImagePicker({ src, alt = 'Recipe image' }: ImagePickerPropTypes) {
         />
       </div>
       {localImage && (
-        <button className="flex justify-end" onClick={() => setLocalImage(null)}>
-          <span className="mt-2 pr-2 text-xs font-semibold text-[#0094f6]">Remove</span>
+        <button
+          className="flex justify-end"
+          onClick={() => {
+            setLocalImage(null);
+            updateForm({ image: '' });
+          }}
+        >
+          <span className="mt-2 pr-2 text-xs font-semibold text-[#0094f6]">
+            Remove
+          </span>
         </button>
       )}
     </div>

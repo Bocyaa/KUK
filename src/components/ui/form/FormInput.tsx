@@ -5,10 +5,15 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   addClass?: string;
 }
 
-const FormInput: React.FC<FormInputProps> = ({ label, addClass, disabled, ...props }) => (
+const FormInput: React.FC<FormInputProps> = ({
+  label,
+  addClass,
+  disabled,
+  ...props
+}) => (
   <div className="parent flex flex-col gap-1">
     <label
-      className={`mb-1 text-xs font-normal uppercase tracking-wide transition-colors ${disabled ? 'text-gray-300 dark:text-[#6f6f6f76]' : 'label-focus-within:text-custom text-gray-500 dark:text-[#7c7c7c]'} `}
+      className={`mb-1 text-xs uppercase tracking-wide transition-colors ${disabled ? 'text-gray-300 dark:text-[#6f6f6f76]' : 'label-focus-within:text-custom text-gray-500 dark:text-[#7c7c7c]'} `}
     >
       {label}
     </label>

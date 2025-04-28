@@ -1,20 +1,34 @@
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { getPageMeta } from '@app/utility/getPageMeta';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ChevronBack from '../ui/ChevronBack';
-import ConfirmButton from '../ui/ConfirmButton';
+import ChevronLeft from '../ui/ChevronLeft';
+import ChevronRight from '../ui/ChevronRight';
 
 const ROOT_PATHS = ['/dashboard', '/search', '/settings', '/create-recipe'];
 
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+
   const { title, back } = getPageMeta(location.pathname);
   const showBack = !!back || !ROOT_PATHS.includes(location.pathname);
 
-  const { isDirty, setIsDirty, onConfirm, label, isLoading } = useFormConfirm();
+  const {
+    isDirty,
+    setIsDirty,
+    // isLoading,
+    // setIsLoading,
+    labelLeft,
+    // setLabelLeft,
+    labelRight,
+    // setLabelRight,
+    onLeftClick,
+    // setOnLeftClick,
+    onRightClick,
+    // setOnRightClick,
+  } = useFormConfirm();
 
-  function handleBackClick() {
+  function handleBack() {
     if (back) {
       navigate(back);
     } else {
@@ -23,28 +37,41 @@ function Header() {
     setIsDirty(false);
   }
 
+  const styleHeader =
+    'fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#1c1c1c] dark:bg-black dark:text-gray-200';
+
+  const styleHeaderDiv =
+    'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between pl-1 pr-5';
+
   return (
-    <header className="fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#1c1c1c] dark:bg-black dark:text-gray-200">
+    <header className={styleHeader}>
       <div className="relative left-0 right-0 flex items-center justify-center">
         <span className="h-6 font-semibold">{title}</span>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between pl-1 pr-5">
+      <div className={styleHeaderDiv}>
         {showBack ? (
-          <button onClick={() => handleBackClick()} aria-label="Back">
-            <ChevronBack />
+          <button onClick={() => handleBack()} aria-label="Back">
+            <ChevronLeft label={labelLeft} />
+          </button>
+        ) : labelLeft && onLeftClick ? (
+          <button onClick={() => onLeftClick()} aria-label="Back">
+            <ChevronLeft label={labelLeft} />
           </button>
         ) : (
           <span>&nbsp;</span>
         )}
 
-        {onConfirm && (
-          <ConfirmButton
-            label={label}
-            isDirty={isDirty}
-            onConfirm={onConfirm}
-            isLoading={isLoading}
-          />
+        {labelRight ? (
+          isDirty && onRightClick ? (
+            <button onClick={() => onRightClick()} aria-label="Back">
+              <ChevronRight label={labelRight} />
+            </button>
+          ) : (
+            <ChevronRight label={labelRight} classNames="text-gray-300" />
+          )
+        ) : (
+          <span>&nbsp;</span>
         )}
       </div>
     </header>
