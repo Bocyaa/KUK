@@ -68,7 +68,10 @@ function Header() {
               <ChevronRight label={labelRight} />
             </button>
           ) : (
-            <ChevronRight label={labelRight} classNames="text-gray-300" />
+            <ChevronRight
+              label={labelRight}
+              classNames="text-gray-300 dark:text-[#2d2d2d]"
+            />
           )
         ) : (
           <span>&nbsp;</span>
