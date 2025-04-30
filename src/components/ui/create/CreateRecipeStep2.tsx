@@ -1,5 +1,7 @@
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import IngredientPicker from './IngredientPicker';
+import FormSection from '../form/FormSection';
 
 type Props = {
   form: {
@@ -36,7 +38,13 @@ function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
     onBack,
   ]);
 
-  return <div className="mt-14">CreateRecipeStep2</div>;
+  return (
+    <div className="mt-14">
+      <FormSection>
+        <IngredientPicker form={form} updateForm={updateForm} />
+      </FormSection>
+    </div>
+  );
 }
 
 /* TODO: Ingredients */

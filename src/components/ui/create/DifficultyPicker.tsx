@@ -12,7 +12,7 @@ type Props = {
   updateForm: (fields: Partial<Props['form']>) => void;
 };
 
-function DifficultyPicker({ form, updateForm }: Props) {
+function DifficultyPicker({ updateForm }: Props) {
   const [selected, setSelected] = useState(0);
 
   function handleClick(selected: number) {
@@ -67,7 +67,7 @@ function DifficultyButton({
       type="button"
       className={`rounded-lg border px-2 py-1 transition-all duration-200 ${
         active
-          ? 'border-gray-300 bg-white text-[#0b0b0b] dark:border-[#6f6f6f3c] dark:bg-[#1c1c1e] dark:text-[#f3f3f3]'
+          ? 'border-gray-300 bg-white text-[#0b0b0b] dark:border-[#6f6f6f3c] dark:bg-[#161617] dark:text-[#f3f3f3]'
           : 'border-transparent bg-transparent text-gray-500 dark:text-[#6f6f6f]'
       }`}
       onClick={onClick}
