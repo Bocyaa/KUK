@@ -3,12 +3,15 @@ import { useEffect, useState } from 'react';
 import IngredientPicker from './IngredientPicker';
 import FormSection from '../form/FormSection';
 
+type Ingredient = {
+  name: string;
+  quantity: number;
+  unit: string;
+};
+
 type Props = {
   form: {
-    title: string;
-    description?: string;
-    difficulty: string;
-    image?: string;
+    ingredients?: Ingredient[];
   };
   updateForm: (fields: Partial<Props['form']>) => void;
   onNext: () => void;
@@ -40,9 +43,7 @@ function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
 
   return (
     <div className="mt-14">
-      <FormSection>
-        <IngredientPicker form={form} updateForm={updateForm} />
-      </FormSection>
+      <IngredientPicker form={form} updateForm={updateForm} />
     </div>
   );
 }

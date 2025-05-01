@@ -22,7 +22,7 @@ const FormInput: React.FC<FormInputProps> = ({
       className={`rounded-none border-b bg-transparent px-0 py-2 transition-all focus:border-[#0094f6] focus:outline-none dark:text-[#f9f9f9] dark:placeholder-[#6f6f6f64] ${addClass && addClass} ${
         disabled
           ? 'dark:border-[#4c4c4c]'
-          : 'border-[#c4c6ca] placeholder-gray-300 dark:border-[#4c4c4c]'
+          : 'placeholder-gray-300 dark:border-[#4c4c4c]'
       } `}
       {...props}
     />

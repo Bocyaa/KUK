@@ -1,5 +1,14 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  MinusIcon,
+  PlusIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import { Button } from './ingredient-picker/Button';
+import FormInput from '../form/FormInput';
+import Select from './ingredient-picker/Select';
+import FormSection from '../form/FormSection';
 
 type Ingredient = {
   name: string;
@@ -10,9 +19,8 @@ type Ingredient = {
 type IngredientPickerProps = {
   form: {
     title: string;
-    description?: string;
-    difficulty: string;
-    image?: string;
+    ingredients: Ingredient[];
+    description: string;
   };
   updateForm: (fields: Partial<IngredientPickerProps['form']>) => void;
   onIngredientsChange?: (ingredients: Ingredient[]) => void;
@@ -29,13 +37,13 @@ function IngredientPicker({
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const units = [
-    { label: 'g', value: 'g' },
-    { label: 'kg', value: 'kg' },
-    { label: 'ml', value: 'ml' },
-    { label: 'l', value: 'l' },
-    { label: 'pcs', value: 'pcs' },
-    { label: 'tbsp', value: 'tbsp' },
-    { label: 'tsp', value: 'tsp' },
+    { label: 'Gram', value: 'g' },
+    { label: 'Kilogram', value: 'kg' },
+    { label: 'Milliliter', value: 'ml' },
+    { label: 'Liter', value: 'l' },
+    { label: 'Pieces', value: 'pcs' },
+    { label: 'Tablespoon', value: 'tbsp' },
+    { label: 'Teaspoon', value: 'tsp' },
   ];
 
   const inc = () => setQuantity((q) => q + 1);
@@ -77,63 +85,129 @@ function IngredientPicker({
       addIngredient();
     }
   }
-
+  //
   return (
-    <div className="w-full max-w-xl space-y-4">
-      <div className="pb-2">
-        <span>Ingredients</span>
-      </div>
-
-      <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center overflow-hidden rounded-xl border">
-            <button className="h-8 w-8 rounded-none" onClick={dec}>
-              <span className="">-</span>
-            </button>
-            <span className="w-8 select-none px-3 text-center">{quantity}</span>
-            <button className="h-8 w-8 rounded-none" onClick={inc}>
-              <span className="">+</span>
-            </button>
-          </div>
-
-          <select value={unit} onChange={(e) => setUnit(e.target.value)}>
-            {units.map((u) => (
-              <option key={u.value} value={u.value}>
-                {u.label}
-              </option>
-            ))}
-          </select>
-
-          <input
-            type="text"
-            placeholder="Add ingredient..."
+    <div className="flex flex-col gap-4">
+      <FormSection>
+        <div className="flex flex-col gap-3">
+          <FormInput
+            label="Ingredients"
+            placeholder="Add ingredient ..."
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="min-w-[8rem] flex-1"
           />
-
-          <button onClick={addIngredient}>Add</button>
-        </div>
-
-        {ingredients.length > 0 && (
-          <div className="space-y-1">
-            {ingredients.map((ing, i) => (
-              <div
-                key={`${ing.name}-${i}`}
-                className="flex items-center justify-between rounded-xl bg-slate-100 p-2"
+          <div className="flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
+            <div className="flex items-center overflow-hidden rounded-lg border bg-white">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8 rounded-none"
+                onClick={dec}
               >
-                <span className="truncate font-medium">
-                  {ing.quantity} {ing.unit} x {ing.name}
-                </span>
-                <button onClick={() => removeIngredient(i)}>
-                  <XMarkIcon className="y-5 w-5" />
-                </button>
-              </div>
-            ))}
+                <MinusIcon className="h-3 w-3" />
+              </Button>
+              <input
+                type="number"
+                value={quantity}
+                min="1"
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => {
+                  // Allow empty value while typing
+                  if (e.target.value === '') {
+                    setQuantity('' as any); // temporarily allow empty string
+                    return;
+                  }
+
+                  const value = Number(e.target.value);
+                  setQuantity(value < 0 ? 0 : value); // allow zero while typing
+                }}
+                onBlur={(e) => {
+                  // When input loses focus, ensure value is at least 1
+                  const value = Number(e.target.value);
+                  setQuantity(!value || value < 1 ? 1 : value);
+                }}
+                className="w-12 text-center focus:outline-none"
+              />
+              <Button
+                size="icon"
+                variant="ghost"
+                className="h-8 w-8 rounded-none"
+                onClick={inc}
+              >
+                <PlusIcon className="h-3 w-3" />
+              </Button>
+            </div>
+            <span className="font-thin text-gray-300 dark:text-[#6f6f6f64]">
+              |
+            </span>
+
+            <Select value={unit} onChange={setUnit} options={units} />
+
+            <span className="font-thin text-gray-300 dark:text-[#6f6f6f64]">
+              |
+            </span>
+
+            <button
+              disabled={name === ''}
+              type="button"
+              className={`rounded-lg border px-6 py-1 transition-all duration-200 ${
+                name !== ''
+                  ? 'bg-white text-[#0094f6] dark:border-[#6f6f6f3c] dark:bg-[#161617] dark:text-[#f3f3f3]'
+                  : 'border-transparent bg-transparent text-gray-500 dark:text-[#6f6f6f]'
+              }`}
+              onClick={addIngredient}
+            >
+              <PlusIcon className={`w-6 ${name === '' && 'text-gray-300'}`} />
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      </FormSection>
+
+      {ingredients.length > 0 && (
+        <FormSection>
+          <div className="flex flex-col gap-2">
+            <span className="font-semibold">{form.title}</span>
+            <span className="text-sm text-gray-400">{form.description}</span>
+
+            <div className="border-t">
+              {ingredients.map((ing, i) => (
+                <div
+                  key={`${ing.name}-${i}`}
+                  className="mt-2 flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]"
+                >
+                  <div className="flex min-w-0 gap-1">
+                    <div className="flex flex-none items-center overflow-hidden rounded-lg border bg-white">
+                      <span className="px-5 py-1">{ing.name}</span>
+                    </div>
+                    <div className="flex flex-none items-center overflow-hidden rounded-lg border bg-white px-4 py-1">
+                      <span className="font-medium">{ing.quantity}</span>
+                      <span className="font-light text-gray-500">
+                        {ing.unit}
+                      </span>
+                    </div>
+                    <div className="min-w-0 flex-1 items-center overflow-hidden rounded-lg">
+                      {/* <input
+                        type="text"
+                        className="w-full bg-transparent px-4 py-1 text-xs placeholder:text-gray-400 focus:outline-none"
+                        placeholder="add comment"
+                      /> */}
+                    </div>
+                  </div>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => removeIngredient(i)}
+                    className="rounded-lg border bg-white"
+                  >
+                    <TrashIcon className="h-3 w-3 text-red-700" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FormSection>
+      )}
     </div>
   );
 }

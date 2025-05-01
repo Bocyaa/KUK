@@ -3,12 +3,18 @@ import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
 
+type Ingredient = {
+  name: string;
+  quantity: number;
+  unit: string;
+};
+
 type RecipeFormData = {
   image?: string;
   title: string;
   description?: string;
   difficulty: string;
-  ingredients?: string[];
+  ingredients?: Ingredient[];
   categories?: string[];
   time?: number;
   price?: number;
