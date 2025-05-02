@@ -4,16 +4,15 @@ const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
 type Props = {
   form: {
-    title: string;
-    description?: string;
     difficulty: string;
-    image?: string;
   };
   updateForm: (fields: Partial<Props['form']>) => void;
 };
 
-function DifficultyPicker({ updateForm }: Props) {
-  const [selected, setSelected] = useState(0);
+function DifficultyPicker({ form, updateForm }: Props) {
+  const [selected, setSelected] = useState(
+    difficulties.indexOf(form.difficulty),
+  );
 
   function handleClick(selected: number) {
     setSelected(selected);

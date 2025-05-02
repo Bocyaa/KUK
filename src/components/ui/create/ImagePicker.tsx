@@ -1,15 +1,13 @@
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import SpinnerBar from '../SpinnerBar';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 type ImagePickerPropTypes = {
   src?: string;
   alt?: string;
   form: {
-    title: string;
-    description?: string;
-    difficulty: string;
     image?: string;
   };
   updateForm: (fields: Partial<ImagePickerPropTypes['form']>) => void;
@@ -18,6 +16,7 @@ type ImagePickerPropTypes = {
 function ImagePicker({
   src,
   alt = 'Recipe image',
+  form,
   updateForm,
 }: ImagePickerPropTypes) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -25,13 +24,13 @@ function ImagePicker({
   const [localImage, setLocalImage] = useState<string | null>(null);
 
   // Clean up object URL when component unmounts or localImage changes
-  useEffect(() => {
-    return () => {
-      if (localImage) {
-        URL.revokeObjectURL(localImage);
-      }
-    };
-  }, [localImage]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (localImage) {
+  //       URL.revokeObjectURL(localImage);
+  //     }
+  //   };
+  // }, [localImage]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -64,10 +63,10 @@ function ImagePicker({
   const imageToShow = localImage || src;
 
   return (
-    <div className="flex flex-col transition-all">
+    <div className="flex flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border dark:border-[#1c1c1c]">
       <div className="relative">
         <div
-          className={`relative flex h-52 items-center justify-center overflow-hidden rounded-2xl border bg-white transition-all hover:ring-1 hover:ring-blue-400 dark:border dark:border-[#1c1c1c] dark:bg-[#1c1c1e]`}
+          className={`relative flex h-52 items-center justify-center transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#1c1c1e]`}
         >
           {imageToShow ? (
             <>
@@ -79,10 +78,13 @@ function ImagePicker({
               />
               {/* Vignette overlay */}
               <div
-                className="pointer-events-none absolute inset-0"
+                className="pointer-events-none absolute inset-0 hidden dark:block"
                 style={{
-                  background:
-                    'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0, 0, 0, 0.7) 100%)',
+                  background: `radial-gradient(ellipse at center, 
+      rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%)
+      var(--tw-gradient-from-position) 
+      var(--tw-gradient-via-position) 
+      var(--tw-gradient-to-position)`,
                 }}
               />
             </>
@@ -105,22 +107,20 @@ function ImagePicker({
           aria-label="Choose a profile photo"
           tabIndex={-1}
           onChange={handleFileChange}
-          disabled={uploading}
+          disabled={uploading || form.image !== ''}
         />
+        {form.image && (
+          <button
+            className="absolute bottom-0 right-0 m-2 rounded-lg bg-white p-1 text-red-700 shadow-sm"
+            onClick={() => {
+              setLocalImage(null);
+              updateForm({ image: '' });
+            }}
+          >
+            <TrashIcon className="h-5 w-5" />
+          </button>
+        )}
       </div>
-      {localImage && (
-        <button
-          className="flex justify-end"
-          onClick={() => {
-            setLocalImage(null);
-            updateForm({ image: '' });
-          }}
-        >
-          <span className="mt-2 pr-2 text-xs font-semibold text-[#0094f6]">
-            Remove
-          </span>
-        </button>
-      )}
     </div>
   );
 }

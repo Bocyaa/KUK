@@ -38,24 +38,24 @@ function Select({ value, onChange, options }: SelectPropTypes) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <ListboxOptions className="max-h-70 absolute mt-3 w-32 overflow-auto rounded-lg border bg-[#ffffffcd] py-1 shadow-lg focus:outline-none">
+          <ListboxOptions className="absolute mt-3 flex flex-col overflow-auto rounded-lg border bg-[#ffffff] shadow-lg focus:outline-none">
             {options.map((option) => (
               <ListboxOption
                 key={option.value}
                 value={option.value}
                 className={({ active }) =>
-                  `relative cursor-pointer select-none py-2 pl-2 ${
+                  `relative cursor-pointer select-none border-b px-2 py-2 last:border-b-0 ${
                     active ? 'text-[#0094f6]' : 'text-gray-900'
                   }`
                 }
               >
                 {({ selected }) => (
-                  <div className="flex items-baseline gap-2">
+                  <div className="flex items-baseline gap-1">
                     <span className={`${selected && 'font-semibold'}`}>
-                      {option.value}
-                    </span>
-                    <span className="text-xs text-gray-300">
                       {option.label}
+                    </span>
+                    <span className="text-sm font-thin text-gray-400">
+                      ({option.value})
                     </span>
                   </div>
                 )}

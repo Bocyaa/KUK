@@ -2,33 +2,28 @@ import { useState } from 'react';
 import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
-
-type Ingredient = {
-  name: string;
-  quantity: number;
-  unit: string;
-};
+import { Ingredient } from '@app/types/recipe';
 
 type RecipeFormData = {
-  image?: string;
+  image: string;
   title: string;
-  description?: string;
+  description: string;
   difficulty: string;
-  ingredients?: Ingredient[];
-  categories?: string[];
-  time?: number;
-  price?: number;
-  calory?: number;
-  portion?: number;
-  isPrivate?: boolean;
+  ingredients: Ingredient[];
+  categories: string[];
+  time: number;
+  price: number;
+  calory: number;
+  portion: number;
+  isPrivate: boolean;
 };
 
 const initialForm: RecipeFormData = {
   image: '',
   title: '',
   description: '',
-  difficulty: '',
-  ingredients: [''],
+  difficulty: 'Beginner',
+  ingredients: [],
   categories: [''],
   time: 0,
   price: 0,

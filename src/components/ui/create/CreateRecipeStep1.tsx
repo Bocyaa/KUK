@@ -8,10 +8,10 @@ import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 
 type Props = {
   form: {
+    image?: string;
     title: string;
     description?: string;
     difficulty: string;
-    image?: string;
   };
   updateForm: (fields: Partial<Props['form']>) => void;
   onNext: () => void;
@@ -40,15 +40,6 @@ function CreateRecipeStep1({ form, updateForm, onNext }: Props) {
       setIsDirty(false);
     }
   }, [form]);
-
-  //   setOnConfirm(() => onNext);
-  //   setLabel('Step 2');
-
-  //   if (form.title !== '') {
-  //     setIsDirty(true);
-  //   } else {
-  //     setIsDirty(false);
-  //   }
 
   return (
     <div className="mt-16 flex w-full flex-col gap-5">

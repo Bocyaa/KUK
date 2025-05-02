@@ -1,17 +1,13 @@
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
-import { useEffect, useState } from 'react';
-import IngredientPicker from './IngredientPicker';
-import FormSection from '../form/FormSection';
-
-type Ingredient = {
-  name: string;
-  quantity: number;
-  unit: string;
-};
+import { useEffect } from 'react';
+import IngredientPicker from '@app/components/ingredients/IngredientPicker';
+import { Ingredient } from '@app/types/recipe';
 
 type Props = {
   form: {
-    ingredients?: Ingredient[];
+    title: string;
+    description: string;
+    ingredients: Ingredient[];
   };
   updateForm: (fields: Partial<Props['form']>) => void;
   onNext: () => void;
@@ -20,7 +16,7 @@ type Props = {
 
 function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
   const {
-    setIsDirty,
+    // setIsDirty,
     setLabelLeft,
     setLabelRight,
     setOnLeftClick,
@@ -48,11 +44,11 @@ function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
   );
 }
 
-/* TODO: Ingredients */
-/* TODO: Time Picker */
-/* TODO: Price Picker */
-/* TODO: Calory Picker */
 /* TODO: Portion Picker */
+/* TODO: Time Picker */
+/* TODO: Calory Picker */
+
+/* TODO: Price Picker */
 /* TODO: Is Private Checkbox */
 /* TODO: Categories picker */
 
