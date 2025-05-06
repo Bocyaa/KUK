@@ -46,6 +46,7 @@ function CreateRecipeStep1({ form, updateForm, onNext }: Props) {
       <ImagePicker form={form} updateForm={updateForm} src={form.image} />
       <FormSection>
         <FormInput
+          autoFocus={form.title ? false : true}
           label="Recipe Title"
           name="title"
           type="text"

@@ -82,12 +82,13 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
       <FormSection>
         <div className="flex flex-col gap-3">
           <FormInput
-            autoFocus
+            autoFocus={ingredients.length !== 0 ? false : true}
             label="Ingredients"
             placeholder="Add ingredient ..."
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
+            // onBlur={addIngredient}
           />
           <div className="z-10 flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
             <QuantityStepper value={quantity} onChange={setQuantity} />

@@ -1,5 +1,5 @@
-import { PlusIcon } from '@heroicons/react/24/outline';
-// onComment={setComment} updateIngredient={addIngredient}
+// import { PlusIcon } from '@heroicons/react/24/outline';
+
 type Props = {
   disabled?: boolean;
   onClick: () => void;
@@ -18,9 +18,14 @@ export default function AddItemButton({ disabled, onClick, className }: Props) {
       } ${className}`}
       onClick={onClick}
     >
-      <PlusIcon
+      {/* <PlusIcon
         className={`w-6 transition-all duration-300 ${!disabled ? 'text-[#0094f6]' : 'text-gray-300'}`}
-      />
+      /> */}
+      <span
+        className={`w-6 transition-all duration-300 ${!disabled ? 'text-[#0094f6]' : 'text-gray-300'}`}
+      >
+        Add
+      </span>
     </button>
   );
 }
