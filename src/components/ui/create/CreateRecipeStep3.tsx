@@ -28,3 +28,7 @@ function CreateRecipeStep3({ form, updateForm, onBack, onSubmit }) {
 }
 
 export default CreateRecipeStep3;
+
+/* TODO: Price Picker */
+/* TODO: Is Private Checkbox */
+/* TODO: Categories picker */

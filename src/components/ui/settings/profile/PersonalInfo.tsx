@@ -127,7 +127,7 @@ function PersonalInfo() {
 
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
-      <FormSection>
+      <FormSection className="gap-10">
         <FormInput
           label="First Name"
           name="first_name"

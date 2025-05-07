@@ -79,8 +79,8 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <FormSection>
-        <div className="flex flex-col gap-3">
+      <FormSection className="gap-1">
+        <div className="flex flex-col gap-3 border-b pb-3">
           <FormInput
             autoFocus={ingredients.length !== 0 ? false : true}
             label="Ingredients"
@@ -98,17 +98,15 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
             <AddItemButton disabled={!name} onClick={addIngredient} />
           </div>
         </div>
-      </FormSection>
 
-      {form.ingredients.length > 0 && (
-        <FormSection>
+        {form.ingredients.length > 0 && (
           <div className="flex flex-col gap-2">
-            <span className="font-semibold">{form.title}</span>
-            {form.description && (
-              <span className="text-sm text-gray-400 first-letter:capitalize">
-                {form.description}
-              </span>
-            )}
+            {/* <span className="font-semibold">{form.title}</span>
+        {form.description && (
+          <span className="text-sm text-gray-400 first-letter:capitalize">
+            {form.description}
+          </span>
+        )} */}
 
             <IngredientList
               items={ingredients}
@@ -116,8 +114,10 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
               onUpdateComment={updateIngredientComment}
             />
           </div>
-        </FormSection>
-      )}
+        )}
+      </FormSection>
+
+      {/* <PortionPicker /> */}
     </div>
   );
 }

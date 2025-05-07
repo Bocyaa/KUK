@@ -15,7 +15,7 @@ function IngredientList({
   className,
 }: Props) {
   return (
-    <div className={`border-t ${className}`}>
+    <div className={` ${className}`}>
       {items.map((ing, i) => (
         <IngredientRow
           key={`${ing.id ?? ing.name}-${i}`}

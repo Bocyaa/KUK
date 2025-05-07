@@ -5,23 +5,27 @@ type Props = {
   value: number;
   min?: number;
   max?: number;
+  incVal?: number;
+  decVal?: number;
   onChange: (v: number) => void;
   className?: string;
 };
 
 export default function QuantityStepper({
   value,
-  min = 1,
+  min = 0,
   max = Infinity,
+  incVal = 1,
+  decVal = 1,
   onChange,
   className,
 }: Props) {
-  const dec = () => onChange(Math.max(min, value - 1));
-  const inc = () => onChange(Math.min(max, value + 1));
+  const dec = () => onChange(Math.max(min, value - decVal));
+  const inc = () => onChange(Math.min(max, value + incVal));
 
   return (
     <div
-      className={`flex items-center overflow-hidden rounded-lg border bg-white ${className ?? ''}`}
+      className={`flex w-[7.3rem] items-center overflow-hidden rounded-lg border bg-white ${className ?? ''}`}
     >
       <Button
         size="icon"

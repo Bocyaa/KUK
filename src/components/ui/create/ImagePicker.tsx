@@ -63,7 +63,7 @@ function ImagePicker({
   const imageToShow = localImage || src;
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border dark:border-[#1c1c1c]">
+    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border dark:border-[#1c1c1c]">
       <div className="relative">
         <div
           className={`relative flex h-52 items-center justify-center transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#1c1c1e]`}

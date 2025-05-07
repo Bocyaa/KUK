@@ -44,7 +44,7 @@ function CreateRecipeStep1({ form, updateForm, onNext }: Props) {
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
       <ImagePicker form={form} updateForm={updateForm} src={form.image} />
-      <FormSection>
+      <FormSection className="gap-10">
         <FormInput
           autoFocus={form.title ? false : true}
           label="Recipe Title"
