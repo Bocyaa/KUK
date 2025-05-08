@@ -85,9 +85,9 @@ function IngredientRow({
                 <span className="font-light text-gray-500">{unit}</span>
               </div>
             </div>
-            {ingredient.comment && (
-              <span className="pl-2 text-xs text-gray-400">
-                {ingredient.comment}
+            {comment && (
+              <span className="mt-1 block pl-2 text-xs text-gray-400 first-letter:capitalize">
+                {comment}
               </span>
             )}
           </div>

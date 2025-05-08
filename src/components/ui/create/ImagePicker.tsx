@@ -63,10 +63,10 @@ function ImagePicker({
   const imageToShow = localImage || src;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border dark:border-[#1c1c1c]">
-      <div className="relative">
+    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border-none">
+      <div className="relative overflow-hidden rounded-[0.55rem] border">
         <div
-          className={`relative flex h-52 items-center justify-center transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#1c1c1e]`}
+          className={`relative flex h-52 items-center justify-center bg-gray-100 transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#1c1c1e]`}
         >
           {imageToShow ? (
             <>
@@ -94,7 +94,7 @@ function ImagePicker({
             <div className="flex flex-col items-center justify-center">
               <PhotoIcon className="h-28 w-28 text-gray-200 dark:text-[#5454625b]" />
               <span className="text-xs text-[#6b7280] dark:text-[#545462]">
-                Click to add image
+                Tap to add image
               </span>
             </div>
           )}
@@ -103,7 +103,7 @@ function ImagePicker({
           ref={fileInputRef}
           type="file"
           accept="image/jpeg,image/png,image/heic"
-          className="absolute bottom-0 left-0 right-0 top-0 h-full w-full opacity-0"
+          className="absolute bottom-0 left-0 right-0 top-0 h-full w-full rounded-xl opacity-0"
           aria-label="Choose a profile photo"
           tabIndex={-1}
           onChange={handleFileChange}

@@ -1,11 +1,12 @@
 import { Ingredient } from '@app/types/recipe';
 import { Minus, Plus } from 'lucide-react';
-import { forwardRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import BackSecondaryCard from '../controllers/BackSecondaryCard';
+import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
+import Button from '../controllers/Button';
 
 type TimePickerProps = {
   form: {
-    title: string;
-    description: string;
     ingredients: Ingredient[];
     portion: number;
     time: number;
@@ -38,6 +39,7 @@ function TimePicker({ form, updateForm }: TimePickerProps) {
   // Update both local state and parent form
   const updateTime = (newTime: { hours: number; minutes: number }) => {
     setTime(newTime);
+
     const totalMinutes = newTime.hours * 60 + newTime.minutes;
     updateForm({ time: totalMinutes });
   };
@@ -63,24 +65,20 @@ function TimePicker({ form, updateForm }: TimePickerProps) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
+    <BackSecondaryCard>
       <span className="pl-1 text-gray-500">Time</span>
 
       <div className="flex gap-1">
-        <div className="relative flex w-[7.3rem] items-center justify-between gap-1 rounded-lg border bg-white">
-          <div className="flex">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-8 w-8 rounded-none"
-              onClick={decHours}
-            >
-              <Minus className="h-3 w-3" />
+        <FrontPrimaryCard className="gap-3">
+          <div className="flex items-center">
+            <Button onClick={decHours}>
+              <Minus className="h-4 w-4" />
             </Button>
-            <div className="flex">
+
+            <div className="relative flex">
               <input
                 type="tel"
-                value={time.hours.toString()}
+                value={time.hours.toString().padStart(2, '0')}
                 onFocus={(e) => e.currentTarget.select()}
                 onChange={(e) => {
                   const n = Number(e.target.value);
@@ -91,38 +89,31 @@ function TimePicker({ form, updateForm }: TimePickerProps) {
                 className="w-5 py-1 text-right focus:outline-none"
               />
               <div
-                className="absolute bottom-[0.4rem] right-9 text-xs text-gray-400"
+                className="absolute -right-7 bottom-[0.4rem] text-xs text-gray-400"
                 style={{ width: '1.5rem' }}
               >
-                {time.hours < 1 ? 'hour' : 'hours'}
+                h
               </div>
             </div>
           </div>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-8 w-8 rounded-none"
-            onClick={incHours}
-          >
-            <Plus className="h-3 w-3" />
-          </Button>
-        </div>
 
-        <div className="relative flex w-[7.3rem] items-center justify-between gap-1 rounded-lg border bg-white">
-          <div className="flex">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-8 w-8 rounded-none"
-              onClick={decMinutes}
-            >
-              <Minus className="h-3 w-3" />
+          <div className="flex items-center">
+            <Button onClick={incHours}>
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        </FrontPrimaryCard>
+
+        <FrontPrimaryCard className="gap-3">
+          <div className="flex items-center">
+            <Button onClick={decMinutes}>
+              <Minus className="h-4 w-4" />
             </Button>
 
-            <div className="flex">
+            <div className="relative flex">
               <input
                 type="tel"
-                value={time.minutes.toString()}
+                value={time.minutes.toString().padStart(2, '0')}
                 onFocus={(e) => e.currentTarget.select()}
                 onChange={(e) => {
                   const n = Number(e.target.value);
@@ -133,58 +124,23 @@ function TimePicker({ form, updateForm }: TimePickerProps) {
                 className="w-5 py-1 text-right focus:outline-none"
               />
               <div
-                className="absolute bottom-[0.4rem] right-9 text-xs text-gray-400"
+                className="absolute -right-7 bottom-[0.4rem] text-xs text-gray-400"
                 style={{ width: '1.5rem' }}
               >
-                {time.minutes < 1 ? 'min' : 'mins'}
+                m
               </div>
             </div>
           </div>
 
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-8 w-8 rounded-none"
-            onClick={incMinutes}
-          >
-            <Plus className="h-3 w-3" />
-          </Button>
-        </div>
+          <div className="flex items-center">
+            <Button onClick={incMinutes}>
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
+        </FrontPrimaryCard>
       </div>
-    </div>
+    </BackSecondaryCard>
   );
 }
 
 export default TimePicker;
-
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'ghost';
-  size?: 'default' | 'icon';
-}
-
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { variant = 'default', size = 'default', className = '', ...props },
-    ref,
-  ) => {
-    const base =
-      'inline-flex items-center justify-center font-medium focus:outline-none focus:ring transition';
-    const variants: Record<string, string> = {
-      default: 'bg-gray-900 text-white active:bg-gray-600',
-      ghost: 'bg-transparent active:bg-gray-100',
-    };
-    const sizes: Record<string, string> = {
-      default: 'h-8 w-24 px-4 text-sm',
-      icon: 'h-8 w-8 p-0',
-    };
-
-    return (
-      <button
-        ref={ref}
-        className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
-        {...props}
-      />
-    );
-  },
-);
-Button.displayName = 'Button';

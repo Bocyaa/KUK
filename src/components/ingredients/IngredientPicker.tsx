@@ -7,12 +7,12 @@ import VerticalSep from '../ui/VerticalSep';
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
 import { Ingredient } from '@app/types/recipe';
+import ShowHide from '../ui/create/ShowHide';
+import { motion } from 'framer-motion';
 
 type IngredientPickerProps = {
   form: {
-    title: string;
     ingredients: Ingredient[];
-    description: string;
   };
   updateForm: (fields: Partial<IngredientPickerProps['form']>) => void;
 };
@@ -22,6 +22,7 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const [unit, setUnit] = useState('g');
   const [ingredients, setIngredients] = useState(form.ingredients);
+  const [isShowIngs, setIsShowIngs] = useState(true);
 
   const units = [
     { label: 'gram', value: 'g' },
@@ -80,7 +81,7 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   return (
     <div className="flex flex-col gap-4">
       <FormSection className="gap-1">
-        <div className="flex flex-col gap-3 border-b pb-3">
+        <div className="mb-3 flex flex-col gap-3 border-b pb-3">
           <FormInput
             autoFocus={ingredients.length !== 0 ? false : true}
             label="Ingredients"
@@ -101,23 +102,29 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
 
         {form.ingredients.length > 0 && (
           <div className="flex flex-col gap-2">
-            {/* <span className="font-semibold">{form.title}</span>
-        {form.description && (
-          <span className="text-sm text-gray-400 first-letter:capitalize">
-            {form.description}
-          </span>
-        )} */}
-
-            <IngredientList
-              items={ingredients}
-              onRemove={removeIngredient}
-              onUpdateComment={updateIngredientComment}
+            <ShowHide
+              type={isShowIngs ? 'hide' : 'show'}
+              onClick={() => setIsShowIngs(!isShowIngs)}
             />
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={
+                isShowIngs
+                  ? { height: 'auto', opacity: 1 }
+                  : { height: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.3 }}
+              style={{ overflow: 'hidden' }}
+            >
+              <IngredientList
+                items={ingredients}
+                onRemove={removeIngredient}
+                onUpdateComment={updateIngredientComment}
+              />
+            </motion.div>
           </div>
         )}
       </FormSection>
-
-      {/* <PortionPicker /> */}
     </div>
   );
 }

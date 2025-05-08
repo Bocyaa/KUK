@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EyeOff } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { Ingredient } from '@app/types/recipe';
@@ -9,11 +9,10 @@ import PortionPicker from './PortionPicker';
 import FormSection from '../form/FormSection';
 import TimePicker from './TimePicker';
 import CaloryPicker from './CaloryPicker';
+import ShowHide from './ShowHide';
 
 type Props = {
   form: {
-    title: string;
-    description: string;
     ingredients: Ingredient[];
     portion: number;
     time: number;
@@ -25,7 +24,7 @@ type Props = {
 };
 
 function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
-  const [isShowDetails, setIsShowDetails] = useState(true);
+  const [isShowMore, setIsShowMore] = useState(true);
 
   const {
     // setIsDirty,
@@ -50,35 +49,33 @@ function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
   ]);
 
   return (
-    <div className="mt-14 flex flex-col gap-5">
+    <div className="mb-12 mt-14 flex flex-col gap-5">
       <IngredientPicker form={form} updateForm={updateForm} />
-      <FormSection className="gap-3">
-        {!isShowDetails ? (
-          <button
-            onClick={() => setIsShowDetails(true)}
-            className="pl-1 text-left text-[#0094f6]"
-          >
-            <span>Show More Options</span>
-          </button>
-        ) : (
-          <>
-            <button
-              onClick={() => setIsShowDetails(false)}
-              className="flex items-center gap-2 pl-1 text-[#0094f6]"
-            >
-              <span>Hide</span>
-              <EyeOff className="h-4 w-4" />
-            </button>
-            <PortionPicker form={form} updateForm={updateForm} />
-            <CaloryPicker form={form} updateForm={updateForm} />
-            <TimePicker form={form} updateForm={updateForm} />
-          </>
-        )}
+
+      <FormSection className={`${isShowMore && 'gap-3'}`}>
+        <ShowHide
+          type={isShowMore ? 'hide' : 'show'}
+          onClick={() => setIsShowMore(!isShowMore)}
+        />
+
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={
+            isShowMore
+              ? { height: 'auto', opacity: 1 }
+              : { height: 0, opacity: 0 }
+          }
+          transition={{ duration: 0.3 }}
+          style={{ overflow: 'hidden' }}
+          className="flex flex-col gap-3"
+        >
+          <PortionPicker form={form} updateForm={updateForm} />
+          <CaloryPicker form={form} updateForm={updateForm} />
+          <TimePicker form={form} updateForm={updateForm} />
+        </motion.div>
       </FormSection>
     </div>
   );
 }
 
 export default CreateRecipeStep2;
-
-/* TODO: Calory Picker */

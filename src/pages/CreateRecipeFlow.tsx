@@ -24,7 +24,7 @@ const initialForm: RecipeFormData = {
   description: '',
   difficulty: 'Beginner',
   ingredients: [],
-  categories: [''],
+  categories: [],
   time: 0,
   price: 0,
   calory: 0,

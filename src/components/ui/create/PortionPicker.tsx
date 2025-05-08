@@ -1,11 +1,10 @@
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
 import { Ingredient } from '@app/types/recipe';
 import { useEffect, useState } from 'react';
+import BackSecondaryCard from '../controllers/BackSecondaryCard';
 
 type PortionPickerProps = {
   form: {
-    title: string;
-    description: string;
     ingredients: Ingredient[];
     portion: number;
     time: number;
@@ -29,10 +28,10 @@ function PortionPicker({ form, updateForm }: PortionPickerProps) {
   }
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
+    <BackSecondaryCard>
       <span className="pl-1 text-gray-500">Portions</span>
       <QuantityStepper value={portion} onChange={handlePortionChange} />
-    </div>
+    </BackSecondaryCard>
   );
 }
 
