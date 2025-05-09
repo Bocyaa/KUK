@@ -3,6 +3,7 @@ import BackSecondaryCard from '../controllers/BackSecondaryCard';
 import FormInput from '../form/FormInput';
 import FormSection from '../form/FormSection';
 import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
+import LabelPlaceholder from './LabelPlaceholder';
 
 type CategoryPickerProps = {
   form: {
@@ -59,22 +60,21 @@ function CategoryPicker({ form, updateForm }: CategoryPickerProps) {
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         onKeyDown={handleKeyDown}
+        onBlur={addCategory}
       />
       <BackSecondaryCard justify="start">
         {categories.length > 0 ? (
           <div className="no-scrollbar flex space-x-1 overflow-x-scroll">
             {categories.map((c) => (
               <FrontPrimaryCard key={c} className="flex-shrink-0">
-                <button className="px-2 py-1" onClick={() => pop(c)}>
+                <button className="px-2 py-1 capitalize" onClick={() => pop(c)}>
                   {c}
                 </button>
               </FrontPrimaryCard>
             ))}
           </div>
         ) : (
-          <span className="w-full text-center text-xs uppercase text-gray-400">
-            empty
-          </span>
+          <LabelPlaceholder>empty</LabelPlaceholder>
         )}
       </BackSecondaryCard>
     </FormSection>
