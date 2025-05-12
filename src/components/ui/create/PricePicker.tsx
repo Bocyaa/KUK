@@ -17,7 +17,7 @@ type PricePickerProps = {
 };
 
 function PricePicker({ form, updateForm }: PricePickerProps) {
-  const [ingredients] = useState(form.ingredients);
+  const [ingredients, setIngredients] = useState(form.ingredients);
   const [price, setPrice] = useState(0);
 
   return (
