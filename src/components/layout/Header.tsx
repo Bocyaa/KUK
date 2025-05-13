@@ -1,8 +1,8 @@
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { getPageMeta } from '@app/utility/getPageMeta';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ChevronLeft from '../ui/ChevronLeft';
-import ChevronRight from '../ui/ChevronRight';
+import Left from '@app/components/ui/Left';
+import Right from '@app/components/ui/Right';
 
 const ROOT_PATHS = ['/dashboard', '/search', '/settings', '/create-recipe'];
 
@@ -41,7 +41,7 @@ function Header() {
     'fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#1c1c1c] dark:bg-black dark:text-gray-200 z-50';
 
   const styleHeaderDiv =
-    'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between pl-1 pr-5';
+    'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between px-1';
 
   return (
     <header className={styleHeader}>
@@ -52,25 +52,30 @@ function Header() {
       <div className={styleHeaderDiv}>
         {showBack ? (
           <button onClick={() => handleBack()} aria-label="Back">
-            <ChevronLeft label={labelLeft} />
+            <Left label={labelLeft} />
           </button>
-        ) : labelLeft && onLeftClick ? (
-          <button onClick={() => onLeftClick()} aria-label="Back">
-            <ChevronLeft label={labelLeft} />
+        ) : labelLeft && isDirty ? (
+          <button onClick={() => onLeftClick!()} aria-label="Back">
+            <Left label={labelLeft} />
           </button>
         ) : (
-          <span>&nbsp;</span>
+          <button onClick={() => onLeftClick!()} aria-label="Back">
+            <Left
+              label={labelLeft}
+              className="text-gray-300 dark:text-[#2d2d2d]"
+            />
+          </button>
         )}
 
         {labelRight ? (
-          isDirty && onRightClick ? (
-            <button onClick={() => onRightClick()} aria-label="Back">
-              <ChevronRight label={labelRight} />
+          isDirty && labelRight ? (
+            <button onClick={() => onRightClick!()} aria-label="Back">
+              <Right label={labelRight} />
             </button>
           ) : (
-            <ChevronRight
+            <Right
               label={labelRight}
-              classNames="text-gray-300 dark:text-[#2d2d2d]"
+              className="text-gray-300 dark:text-[#2d2d2d]"
             />
           )
         ) : (

@@ -14,10 +14,11 @@ type Props = {
     difficulty: string;
   };
   updateForm: (fields: Partial<Props['form']>) => void;
+  onReset: () => void;
   onNext: () => void;
 };
 
-function CreateRecipeStep1({ form, updateForm, onNext }: Props) {
+function CreateRecipeStep1({ form, updateForm, onNext, onReset }: Props) {
   const {
     setIsDirty,
     setLabelLeft,
@@ -27,9 +28,9 @@ function CreateRecipeStep1({ form, updateForm, onNext }: Props) {
   } = useFormConfirm();
 
   useEffect(() => {
-    setLabelLeft('');
+    setLabelLeft('Reset');
     setLabelRight('Step 2');
-    setOnLeftClick(null);
+    setOnLeftClick(() => onReset);
     setOnRightClick(() => onNext);
   }, []);
 

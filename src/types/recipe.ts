@@ -4,4 +4,5 @@ export type Ingredient = {
   quantity: number;
   unit: string;
   comment?: string;
+  pricePerUnit?: number;
 };

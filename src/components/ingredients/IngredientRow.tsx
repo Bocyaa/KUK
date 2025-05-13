@@ -2,11 +2,14 @@ import { Ingredient } from '@app/types/recipe';
 import { Button } from './Button';
 import {
   ChatBubbleBottomCenterIcon,
+  EllipsisHorizontalIcon,
   TrashIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { ChatBubbleBottomCenterIcon as ChatBubbleBottomCenterIconSolid } from '@heroicons/react/24/solid';
 import { useState } from 'react';
+import BackSecondaryCard from '../ui/controllers/BackSecondaryCard';
+import FrontPrimaryCard from '../ui/controllers/FrontPrimaryCard';
 
 interface Props {
   ingredient: Ingredient;
@@ -24,6 +27,7 @@ function IngredientRow({
   const { name, quantity, unit, comment } = ingredient;
   const [showComment, setShowComment] = useState(false);
   const [commentValue, setCommentValue] = useState(ingredient.comment || '');
+  const [isShowOptions, setIsShowOptions] = useState(false);
 
   async function updateComment() {
     onUpdateComment(index, commentValue);
@@ -41,7 +45,7 @@ function IngredientRow({
   }
 
   return (
-    <div className="mt-2 flex justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
+    <BackSecondaryCard className="mt-2" gap="0" height="full">
       {showComment ? (
         <div className="relative flex w-full items-center">
           <input
@@ -71,60 +75,77 @@ function IngredientRow({
           )}
         </div>
       ) : (
-        <>
-          <div className="no-scrollbar relative max-w-xs overflow-x-auto rounded-lg">
-            <div className="flex min-w-max gap-1 whitespace-nowrap rounded-lg">
-              <div className="flex flex-none items-center overflow-hidden rounded-lg border bg-white">
-                <span className="px-3 py-1 first-letter:capitalize">
-                  {name}
-                </span>
-              </div>
+        <div className="w-full rounded-lg">
+          <div className="relative">
+            <div className="no-scrollbar overflow-x-auto rounded-lg">
+              <div className="flex min-w-max gap-1 whitespace-nowrap rounded-lg">
+                <FrontPrimaryCard height="full">
+                  <span className="px-3 py-1 capitalize">{name}</span>
+                </FrontPrimaryCard>
 
-              <div className="flex flex-none items-center overflow-hidden rounded-lg border bg-white px-4 py-1">
-                <span>{quantity}&nbsp;</span>
-                <span className="font-light text-gray-500">{unit}</span>
+                <FrontPrimaryCard className="mr-20">
+                  <div className="flex gap-1 px-4">
+                    <span>{String(quantity).replace('.', ',')}</span>
+                    <span className="font-light text-gray-500">{unit}</span>
+                  </div>
+                </FrontPrimaryCard>
               </div>
             </div>
-            {comment && (
-              <span className="mt-1 block pl-2 text-xs text-gray-400 first-letter:capitalize">
-                {comment}
+
+            <div className="absolute bottom-0 right-0 top-0 flex gap-1 border-l bg-[#f3f2f8] px-1">
+              {isShowOptions ? (
+                <>
+                  {comment ? (
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => setShowComment(!showComment)}
+                      className="flex h-auto flex-none rounded-lg border bg-white"
+                    >
+                      <ChatBubbleBottomCenterIconSolid className="h-3 w-3 text-[#0094f6]" />
+                    </Button>
+                  ) : (
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => setShowComment(!showComment)}
+                      className="flex h-auto flex-none rounded-lg border bg-white"
+                    >
+                      <ChatBubbleBottomCenterIcon className="h-3 w-3 text-[#0094f6]" />
+                    </Button>
+                  )}
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={onRemove}
+                    className="flex h-auto flex-none rounded-lg border bg-white"
+                  >
+                    <TrashIcon className="h-3 w-3 text-red-700" />
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => setIsShowOptions(!isShowOptions)}
+                  className="flex h-auto flex-none rounded-lg border bg-white"
+                >
+                  <EllipsisHorizontalIcon className="h-4 w-4 text-[#0094f6]" />
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {comment && (
+            <div className="no-scrollbar overflow-x-auto">
+              <span className="mt-1 flex min-w-max gap-1 whitespace-nowrap rounded-lg pl-2 text-xs text-gray-400">
+                {comment && comment.charAt(0).toUpperCase() + comment.slice(1)}
               </span>
-            )}
-          </div>
-
-          <div className="flex gap-1">
-            {comment ? (
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setShowComment(!showComment)}
-                className="flex flex-none rounded-lg border bg-white"
-              >
-                <ChatBubbleBottomCenterIconSolid className="h-3 w-3 text-[#0094f6]" />
-              </Button>
-            ) : (
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setShowComment(!showComment)}
-                className="flex flex-none rounded-lg border bg-white"
-              >
-                <ChatBubbleBottomCenterIcon className="h-3 w-3 text-[#0094f6]" />
-              </Button>
-            )}
-
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={onRemove}
-              className="flex flex-none rounded-lg border bg-white"
-            >
-              <TrashIcon className="h-3 w-3 text-red-700" />
-            </Button>
-          </div>
-        </>
+            </div>
+          )}
+        </div>
       )}
-    </div>
+    </BackSecondaryCard>
   );
 }
 

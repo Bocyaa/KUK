@@ -4,12 +4,18 @@ type Prop = {
   children: React.ReactNode;
   width?: string;
   className?: string;
+  height?: string;
 };
 // px-3 py-1
-function FrontPrimaryCard({ children, className, width = '7.3rem' }: Prop) {
+function FrontPrimaryCard({
+  children,
+  className,
+  width = '7.3rem',
+  height = '9',
+}: Prop) {
   return (
     <div
-      className={`flex w-[${width}] h-9 items-center justify-between overflow-hidden rounded-lg border bg-white ${className && className}`}
+      className={`flex w-[${width}] h-${height} items-center justify-between overflow-hidden rounded-lg border bg-white ${className && className}`}
     >
       {children}
     </div>

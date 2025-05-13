@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
@@ -13,6 +13,14 @@ function DifficultyPicker({ form, updateForm }: Props) {
   const [selected, setSelected] = useState(
     difficulties.indexOf(form.difficulty),
   );
+
+  // Keep component in sync with form value
+  useEffect(() => {
+    const formDifficultyIndex = difficulties.indexOf(form.difficulty);
+    if (formDifficultyIndex !== selected && formDifficultyIndex !== -1) {
+      setSelected(formDifficultyIndex);
+    }
+  }, [form.difficulty, selected]);
 
   function handleClick(selected: number) {
     setSelected(selected);

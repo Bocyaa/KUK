@@ -19,7 +19,7 @@ type IngredientPickerProps = {
 
 function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState(0);
   const [unit, setUnit] = useState('g');
   const [ingredients, setIngredients] = useState(form.ingredients);
   const [isShowIngs, setIsShowIngs] = useState(true);
@@ -28,14 +28,14 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
     { label: 'gram', value: 'g' },
     { label: 'kilogram', value: 'kg' },
     { label: 'milliliter', value: 'ml' },
-    { label: 'liter', value: 'l' },
+    { label: 'liter', value: '𝓁' },
     { label: 'pieces', value: 'pcs' },
     { label: 'tablespoon', value: 'tbsp' },
     { label: 'teaspoon', value: 'tsp' },
   ];
 
   function resetInputs() {
-    setQuantity(1);
+    setQuantity(0);
     setUnit('g');
     setName('');
   }
@@ -74,7 +74,9 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      addIngredient();
+      if (quantity !== 0 && name) {
+        addIngredient();
+      }
     }
   }
 
@@ -92,11 +94,19 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
             // onBlur={addIngredient}
           />
           <div className="z-10 flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
-            <QuantityStepper value={quantity} onChange={setQuantity} />
+            <QuantityStepper
+              incVal={['g', 'ml'].includes(unit) ? 100 : 1}
+              decVal={['g', 'ml'].includes(unit) ? 100 : 1}
+              value={quantity}
+              onChange={setQuantity}
+            />
             <VerticalSep />
             <Select value={unit} onChange={setUnit} options={units} />
             <VerticalSep />
-            <AddItemButton disabled={!name} onClick={addIngredient} />
+            <AddItemButton
+              disabled={!name || quantity === 0}
+              onClick={addIngredient}
+            />
           </div>
         </div>
 

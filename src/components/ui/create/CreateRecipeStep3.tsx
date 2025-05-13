@@ -11,7 +11,7 @@ type Props = {
     ingredients: Ingredient[];
     categories: string[];
     price: number;
-    isPrivate: false;
+    isPrivate: boolean;
   };
   updateForm: (fields: Partial<Props['form']>) => void;
   onBack: () => void;
@@ -19,13 +19,8 @@ type Props = {
 };
 
 function CreateRecipeStep3({ form, updateForm, onBack, onSubmit }: Props) {
-  const {
-    // setIsDirty,
-    setLabelLeft,
-    setLabelRight,
-    setOnLeftClick,
-    setOnRightClick,
-  } = useFormConfirm();
+  const { setLabelLeft, setLabelRight, setOnLeftClick, setOnRightClick } =
+    useFormConfirm();
 
   useEffect(() => {
     setLabelLeft('Step 2');
@@ -42,7 +37,7 @@ function CreateRecipeStep3({ form, updateForm, onBack, onSubmit }: Props) {
   ]);
 
   return (
-    <div className="mt-14 flex flex-col gap-5">
+    <div className="mb-12 mt-14 flex flex-col gap-5">
       {/* Categories Picker */}
       <CategoryPicker form={form} updateForm={updateForm} />
       <PricePicker form={form} updateForm={updateForm} />
