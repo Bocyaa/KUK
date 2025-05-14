@@ -16,9 +16,16 @@ type Props = {
   updateForm: (fields: Partial<Props['form']>) => void;
   onReset: () => void;
   onNext: () => void;
+  onFileSelect?: (file: File | null) => void;
 };
 
-function CreateRecipeStep1({ form, updateForm, onNext, onReset }: Props) {
+function CreateRecipeStep1({
+  form,
+  updateForm,
+  onNext,
+  onReset,
+  onFileSelect,
+}: Props) {
   const {
     setIsDirty,
     setLabelLeft,
@@ -44,7 +51,13 @@ function CreateRecipeStep1({ form, updateForm, onNext, onReset }: Props) {
 
   return (
     <div className="mt-16 flex w-full flex-col gap-5">
-      <ImagePicker form={form} updateForm={updateForm} src={form.image} />
+      <ImagePicker
+        form={form}
+        updateForm={updateForm}
+        src={form.image}
+        onFileSelect={onFileSelect}
+      />
+
       <FormSection className="gap-10">
         <FormInput
           autoFocus={form.title ? false : true}

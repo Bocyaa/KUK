@@ -21,6 +21,7 @@ export default function QuantityStepper({
   incVal = 1,
   decVal = 1,
   onChange,
+  className,
 }: Props) {
   //
   const [inputValue, setInputValue] = useState<string>(() => String(value));
@@ -59,7 +60,7 @@ export default function QuantityStepper({
   };
 
   return (
-    <FrontPrimaryCard>
+    <FrontPrimaryCard height="full">
       <Button onClick={dec}>
         <Minus className="h-4 w-4" />
       </Button>
@@ -73,26 +74,11 @@ export default function QuantityStepper({
         decimalSeparator=","
         groupSeparator="."
         placeholder="0"
-        className="w-10 text-center focus:outline-none"
+        className={`w-10 py-1 text-center focus:outline-none ${className && className}`}
         allowNegativeValue={false}
         disableAbbreviations
         inputMode="decimal"
       />
-      {/* <input
-        type="number"
-        value={value === 0 ? '' : value}
-        onFocus={(e) => e.currentTarget.select()}
-        onChange={(e) => {
-          const n = Number(e.target.value);
-          if (!Number.isNaN(n)) onChange(n);
-          else onChange(0);
-        }}
-        onBlur={(e) => {
-          if (e.target.value === '') onChange(0);
-        }}
-        placeholder="0"
-        className="w-8 text-center focus:outline-none"
-      /> */}
       <Button onClick={inc}>
         <Plus className="h-4 w-4" />
       </Button>

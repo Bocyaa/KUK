@@ -1,5 +1,5 @@
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import SpinnerBar from '../SpinnerBar';
 import { TrashIcon } from '@heroicons/react/24/outline';
@@ -11,6 +11,7 @@ type ImagePickerPropTypes = {
     image?: string;
   };
   updateForm: (fields: Partial<ImagePickerPropTypes['form']>) => void;
+  onFileSelect?: (file: File | null) => void;
 };
 
 function ImagePicker({
@@ -18,19 +19,20 @@ function ImagePicker({
   alt = 'Recipe image',
   form,
   updateForm,
+  onFileSelect,
 }: ImagePickerPropTypes) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [localImage, setLocalImage] = useState<string | null>(null);
 
   // Clean up object URL when component unmounts or localImage changes
-  // useEffect(() => {
-  //   return () => {
-  //     if (localImage) {
-  //       URL.revokeObjectURL(localImage);
-  //     }
-  //   };
-  // }, [localImage]);
+  useEffect(() => {
+    return () => {
+      if (localImage) {
+        URL.revokeObjectURL(localImage);
+      }
+    };
+  }, [localImage]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -49,12 +51,17 @@ function ImagePicker({
       URL.revokeObjectURL(localImage);
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // await new Promise((resolve) => setTimeout(resolve, 500));
 
     // Create a local URL for preview
     const imageUrl = URL.createObjectURL(file);
     setLocalImage(imageUrl);
-    updateForm({ image: imageUrl }); // sync with parent form
+    updateForm({ image: imageUrl }); // For preview only
+
+    // Pass the actual file to the parent
+    if (onFileSelect) {
+      onFileSelect(file);
+    }
 
     setUploading(false);
   }
@@ -115,6 +122,7 @@ function ImagePicker({
             onClick={() => {
               setLocalImage(null);
               updateForm({ image: '' });
+              if (onFileSelect) onFileSelect(null); // Clear the file
             }}
           >
             <TrashIcon className="h-5 w-5" />

@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
 import { Ingredient } from '@app/types/recipe';
+import { supabase } from '@app/lib/supabaseClient';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 type RecipeFormData = {
   image: string;
+  imageFile: File | null;
   title: string;
   description: string;
   difficulty: string;
@@ -20,74 +26,18 @@ type RecipeFormData = {
 
 const initialForm: RecipeFormData = {
   image: '',
+  imageFile: null, // store actual image file here
   title: '',
   description: '',
   difficulty: 'Beginner',
   ingredients: [],
   categories: [],
-  time: 0,
+  time: 0, // in minutes
   price: 0,
   calory: 0,
   portion: 0,
-  isPrivate: false,
+  isPrivate: true,
 };
-
-// const initialForm: RecipeFormData = {
-//   image: '',
-//   title: 'Pancakes',
-//   description: '',
-//   difficulty: 'Intermediate',
-//   ingredients: [
-//     {
-//       name: 'Eggs',
-//       quantity: 3,
-//       unit: 'pcs',
-//       pricePerUnit: 0.2,
-//     },
-//     {
-//       name: 'Sugar',
-//       quantity: 3,
-//       unit: 'tbsp',
-//       pricePerUnit: 0.89,
-//     },
-//     {
-//       name: 'Milk',
-//       quantity: 250,
-//       unit: 'ml',
-//       pricePerUnit: 1.09,
-//     },
-//     {
-//       name: 'Flour',
-//       quantity: 140,
-//       unit: 'g',
-//       pricePerUnit: 0.59,
-//     },
-//     {
-//       name: 'Boiled water',
-//       quantity: 250,
-//       unit: 'ml',
-//       pricePerUnit: 0,
-//     },
-//     {
-//       name: 'Plant Oil',
-//       quantity: 20,
-//       unit: 'ml',
-//       pricePerUnit: 1.49,
-//     },
-//     {
-//       name: 'Baking powder',
-//       quantity: 0.5,
-//       unit: 'tsp',
-//       pricePerUnit: 8.06,
-//     },
-//   ],
-//   categories: [],
-//   time: 0,
-//   price: 0,
-//   calory: 0,
-//   portion: 0,
-//   isPrivate: false,
-// };
 
 function AddRecipeFlow() {
   const [step, setStep] = useState(1);
@@ -95,6 +45,7 @@ function AddRecipeFlow() {
     const saved = localStorage.getItem('recipeForm');
     return saved ? JSON.parse(saved) : initialForm;
   });
+  const navigate = useNavigate();
 
   function updateForm(fields: Partial<RecipeFormData>) {
     setForm((prev) => ({ ...prev, ...fields }));
@@ -108,21 +59,121 @@ function AddRecipeFlow() {
     setStep((s) => s - 1);
   }
 
-  function handleSubmit() {
-    // Submit the form data
-    console.log(form);
+  function handleFileSelect(file: File | null) {
+    if (!file) {
+      setForm((prev) => ({ ...prev, imageFile: null, image: '' }));
+      return;
+    }
+
+    // Read the file and convert to base64
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setForm((prev) => ({
+        ...prev,
+        imageFile: file,
+        image: base64String, // Store base64 data URL for persistence
+      }));
+    };
+    reader.readAsDataURL(file);
+  }
+
+  async function handleSubmit() {
+    try {
+      // get current user
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        toast.error('You need to be logged in to submit a recipe!');
+        return;
+      }
+
+      // Handle image upload to Supabase storage
+      let imageUrl = '';
+      if (form.imageFile) {
+        // TODO : Set loading to true
+
+        // Generate unique filename
+        const fileExt = form.imageFile.name.split('.').pop();
+        const fileName = `${uuidv4()}.${fileExt}`;
+        const filePath = `${session.user.id}/${fileName}`;
+
+        // Upload to supabase
+        const { error: uploadError } = await supabase.storage
+          .from('recipe-images')
+          .upload(filePath, form.imageFile);
+
+        if (uploadError) {
+          toast.dismiss();
+          toast.error(`Failed to upload image: ${uploadError.message}`);
+          return;
+        }
+
+        // Get the public URL
+        const { data } = supabase.storage
+          .from('recipe-images')
+          .getPublicUrl(filePath);
+
+        imageUrl = data.publicUrl;
+        toast.dismiss();
+      }
+
+      const recipeData = {
+        title: form.title,
+        description: form.description || '',
+        image_url: imageUrl, // permanent supabase URL
+        ingredients: form.ingredients,
+        cook_time: form.time,
+        difficulty: form.difficulty,
+        price: form.price,
+        calories: form.calory,
+        portions: form.portion,
+        is_private: form.isPrivate,
+        categories: form.categories,
+        user_id: session.user.id,
+      };
+
+      const { data, error } = await supabase
+        .from('recipes')
+        .insert(recipeData)
+        .select()
+        .single();
+
+      if (error) {
+        toast.error(`Failed to submit recipe: ${error.message}`);
+        console.error('Error submitting recipe:', error);
+        return;
+      }
+
+      toast.success('Recipe successfully created!');
+      console.log('Recipe submitted:', data);
+
+      // Clear form after successful submission
+      handleReset();
+
+      // Navigate to the recipe page or dashboard
+      navigate('/search');
+      // navigate(`/recipe/${data.id}`);
+    } catch (error) {
+      console.error('Error in submission process:', error);
+      toast.error('An unexpected error occurred');
+    }
   }
 
   function handleReset() {
     setForm(initialForm);
-
     localStorage.removeItem('recipeForm');
-
     setStep(1);
   }
 
   useEffect(() => {
-    localStorage.setItem('recipeForm', JSON.stringify(form));
+    const formForStorage = {
+      ...form,
+      imageFile: null,
+    };
+    localStorage.setItem('recipeForm', JSON.stringify(formForStorage));
   }, [form]);
 
   return (
@@ -133,6 +184,7 @@ function AddRecipeFlow() {
           updateForm={updateForm}
           onReset={handleReset}
           onNext={handleNext}
+          onFileSelect={handleFileSelect}
         />
       )}
       {step === 2 && (

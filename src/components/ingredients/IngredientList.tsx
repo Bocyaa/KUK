@@ -1,31 +1,28 @@
 import type { Ingredient } from '@app/types/recipe';
 import IngredientRow from './IngredientRow';
+import BackSecondaryCard from '../ui/controllers/BackSecondaryCard';
 
 interface Props {
   items: Ingredient[];
   onRemove: (index: number) => void;
   onUpdateComment: (index: number, comment: string) => void;
-  className?: string;
 }
 
-function IngredientList({
-  items,
-  onRemove,
-  onUpdateComment,
-  className,
-}: Props) {
+function IngredientList({ items, onRemove, onUpdateComment }: Props) {
   return (
-    <div className={` ${className}`}>
-      {items.map((ing, i) => (
-        <IngredientRow
-          key={`${ing.id ?? ing.name}-${i}`}
-          ingredient={ing}
-          index={i}
-          onRemove={() => onRemove(i)}
-          onUpdateComment={onUpdateComment}
-        />
-      ))}
-    </div>
+    <BackSecondaryCard justify="start" height="full">
+      <div className="flex w-full flex-col gap-1">
+        {items.map((ing, i) => (
+          <IngredientRow
+            key={`${ing.id ?? ing.name}-${i}`}
+            ingredient={ing}
+            index={i}
+            onRemove={() => onRemove(i)}
+            onUpdateComment={onUpdateComment}
+          />
+        ))}
+      </div>
+    </BackSecondaryCard>
   );
 }
 

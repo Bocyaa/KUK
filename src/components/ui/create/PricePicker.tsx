@@ -136,19 +136,22 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
       <BackSecondaryCard justify="start" height="full">
         {ingredients.length > 0 ? (
           <div className="flex w-full flex-col gap-1">
+            {/*  */}
             {ingredients.map((ing) => (
-              <div className="relative">
-                <div className="no-scrollbar overflow-x-auto" key={ing.name}>
-                  <div className="flex min-w-max gap-1 whitespace-nowrap">
-                    <FrontPrimaryCard className="mr-28">
-                      <span className="px-2">
-                        {ingAmount(ing.unit)}
-                        <span className="text-sm font-light text-gray-600">
-                          of{' '}
+              <div className="w-full border-b pb-2 pt-1 first:pt-0 last:border-none last:pb-0">
+                <div className="relative">
+                  <div className="no-scrollbar overflow-x-auto" key={ing.name}>
+                    <div className="flex min-w-max gap-1 whitespace-nowrap">
+                      <FrontPrimaryCard className="mr-28 py-1">
+                        <span className="px-2">
+                          {ingAmount(ing.unit)}
+                          <span className="text-sm font-light text-gray-600">
+                            of{' '}
+                          </span>
+                          <span className="capitalize">{ing.name}</span>
                         </span>
-                        <span className="capitalize">{ing.name}</span>
-                      </span>
-                    </FrontPrimaryCard>
+                      </FrontPrimaryCard>
+                    </div>
                   </div>
 
                   <div className="absolute bottom-0 right-0 top-0">
@@ -162,6 +165,7 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
                 </div>
               </div>
             ))}
+            {/*  */}
           </div>
         ) : (
           <LabelPlaceholder>empty</LabelPlaceholder>

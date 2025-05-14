@@ -7,8 +7,6 @@ import VerticalSep from '../ui/VerticalSep';
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
 import { Ingredient } from '@app/types/recipe';
-import ShowHide from '../ui/create/ShowHide';
-import { motion } from 'framer-motion';
 
 type IngredientPickerProps = {
   form: {
@@ -22,7 +20,6 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   const [quantity, setQuantity] = useState(0);
   const [unit, setUnit] = useState('g');
   const [ingredients, setIngredients] = useState(form.ingredients);
-  const [isShowIngs, setIsShowIngs] = useState(true);
 
   const units = [
     { label: 'gram', value: 'g' },
@@ -83,7 +80,7 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   return (
     <div className="flex flex-col gap-4">
       <FormSection className="gap-1">
-        <div className="mb-3 flex flex-col gap-3 border-b pb-3">
+        <div className="mb-2 flex flex-col gap-3 border-b pb-3">
           <FormInput
             autoFocus={ingredients.length !== 0 ? false : true}
             label="Ingredients"
@@ -91,7 +88,6 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
-            // onBlur={addIngredient}
           />
           <div className="z-10 flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
             <QuantityStepper
@@ -111,28 +107,11 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
         </div>
 
         {form.ingredients.length > 0 && (
-          <div className="flex flex-col gap-2">
-            <ShowHide
-              type={isShowIngs ? 'hide' : 'show'}
-              onClick={() => setIsShowIngs(!isShowIngs)}
-            />
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={
-                isShowIngs
-                  ? { height: 'auto', opacity: 1 }
-                  : { height: 0, opacity: 0 }
-              }
-              transition={{ duration: 0.3 }}
-              style={{ overflow: 'hidden' }}
-            >
-              <IngredientList
-                items={ingredients}
-                onRemove={removeIngredient}
-                onUpdateComment={updateIngredientComment}
-              />
-            </motion.div>
-          </div>
+          <IngredientList
+            items={ingredients}
+            onRemove={removeIngredient}
+            onUpdateComment={updateIngredientComment}
+          />
         )}
       </FormSection>
     </div>

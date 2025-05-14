@@ -8,8 +8,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { ChatBubbleBottomCenterIcon as ChatBubbleBottomCenterIconSolid } from '@heroicons/react/24/solid';
 import { useState } from 'react';
-import BackSecondaryCard from '../ui/controllers/BackSecondaryCard';
 import FrontPrimaryCard from '../ui/controllers/FrontPrimaryCard';
+import AutoScrollingText from './AutoScrollingText';
 
 interface Props {
   ingredient: Ingredient;
@@ -45,7 +45,7 @@ function IngredientRow({
   }
 
   return (
-    <BackSecondaryCard className="mt-2" gap="0" height="full">
+    <>
       {showComment ? (
         <div className="relative flex w-full items-center">
           <input
@@ -75,11 +75,11 @@ function IngredientRow({
           )}
         </div>
       ) : (
-        <div className="w-full rounded-lg">
+        <div className="w-full border-b pb-2 pt-1 first:pt-0 last:border-none last:pb-0">
           <div className="relative">
             <div className="no-scrollbar overflow-x-auto rounded-lg">
               <div className="flex min-w-max gap-1 whitespace-nowrap rounded-lg">
-                <FrontPrimaryCard height="full">
+                <FrontPrimaryCard>
                   <span className="px-3 py-1 capitalize">{name}</span>
                 </FrontPrimaryCard>
 
@@ -92,7 +92,7 @@ function IngredientRow({
               </div>
             </div>
 
-            <div className="absolute bottom-0 right-0 top-0 flex gap-1 border-l bg-[#f3f2f8] px-1">
+            <div className="absolute bottom-0 right-0 top-0 flex gap-1 bg-[#f3f2f8] px-1">
               {isShowOptions ? (
                 <>
                   {comment ? (
@@ -137,15 +137,16 @@ function IngredientRow({
           </div>
 
           {comment && (
-            <div className="no-scrollbar overflow-x-auto">
-              <span className="mt-1 flex min-w-max gap-1 whitespace-nowrap rounded-lg pl-2 text-xs text-gray-400">
-                {comment && comment.charAt(0).toUpperCase() + comment.slice(1)}
-              </span>
-            </div>
+            <AutoScrollingText
+              text={comment}
+              className="mt-1 flex rounded-lg px-2 text-xs text-gray-400"
+              capitalize={true}
+              speed={15}
+            />
           )}
         </div>
       )}
-    </BackSecondaryCard>
+    </>
   );
 }
 

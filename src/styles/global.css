@@ -42,6 +42,35 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #000 !important;
 }
 
+/* Auto-scrolling text animation */
+@keyframes scrollText {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(calc(min(-100%, -100% + 100vw)));
+  }
+  50% {
+    transform: translateX(calc(min(-100%, -100% + 100vw)));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.auto-scroll {
+  animation: scrollText linear infinite;
+  padding-right: 50px; /* Add some padding at the end */
+}
+
+.auto-scroll.paused {
+  animation-play-state: paused;
+}
+
+.paused {
+  animation-play-state: paused !important;
+}
+
 /* Google Icon */
 .gsi-material-button {
   -moz-user-select: none;
