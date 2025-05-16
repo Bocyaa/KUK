@@ -8,6 +8,7 @@ import { Ingredient } from '@app/types/recipe';
 import { supabase } from '@app/lib/supabaseClient';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import processImage from '@app/utility/processImage';
 
 type RecipeFormData = {
   image: string;
@@ -59,42 +60,58 @@ function AddRecipeFlow() {
     setStep((s) => s - 1);
   }
 
-  function handleFileSelect(file: File | null) {
+  async function handleFileSelect(file: File | null) {
     if (!file) {
       setForm((prev) => ({ ...prev, imageFile: null, image: '' }));
       return;
     }
 
-    // Read the file and convert to base64
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      setForm((prev) => ({
-        ...prev,
-        imageFile: file,
-        image: base64String, // Store base64 data URL for persistence
-      }));
-    };
-    reader.readAsDataURL(file);
+    try {
+      // Show loading toast while processing
+      toast.loading('Processing image...');
+
+      // Process image to crop and optimize
+      const processedFile = await processImage(file);
+
+      // Read the processed file and convert to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setForm((prev) => ({
+          ...prev,
+          imageFile: processedFile,
+          image: base64String, // Store base64 data URL for persistence
+        }));
+        toast.dismiss();
+        toast.success('Image processed successfully');
+      };
+      reader.readAsDataURL(processedFile);
+    } catch (error) {
+      console.error('Image processing failed:', error);
+      toast.dismiss();
+      toast.error('Failed to process image');
+    }
   }
 
   async function handleSubmit() {
     try {
-      // get current user
+      // Get current user
       const {
         data: { session },
       } = await supabase.auth.getSession();
 
+      // Check for authentication
       if (!session?.user) {
         toast.error('You need to be logged in to submit a recipe!');
         return;
       }
 
+      // Start loading toast
+      const loadingToast = toast.loading('Creating your recipe...');
+
       // Handle image upload to Supabase storage
       let imageUrl = '';
       if (form.imageFile) {
-        // TODO : Set loading to true
-
         // Generate unique filename
         const fileExt = form.imageFile.name.split('.').pop();
         const fileName = `${uuidv4()}.${fileExt}`;
@@ -106,7 +123,7 @@ function AddRecipeFlow() {
           .upload(filePath, form.imageFile);
 
         if (uploadError) {
-          toast.dismiss();
+          toast.dismiss(loadingToast);
           toast.error(`Failed to upload image: ${uploadError.message}`);
           return;
         }
@@ -117,7 +134,6 @@ function AddRecipeFlow() {
           .getPublicUrl(filePath);
 
         imageUrl = data.publicUrl;
-        toast.dismiss();
       }
 
       const recipeData = {
@@ -142,11 +158,13 @@ function AddRecipeFlow() {
         .single();
 
       if (error) {
+        toast.dismiss(loadingToast);
         toast.error(`Failed to submit recipe: ${error.message}`);
         console.error('Error submitting recipe:', error);
         return;
       }
 
+      toast.dismiss(loadingToast);
       toast.success('Recipe successfully created!');
       console.log('Recipe submitted:', data);
 
@@ -155,9 +173,9 @@ function AddRecipeFlow() {
 
       // Navigate to the recipe page or dashboard
       navigate('/search');
-      // navigate(`/recipe/${data.id}`);
     } catch (error) {
       console.error('Error in submission process:', error);
+      toast.dismiss();
       toast.error('An unexpected error occurred');
     }
   }

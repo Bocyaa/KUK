@@ -3,18 +3,21 @@ import { NavLink } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
 
-import AuthTitle from '@app/components/ui/AuthTitle';
 import InputLabel from '@app/components/ui/InputLabel';
 import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
-import Logo from '@app/components/ui/Logo';
 import AuthDivider from '@app/components/ui/AuthDivider';
 
 import { validateForm } from '@app/hooks/auth/validateAuthForm';
 import { useLogin } from '@app/hooks/auth/useLogin';
 import { useGoogleAuth } from '@app/hooks/auth/useGoogleAuth';
 import { useAppleAuth } from '@app/hooks/auth/useAppleAuth';
+import AuthLayout from '@app/components/ui/auth/AuthLayout';
+import AuthHeader from '@app/components/ui/auth/AuthHeader';
+import AuthCard from '@app/components/ui/auth/AuthCard';
+import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -46,24 +49,22 @@ function Login() {
   }
 
   return (
-    <>
-      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
-        <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <Logo />
-          <AuthTitle>Login to your account</AuthTitle>
-        </div>
+    <AuthLayout>
+      <AuthHeader title="KÜK" />
 
-        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+      <AuthCard>
+        <AuthCardHeader title="Log in" />
+        <AuthCardBody>
           <form onSubmit={handleSubmit}>
-            <div className='space-y-6'>
+            <div className="space-y-4">
               <div>
-                <InputLabel>Email address</InputLabel>
-                <div className='mt-2'>
+                <InputLabel>Email</InputLabel>
+                <div className="mt-2">
                   <Input
-                    id='email'
-                    type='email'
-                    autoComplete='email'
-                    placeholder='example@gmail.com'
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="hello@example.com"
                     disabled={isPending}
                     required
                     value={email}
@@ -73,25 +74,13 @@ function Login() {
               </div>
 
               <div>
-                <div className='flex items-center justify-between'>
-                  <InputLabel>Password</InputLabel>
-                  <div className='text-sm'>
-                    <NavLink
-                      to='/forgot-password'
-                      className='text-blue-500 hover:underline font-semibold'
-                    >
-                      Forgot password?
-                    </NavLink>
-                  </div>
-                </div>
-
-                <div className='mt-2'>
+                <InputLabel>Password</InputLabel>
+                <div className="mt-2">
                   <Input
-                    id='password'
-                    name='password'
-                    type='password'
-                    placeholder='•••••••••'
-                    autoComplete='current-password'
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
                     required
                     disabled={isPending}
                     value={password}
@@ -101,7 +90,16 @@ function Login() {
               </div>
 
               <div>
-                <SubmitButton label='Continue' disabled={!isFormValid} />
+                <SubmitButton label="Log in" disabled={!isFormValid} />
+              </div>
+
+              <div className="flex w-full justify-center pb-2 pt-1 text-sm">
+                <NavLink
+                  to="/forgot-password"
+                  className="tracking-wide hover:underline dark:text-[#f3f4f6]"
+                >
+                  I forgot my password
+                </NavLink>
               </div>
 
               <AuthDivider
@@ -110,18 +108,19 @@ function Login() {
                   google: handleGoogleSignIn,
                   apple: handleAppleSignIn,
                 }}
+                label="or log in with"
               />
             </div>
           </form>
+        </AuthCardBody>
+      </AuthCard>
 
-          <SwitchAuthLink
-            question="Don't have an account?"
-            linkText='Sign up'
-            to='register'
-          />
-        </div>
-      </div>
-    </>
+      <SwitchAuthLink
+        question="Don't have an account?"
+        linkText="Sign up here!"
+        to="register"
+      />
+    </AuthLayout>
   );
 }
 

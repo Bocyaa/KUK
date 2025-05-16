@@ -6,7 +6,7 @@ interface AuthTitleProp {
 
 function AuthTitle({ children }: AuthTitleProp) {
   return (
-    <h2 className='mt-6 text-center text-2xl font-bold tracking-tight text-gray-900'>
+    <h2 className="text-2xl font-semibold text-[#181823] dark:text-white">
       {children}
     </h2>
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import InputLabel from '@app/components/ui/InputLabel';
 import Input from '@app/components/ui/Input';
@@ -9,6 +9,11 @@ import Logo from '@app/components/ui/Logo';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 
 import { useForgotPassword } from '@app/hooks/auth/useForgotPassword';
+import AuthHeader from '@app/components/ui/auth/AuthHeader';
+import AuthLayout from '@app/components/ui/auth/AuthLayout';
+import AuthCard from '@app/components/ui/auth/AuthCard';
+import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -25,43 +30,54 @@ function ForgotPassword() {
   }
 
   return (
-    <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <Logo />
-        <AuthTitle>Forgot Password</AuthTitle>
-      </div>
+    <AuthLayout>
+      <AuthHeader title="KÜK" />
 
-      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form onSubmit={handleSubmit}>
-          <div className='space-y-6'>
-            <div>
-              <InputLabel>Email address</InputLabel>
-              <div className='mt-2'>
-                <Input
-                  id='email'
-                  type='email'
-                  autoComplete='email'
-                  placeholder='example@gmail.com'
-                  disabled={isPending}
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+      <AuthCard>
+        <AuthCardHeader title="Reset Password" />
+        <AuthCardBody>
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-6">
+              <div>
+                <InputLabel>Email</InputLabel>
+                <div className="mt-1">
+                  <Input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="example@gmail.com"
+                    disabled={isPending}
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex w-full border-b dark:border-[#3b3f4e]"></div>
+
+              <div className="flex flex-row-reverse">
+                <SubmitButton
+                  label="Recover Password"
+                  disabled={!email || isPending}
                 />
               </div>
             </div>
+          </form>
+        </AuthCardBody>
+      </AuthCard>
 
-            <div>
-              <SubmitButton
-                label='Send Reset Link'
-                disabled={!email || isPending}
-              />
-            </div>
-
-            <SwitchAuthLink question='Back to' linkText='Log in' to='login' />
-          </div>
-        </form>
+      <div className="flex items-center gap-1 text-sm">
+        <span className="my-5 text-[#171823BF] dark:text-[#bab9bc]">
+          Back to
+        </span>
+        <NavLink to={`/login`} className="">
+          <span className="font-medium text-[#0094f6] dark:text-[#0094f6]">
+            Log in
+          </span>
+        </NavLink>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 

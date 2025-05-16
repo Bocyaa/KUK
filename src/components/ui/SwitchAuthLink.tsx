@@ -8,15 +8,17 @@ interface SwitchAuthLinkProps {
 
 function SwitchAuthLink({ question, linkText, to }: SwitchAuthLinkProps) {
   return (
-    <p className='mt-10 text-center text-sm text-gray-500'>
-      {question}{' '}
+    <div className="flex flex-col items-center">
+      <span className="my-5 text-sm text-[#171823BF] dark:text-[#bab9bc]">
+        {question}
+      </span>
       <NavLink
         to={`/${to}`}
-        className='text-blue-500 hover:underline font-semibold'
+        className="flex w-full justify-center rounded-lg border border-[#d2d4db] bg-white py-2 text-sm font-semibold hover:bg-gray-100 dark:border-[#3b3f4e] dark:bg-[#181823] dark:hover:bg-[#1e1e2b]"
       >
-        {linkText}
+        <span className="text-[#171823] dark:text-white">{linkText}</span>
       </NavLink>
-    </p>
+    </div>
   );
 }
 

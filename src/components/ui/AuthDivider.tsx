@@ -6,29 +6,33 @@ interface AuthDividerProps {
     google?: () => void;
     apple?: () => void;
   };
+  label: string;
 }
 
 function AuthDivider({
   providers = ['google', 'apple'],
   onClickHandlers = {},
+  label = '',
 }: AuthDividerProps) {
   return (
     <>
-      <div className='relative w-full text-center my-6'>
-        <span className='relative z-10 bg-white px-3 text-sm text-gray-800 font-medium'>
-          Or continue with
-        </span>
-        <div className='absolute inset-0 flex items-center' aria-hidden='true'>
-          <div className='w-full border-t border-gray-300'></div>
+      <div className="relative w-full">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <div className="w-full border-t border-gray-300 dark:border-[#3c3e4c]"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <span className="bg-white px-3 text-xs font-medium text-gray-500 dark:bg-[#242533] dark:text-[#f3f4f6]">
+            {label}
+          </span>
         </div>
       </div>
 
-      <div className='flex justify-center gap-3'>
+      <div className="flex justify-center gap-3 pt-2">
         {providers.includes('google') && (
-          <AuthButton provider='google' onClick={onClickHandlers.google} />
+          <AuthButton provider="google" onClick={onClickHandlers.google} />
         )}
         {providers.includes('apple') && (
-          <AuthButton provider='apple' onClick={onClickHandlers.apple} />
+          <AuthButton provider="apple" onClick={onClickHandlers.apple} />
         )}
       </div>
     </>

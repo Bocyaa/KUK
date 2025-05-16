@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
       required={required}
       autoComplete={autoComplete}
       disabled={disabled}
-      className={`block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6 ${
+      className={`block w-full bg-white px-3 py-[0.375rem] text-base text-gray-900 outline-none placeholder:text-gray-400 dark:border-[#3b3f4e] dark:bg-[#181823] dark:text-white ${
         top || bottom ? '' : 'rounded-md border border-gray-300'
       } ${className} `}
     />

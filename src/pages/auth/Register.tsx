@@ -8,12 +8,16 @@ import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 import AuthDivider from '@app/components/ui/AuthDivider';
-import Logo from '@app/components/ui/Logo';
 
 import { useGoogleAuth } from '@app/hooks/auth/useGoogleAuth';
 import { validateForm } from '@app/hooks/auth/validateAuthForm';
 import { handleSignup } from '@app/hooks/auth/useSignup';
 import { useAppleAuth } from '@app/hooks/auth/useAppleAuth';
+import AuthLayout from '@app/components/ui/auth/AuthLayout';
+import AuthHeader from '@app/components/ui/auth/AuthHeader';
+import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
+import AuthCard from '@app/components/ui/auth/AuthCard';
 
 function Register() {
   // Controlled input states
@@ -47,23 +51,21 @@ function Register() {
   }
 
   return (
-    <>
-      <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
-        <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <Logo />
-          <AuthTitle>Create a new account</AuthTitle>
-        </div>
+    <AuthLayout>
+      <AuthHeader title="KÜK" />
 
-        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-          <form onSubmit={handleSubmit} className='space-y-6'>
+      <AuthCard>
+        <AuthCardHeader title="Sign up" />
+        <AuthCardBody>
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <InputLabel>Email address</InputLabel>
-              <div className='mt-2'>
+              <InputLabel>Email</InputLabel>
+              <div className="mt-1">
                 <Input
-                  id='email'
-                  type='email'
-                  autoComplete='email'
-                  placeholder='name@example.com'
+                  id="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="name@example.com"
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -71,25 +73,25 @@ function Register() {
             </div>
 
             <div>
-              <div className='flex items-center justify-between'>
+              <div className="flex items-center justify-between">
                 <InputLabel>Password</InputLabel>
               </div>
-              <div className='mt-2'>
-                <div className='rounded-tl rounded-tr border border-gray-300'>
+              <div className="mt-1">
+                <div className="overflow-hidden rounded-tl-lg rounded-tr-lg border border-gray-300 dark:border-[#3b3f4e]">
                   <Input
-                    id='password'
-                    type='password'
-                    placeholder='New password'
+                    id="password"
+                    type="password"
+                    placeholder="New password"
                     required
                     top={true}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className='rounded-bl rounded-br border-b border-l border-r border-gray-300'>
+                <div className="overflow-hidden rounded-bl-lg rounded-br-lg border-b border-l border-r border-gray-300 dark:border-[#3b3f4e]">
                   <Input
-                    id='passwordConfirm'
-                    type='password'
-                    placeholder='Confirm new password'
+                    id="passwordConfirm"
+                    type="password"
+                    placeholder="Confirm new password"
                     required
                     bottom={true}
                     onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -99,7 +101,7 @@ function Register() {
             </div>
 
             <div>
-              <SubmitButton label='Continue' disabled={!isFormValid} />
+              <SubmitButton label="Sign up" disabled={!isFormValid} />
             </div>
 
             <AuthDivider
@@ -108,17 +110,18 @@ function Register() {
                 google: handleGoogleSignIn,
                 apple: handleAppleSignIn,
               }}
+              label="or sign up with"
             />
           </form>
+        </AuthCardBody>
+      </AuthCard>
 
-          <SwitchAuthLink
-            question='Already have an account?'
-            linkText='Log in'
-            to='login'
-          />
-        </div>
-      </div>
-    </>
+      <SwitchAuthLink
+        question="Already have an account?"
+        linkText="Log in here!"
+        to="login"
+      />
+    </AuthLayout>
   );
 }
 
