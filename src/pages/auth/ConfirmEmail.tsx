@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
 
-import Logo from '@app/components/ui/Logo';
 import SubmitButton from '@app/components/ui/SubmitButton';
-import InputLabel from '@app/components/ui/InputLabel';
-import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 
 import { useAuth } from '@app/contexts/hooks/useAuth';
 import { supabase } from '@app/lib/supabaseClient';
+import AuthLayout from '@app/components/ui/auth/AuthLayout';
+import AuthHeader from '@app/components/ui/auth/AuthHeader';
+import AuthCard from '@app/components/ui/auth/AuthCard';
+import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 
 function ConfirmEmail() {
   const [isResending, setIsResending] = useState(false);
@@ -58,51 +60,53 @@ function ConfirmEmail() {
   }
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <Logo />
+    <AuthLayout>
+      <AuthHeader title="KÜK" />
 
-      <div className="flex flex-col gap-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Check your email
-        </h2>
-        <p className="mt-4 text-center text-gray-600">
-          We've sent you a verification email. Please check your inbox or spam folder and click the
-          link to verify your account.
-        </p>
-        <div className="mt-6 flex flex-col gap-3 text-center">
-          {!isTimerActive && <InputLabel>Didn't receive the email?</InputLabel>}
+      <AuthCard>
+        <AuthCardHeader title="Check your email" />
+        <AuthCardBody>
+          <p className="mt-4 text-left text-gray-600 dark:text-[#e3e3e3]">
+            We've sent you a verification email. Please check your inbox or spam
+            folder and click the link to verify your account.
+          </p>
+        </AuthCardBody>
+        <div className="mt-4 flex flex-col gap-3 border-t pt-3 text-center dark:border-[#424242]">
+          {!isTimerActive && (
+            <label className="text-xs font-medium tracking-wider dark:text-[#afafaf]">
+              Didn't receive the email?
+            </label>
+          )}
 
-          <div className="relative">
-            {isTimerActive && (
-              <>
-                <div className="absolute top-2 w-full">
-                  <div className="h-[2px] w-full bg-gray-200">
-                    <div
-                      className="h-full bg-black transition-all duration-1000 ease-linear"
-                      style={{ width: `${(countdown / 30) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+          <div className="flex flex-row-reverse px-6 pb-4">
+            <SubmitButton
+              label={
+                isResending
+                  ? 'Sending...'
+                  : isTimerActive
+                    ? `Resend available in ${countdown}s`
+                    : 'Resend'
+              }
+              onClick={handleResendEmail}
+              disabled={isResending || isTimerActive}
+            />
           </div>
-
-          <SubmitButton
-            label={
-              isResending
-                ? 'Sending...'
-                : isTimerActive
-                  ? `Resend available in ${countdown}s`
-                  : 'Resend'
-            }
-            onClick={handleResendEmail}
-            disabled={isResending || isTimerActive}
-          />
         </div>
-      </div>
+      </AuthCard>
 
-      <SwitchAuthLink question="Back to" linkText="Log in" to="login" />
-    </div>
+      {/* <SwitchAuthLink question="Back to" linkText="Log in" to="login" /> */}
+
+      <div className="mt-4 flex items-center gap-1 text-sm">
+        <span className="my-5 text-[#171823BF] dark:text-[#bab9bc]">
+          Back to
+        </span>
+        <NavLink to={`/login`} className="">
+          <span className="font-medium text-[#0094f6] dark:text-[#0094f6]">
+            Log in
+          </span>
+        </NavLink>
+      </div>
+    </AuthLayout>
   );
 }
 

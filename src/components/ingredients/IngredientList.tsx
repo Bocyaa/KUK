@@ -1,4 +1,4 @@
-import type { Ingredient } from '@app/types/recipe';
+import type { Ingredient } from '@app/types/IngredientType';
 import IngredientRow from './IngredientRow';
 import BackSecondaryCard from '../ui/controllers/BackSecondaryCard';
 

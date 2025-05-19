@@ -1,4 +1,4 @@
-export type Ingredient = {
+type IngredientType = {
   id?: string;
   name: string;
   quantity: number;
@@ -6,3 +6,5 @@ export type Ingredient = {
   comment?: string;
   pricePerUnit?: number;
 };
+
+export default IngredientType;

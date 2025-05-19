@@ -1,4 +1,4 @@
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 import { Button } from './Button';
 import {
   ChatBubbleBottomCenterIcon,

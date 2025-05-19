@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 
 import IngredientPicker from '@app/components/ingredients/IngredientPicker';
 import PortionPicker from './PortionPicker';

@@ -18,10 +18,10 @@ function AuthDivider({
     <>
       <div className="relative w-full">
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
-          <div className="w-full border-t border-gray-300 dark:border-[#3c3e4c]"></div>
+          <div className="w-full border-t border-gray-300 dark:border-[#424242]"></div>
         </div>
         <div className="relative flex justify-center">
-          <span className="bg-white px-3 text-xs font-medium text-gray-500 dark:bg-[#242533] dark:text-[#f3f4f6]">
+          <span className="bg-white px-3 text-xs font-medium text-gray-500 dark:bg-[#212121] dark:text-[#afafaf]">
             {label}
           </span>
         </div>

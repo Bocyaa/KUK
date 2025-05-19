@@ -6,7 +6,7 @@ type AuthCardHeaderProps = {
 
 function AuthCardHeader({ title }: AuthCardHeaderProps) {
   return (
-    <div className="flex border-b py-3 pl-6 dark:border-[#3b3f4e]">
+    <div className="flex border-b py-3 pl-6 dark:border-[#424242]">
       <AuthTitle>{title}</AuthTitle>
     </div>
   );

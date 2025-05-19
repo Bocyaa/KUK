@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
-import { Ingredient } from '@app/types/recipe';
+import Ingredient from '@app/types/IngredientType';
 import { supabase } from '@app/lib/supabaseClient';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';

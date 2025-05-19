@@ -12,8 +12,24 @@
     />
     <meta
       name="theme-color"
-      content="#181823"
+      content="#000000"
       media="(prefers-color-scheme: dark)"
+    />
+
+    <!-- Critical font preloading -->
+    <link
+      rel="preload"
+      href="/fonts/SF-Pro-Text-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/SF-Pro-Display-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
     />
 
     <!-- Favicons and App Icons -->
@@ -38,10 +54,11 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#ffffff" />
-    <!-- Favicons and App Icons END -->
   </head>
-  <body class="relative h-screen bg-[#f9fafb] dark:bg-[#181823]">
+  <!--  -->
+  <body class="h-screen bg-[#f9fafb] dark:bg-[#000000]">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
+  <!--  -->
 </html>

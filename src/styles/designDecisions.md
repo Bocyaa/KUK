@@ -113,3 +113,17 @@
 - `#2563eb` (Spinner blue)
 
 ---
+
+| Context        | Light Mode | Dark Mode             |
+| -------------- | ---------- | --------------------- |
+| App main bg    | `#`        | `#000000`             |
+| Panel bg I     | `#`        | `#212121`             |
+| Panel bg II    | `#`        | `#2c2c2e`             |
+| Border         | `#`        | `#424242`             |
+| Input bg       | `#`        | `#303030`             |
+| Input placeh   | `#`        | `#b4b4b4`             |
+| Text I         | `#`        | `#ffffff` - `#e3e3e3` |
+| Text II        | `#`        | `#afafaf`             |
+| Text III       | `#`        | `#929299`             |
+| Icon color     | `#`        | `#f3f3f3`             |
+| Hover on white | `#`        | `#c1c1c1`             |

@@ -60,7 +60,6 @@ function CreateRecipeStep1({
 
       <FormSection className="gap-10">
         <FormInput
-          autoFocus={form.title ? false : true}
           label="Recipe Title"
           name="title"
           type="text"

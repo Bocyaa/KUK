@@ -64,7 +64,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ provider, onClick }) => {
     <button
       onClick={onClick}
       type="button"
-      className="flex h-10 w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition hover:bg-gray-100 dark:border-[#3b3f4e] dark:bg-[#181823] dark:text-white dark:hover:bg-[#1e1e2b]"
+      className="flex h-10 w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-900 transition hover:bg-gray-100 dark:border-[#424242] dark:bg-[#212121] dark:text-white dark:hover:bg-[#1e1e2b]"
     >
       <div className="mr-3 flex h-5 w-5 items-center justify-center">
         {icons[provider]}

@@ -38,7 +38,7 @@ function Header() {
   }
 
   const styleHeader =
-    'fixed left-0 right-0 border-b border-gray-300 bg-white px-5 py-3 dark:border-[#1c1c1c] dark:bg-black dark:text-gray-200 z-50';
+    'fixed left-0 right-0 border-b border-gray-300 bg-[#f9fafb] px-5 py-3 dark:border-[#1c1c1c] dark:bg-[#242533] dark:text-gray-200 z-50';
 
   const styleHeaderDiv =
     'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between px-1';

@@ -60,7 +60,7 @@ function BottomNav() {
   return (
     <nav
       className={
-        'bottom-nav fixed inset-x-0 bottom-0 z-50 flex h-[70px] items-center justify-around border-t border-gray-300 bg-white pb-3 pt-2 dark:border-[#1c1c1c] dark:bg-black standalone:h-[90px] standalone:pb-7'
+        'bottom-nav fixed inset-x-0 bottom-0 z-50 flex h-[70px] items-center justify-around border-t border-gray-300 bg-[#f9fafb] pb-3 pt-2 dark:border-[#1c1c1c] dark:bg-[#242533] standalone:h-[90px] standalone:pb-7'
       }
     >
       {navItems.map((item) => (
@@ -69,7 +69,9 @@ function BottomNav() {
           key={item.key}
           className={({ isActive }) =>
             `flex flex-col items-center gap-1 text-xs ${
-              isActive ? 'text-gray-800 dark:text-[#f3f3f3]' : 'text-gray-400 dark:text-[#666666]'
+              isActive
+                ? 'text-gray-800 dark:text-[#f3f3f3]'
+                : 'text-gray-400 dark:text-[#666666]'
             }`
           }
         >

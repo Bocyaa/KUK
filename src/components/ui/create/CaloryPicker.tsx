@@ -1,5 +1,5 @@
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 import { useEffect, useState } from 'react';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
 

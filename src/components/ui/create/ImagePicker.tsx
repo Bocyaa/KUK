@@ -70,10 +70,10 @@ function ImagePicker({
   const imageToShow = localImage || src;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border-none">
-      <div className="relative overflow-hidden rounded-[0.55rem] border">
+    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border-8 dark:border-[#242533]">
+      <div className="relative overflow-hidden rounded-[0.55rem] border dark:border-[#3b3f4e]">
         <div
-          className={`relative flex h-52 items-center justify-center bg-gray-100 transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#1c1c1e]`}
+          className={`relative flex h-52 items-center justify-center bg-gray-100 transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#333442]`}
         >
           {imageToShow ? (
             <>
@@ -118,7 +118,7 @@ function ImagePicker({
         />
         {form.image && (
           <button
-            className="absolute bottom-0 right-0 m-2 rounded-lg bg-white p-1 text-red-700 shadow-sm"
+            className="absolute bottom-0 right-0 m-2 rounded-lg p-1 text-red-700 shadow-sm"
             onClick={() => {
               setLocalImage(null);
               updateForm({ image: '' });

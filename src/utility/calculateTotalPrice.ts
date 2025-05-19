@@ -1,4 +1,4 @@
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 
 // Most accurate static values for average ingredient
 const GRAMS_PER_TSP = 4.92892159375;

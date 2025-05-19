@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-import AuthTitle from '@app/components/ui/AuthTitle';
 import InputLabel from '@app/components/ui/InputLabel';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 import Input from '@app/components/ui/Input';
@@ -23,7 +22,8 @@ function Register() {
   // Controlled input states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  // const [passwordConfirm, setPasswordConfirm] = useState('');
 
   // Custom hooks
   const navigate = useNavigate();
@@ -31,11 +31,21 @@ function Register() {
   const { signInWithApple } = useAppleAuth();
 
   // FrontEnd form validation
-  const isFormValid = validateForm(email, password, passwordConfirm);
+  const isFormValid = validateForm(email, password); // passwordConfirm
 
   // SignUp via Email
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    await handleSignup(e, email, password, navigate);
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      await handleSignup(e, email, password, navigate);
+    } finally {
+      // Ensure loading state persists for at least 300ms
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
   }
 
   // SignIn via Google
@@ -57,37 +67,39 @@ function Register() {
       <AuthCard>
         <AuthCardHeader title="Sign up" />
         <AuthCardBody>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <InputLabel>Email</InputLabel>
-              <div className="mt-1">
-                <Input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="name@example.com"
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div>
+                <InputLabel>Email</InputLabel>
+                <div className="mt-1">
+                  <Input
+                    id="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="hello@example.com"
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <div className="flex items-center justify-between">
+              <div>
                 <InputLabel>Password</InputLabel>
-              </div>
-              <div className="mt-1">
-                <div className="overflow-hidden rounded-tl-lg rounded-tr-lg border border-gray-300 dark:border-[#3b3f4e]">
+                <div className="mt-1">
                   <Input
                     id="password"
                     type="password"
-                    placeholder="New password"
+                    placeholder=""
                     required
-                    top={true}
                     onChange={(e) => setPassword(e.target.value)}
+                    eye={true}
                   />
                 </div>
-                <div className="overflow-hidden rounded-bl-lg rounded-br-lg border-b border-l border-r border-gray-300 dark:border-[#3b3f4e]">
+                <p className="mt-2 pl-2 text-xs text-[#74747b] dark:text-[#afafaf]">
+                  Min 6 chars. Adding upper, lower & special chars increases
+                  security.
+                </p>
+                {/* <div className="overflow-hidden rounded-bl-lg rounded-br-lg border-b border-l border-r border-gray-300 dark:border-[#3b3f4e]">
                   <Input
                     id="passwordConfirm"
                     type="password"
@@ -95,23 +107,28 @@ function Register() {
                     required
                     bottom={true}
                     onChange={(e) => setPasswordConfirm(e.target.value)}
+                    eye={true}
                   />
-                </div>
+                </div> */}
               </div>
-            </div>
 
-            <div>
-              <SubmitButton label="Sign up" disabled={!isFormValid} />
-            </div>
+              <div className="pb-2">
+                <SubmitButton
+                  label="Create account"
+                  disabled={!isFormValid}
+                  isLoading={isLoading}
+                />
+              </div>
 
-            <AuthDivider
-              providers={['google', 'apple']}
-              onClickHandlers={{
-                google: handleGoogleSignIn,
-                apple: handleAppleSignIn,
-              }}
-              label="or sign up with"
-            />
+              <AuthDivider
+                providers={['google', 'apple']}
+                onClickHandlers={{
+                  google: handleGoogleSignIn,
+                  apple: handleAppleSignIn,
+                }}
+                label="or sign up with"
+              />
+            </div>
           </form>
         </AuthCardBody>
       </AuthCard>

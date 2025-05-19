@@ -6,7 +6,7 @@ interface InputLabelProp {
 
 function InputLabel({ children }: InputLabelProp) {
   return (
-    <label className="mb-1 text-xs font-medium tracking-wider dark:text-[#bdbec1]">
+    <label className="mb-1 text-xs font-medium tracking-wider dark:text-[#e3e3e3]">
       {children}
     </label>
   );

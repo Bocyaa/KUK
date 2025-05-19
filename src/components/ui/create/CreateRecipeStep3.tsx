@@ -2,7 +2,7 @@ import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { useEffect } from 'react';
 
 import CategoryPicker from './CategoryPicker';
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 import PricePicker from './PricePicker';
 import RecipeVisibilityToggle from './RecipeVisibilityToggle';
 

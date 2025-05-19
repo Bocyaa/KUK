@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
@@ -22,10 +22,23 @@ import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [extendedLoading, setExtendedLoading] = useState(false);
 
   const { login, isPending } = useLogin();
   const { signInWithGoogle } = useGoogleAuth();
   const { signInWithApple } = useAppleAuth();
+
+  // Ensure loading indicator shows for at least 300ms
+  useEffect(() => {
+    if (isPending) {
+      setExtendedLoading(true);
+    } else if (!isPending && extendedLoading) {
+      const timer = setTimeout(() => {
+        setExtendedLoading(false);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isPending, extendedLoading]);
 
   const isFormValid = validateForm(email, password);
 
@@ -59,7 +72,7 @@ function Login() {
             <div className="space-y-4">
               <div>
                 <InputLabel>Email</InputLabel>
-                <div className="mt-2">
+                <div className="mt-1">
                   <Input
                     id="email"
                     type="email"
@@ -75,7 +88,7 @@ function Login() {
 
               <div>
                 <InputLabel>Password</InputLabel>
-                <div className="mt-2">
+                <div className="mt-1">
                   <Input
                     id="password"
                     name="password"
@@ -85,18 +98,23 @@ function Login() {
                     disabled={isPending}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    eye={true}
                   />
                 </div>
               </div>
 
               <div>
-                <SubmitButton label="Log in" disabled={!isFormValid} />
+                <SubmitButton
+                  label="Continue"
+                  disabled={!isFormValid}
+                  isLoading={extendedLoading || isPending}
+                />
               </div>
 
               <div className="flex w-full justify-center pb-2 pt-1 text-sm">
                 <NavLink
                   to="/forgot-password"
-                  className="tracking-wide hover:underline dark:text-[#f3f4f6]"
+                  className="tracking-wide hover:underline dark:text-[#e3e3e3]"
                 >
                   I forgot my password
                 </NavLink>

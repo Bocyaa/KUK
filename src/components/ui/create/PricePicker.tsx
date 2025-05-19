@@ -1,11 +1,11 @@
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
 import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
 import FormSection from '../form/FormSection';
 import { useEffect, useMemo, useState } from 'react';
 import LabelPlaceholder from './LabelPlaceholder';
 import PriceStepper from '@app/components/ingredients/PriceStepper';
-import { UNIT_TO_KG, UNIT_TO_L } from '@app/utility/price';
+import { UNIT_TO_KG, UNIT_TO_L } from '@app/utility/calculateTotalPrice';
 
 type PricePickerProps = {
   form: {

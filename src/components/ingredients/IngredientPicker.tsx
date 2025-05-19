@@ -6,7 +6,7 @@ import QuantityStepper from './QuantityStepper';
 import VerticalSep from '../ui/VerticalSep';
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
-import { Ingredient } from '@app/types/recipe';
+import { Ingredient } from '@app/types/IngredientType';
 
 type IngredientPickerProps = {
   form: {
