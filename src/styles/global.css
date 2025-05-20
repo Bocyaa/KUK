@@ -179,11 +179,27 @@ a {
   scrollbar-width: none; /* Firefox */
 }
 
-/* Background color of apple auto fill */
+/* Light mode autofill styles */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px white inset !important;
   box-shadow: 0 0 0 1000px white inset !important;
   -webkit-text-fill-color: #000 !important;
+}
+
+/* Dark mode autofill styles */
+@media (prefers-color-scheme: dark) {
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #212121 inset !important;
+    box-shadow: 0 0 0 1000px #212121 inset !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+}
+
+/* Class-based dark mode for systems that use manual toggles */
+.dark input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #212121 inset !important;
+  box-shadow: 0 0 0 1000px #212121 inset !important;
+  -webkit-text-fill-color: #fff !important;
 }
 
 /* Auto-scrolling text animation */

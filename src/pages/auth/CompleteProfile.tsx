@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import countryList from 'react-select-country-list';
@@ -14,6 +14,8 @@ import AuthCard from '@app/components/ui/auth/AuthCard';
 import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
 import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 import ThemedSelect from '@app/components/ui/ThemedSelect';
+import ThemedDatePicker from '@app/components/ui/ThemedDatePicker';
+import AuthHeader from '@app/components/ui/auth/AuthHeader';
 
 interface FormState {
   first_name: string;
@@ -35,7 +37,7 @@ interface UsernameValidation {
 export default function CompleteProfile() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [disabledFields, setDisabledFields] = useState<string[]>([]);
+  const [disabledFields] = useState<string[]>([]);
   const [existingUsernames, setExistingUsernames] = useState<string[]>([]);
   const countries = countryList().getData();
 
@@ -90,17 +92,14 @@ export default function CompleteProfile() {
   // Fetch usernames on mount
   useEffect(() => {
     async function fetchUsernames() {
-      console.log('Fetching usernames...');
-
       // Use the RPC function instead of direct table access
       const { data, error } = await supabase.rpc('get_all_usernames');
 
-      console.log('Raw data response:', data);
-      console.log('Error (if any):', error);
-
       if (!error && data) {
-        const usernames = data.map((item) => item.username.toLowerCase());
-        console.log('Processed usernames:', usernames);
+        const usernames = data.map((item: { username: string }) => {
+          item.username.toLowerCase();
+        });
+
         setExistingUsernames(usernames);
       }
     }
@@ -108,65 +107,74 @@ export default function CompleteProfile() {
     fetchUsernames();
   }, []);
 
-  const isFormValid =
-    (form.first_name?.trim()?.length ?? 0) >= 3 &&
-    (form.last_name?.trim()?.length ?? 0) >= 3 &&
-    (form.birthdate?.trim() ?? '') !== '' &&
-    (form.username ?? '') !== '';
+  const isFormValid = useMemo(() => {
+    return (
+      form.first_name.trim().length >= 3 &&
+      form.last_name.trim().length >= 3 &&
+      form.username.trim().length >= 3 && // you already require length >= 3
+      form.birthdate.trim().length > 0 && // non‐empty
+      form.country.trim().length > 0 // non‐empty
+    );
+  }, [
+    form.first_name,
+    form.last_name,
+    form.username,
+    form.birthdate,
+    form.country,
+  ]);
 
   // Pre-Populate inputs on mount
   useEffect(() => {
     const loadUserMetadata = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (!session?.user) {
-        navigate('/login');
-        return;
+        if (!session?.user) {
+          navigate('/login');
+          return;
+        }
+
+        // Set default values first
+        setForm({
+          first_name: '',
+          last_name: '',
+          username: '',
+          birthdate: '',
+          country: '',
+          avatar_url: '',
+          email: '',
+          authProvider: '',
+        });
+
+        // Try to load data from user metadata
+        const user = session.user;
+        const metadata = user.user_metadata || {};
+
+        // Query the profiles table for fallback values
+        const { data: userProfile } = await supabase
+          .from('profiles')
+          .select('first_name, last_name, username, birthdate, country')
+          .eq('id', session.user.id)
+          .single();
+
+        // Update state with whatever data we have
+        setForm((prev) => ({
+          ...prev,
+          first_name: metadata?.first_name || userProfile?.first_name || '',
+          last_name: metadata?.last_name || userProfile?.last_name || '',
+          username: metadata?.username || userProfile?.username || '',
+          birthdate: metadata?.birthdate || userProfile?.birthdate || '',
+          country: metadata?.country || userProfile?.country || '',
+        }));
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        toast.error('Failed to load your profile');
+        setLoading(false);
       }
-
-      const user = session.user;
-      const metadata = user.user_metadata;
-
-      // Query the profiles table for fallback values
-      const { data: userProfile } = await supabase
-        .from('profiles')
-        .select('first_name, last_name, username, birthdate, country')
-        .eq('id', session.user.id)
-        .single();
-
-      // Use metadata if available, else fallback to the profile data
-      const fullName =
-        metadata?.name ||
-        metadata?.full_name ||
-        `${userProfile?.first_name || ''} ${userProfile?.last_name || ''}`;
-      const [firstName = '', lastName = ''] = fullName.trim().split(' ');
-      const username = metadata?.username || userProfile?.username || '';
-      const birthdate = metadata?.birthdate || userProfile?.birthdate || '';
-      const country = metadata?.country || userProfile?.country || '';
-
-      setForm((prev) => ({
-        ...prev,
-        first_name: firstName,
-        last_name: lastName,
-        username: username,
-        birthdate: birthdate,
-        country: country,
-        avatar_url: metadata?.avatar_url || metadata?.picture || '',
-        email: metadata?.email || '',
-        authProvider: user.app_metadata?.provider || '',
-      }));
-
-      const disabled: string[] = [];
-      if (firstName) disabled.push('first_name');
-      if (lastName) disabled.push('last_name');
-      if (username) disabled.push('username');
-      if (birthdate) disabled.push('birthdate');
-      if (country) disabled.push('country');
-
-      setDisabledFields(disabled);
-      setLoading(false);
     };
 
     loadUserMetadata();
@@ -209,8 +217,6 @@ export default function CompleteProfile() {
       toast.error('Failed to save profile: ' + error.message);
     }
   };
-
-  console.log(existingUsernames);
 
   if (loading) return <div className="p-4 text-center">Loading...</div>;
 
@@ -259,7 +265,7 @@ export default function CompleteProfile() {
                   />
                   {form.username && (
                     <div
-                      className={`mt-1 text-sm ${
+                      className={`mt-1 pl-2 text-xs ${
                         usernameValidation.isValid
                           ? 'text-green-600'
                           : 'text-red-600'
@@ -273,17 +279,18 @@ export default function CompleteProfile() {
                 </div>
               </div>
 
-              {/* TODO: Need to create new component for this birthdate input, or just use React library */}
               <div className="flex flex-col gap-1">
                 <InputLabel>Birthday</InputLabel>
-                <Input
-                  type="date"
+                <ThemedDatePicker
                   id="birthdate"
                   value={form.birthdate}
-                  onChange={handleChange}
+                  // onChange={handleDateChange}
+                  onChange={(date) =>
+                    setForm((prev) => ({ ...prev, birthdate: date }))
+                  }
                   disabled={disabledFields.includes('birthdate')}
                   required
-                  onKeyDown={(e) => e.preventDefault()} // block typing
+                  minAge={6}
                 />
               </div>
 
@@ -312,6 +319,9 @@ export default function CompleteProfile() {
           </form>
         </AuthCardBody>
       </AuthCard>
+      <span className="px-2 py-3 text-xs font-medium text-[#8f8f8f] dark:text-[#afafaf]">
+        Introduce yourself to get better, more personalized user experience.
+      </span>
     </AuthLayout>
   );
 }
