@@ -14,7 +14,7 @@ function SettingsList() {
   }, [setLabelLeft, setLabelRight]);
 
   return (
-    <div className="mt-14 flex w-full flex-col gap-5">
+    <div className="mt-14 flex w-full flex-col gap-5 px-4 py-2">
       <NavLink to="profile">
         <ProfileCard />
       </NavLink>

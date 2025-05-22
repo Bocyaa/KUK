@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Select from '@app/components/ingredients/Select';
-import FormInput from '@app/components/ui/form/FormInput';
 import FormSection from '@app/components/ui/form/FormSection';
 import QuantityStepper from './QuantityStepper';
-import VerticalSep from '../ui/VerticalSep';
+
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
-import { Ingredient } from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientType';
+import Input from '../ui/Input';
 
 type IngredientPickerProps = {
   form: {
@@ -80,25 +80,29 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
   return (
     <div className="flex flex-col gap-4">
       <FormSection className="gap-1">
-        <div className="mb-2 flex flex-col gap-3 border-b pb-3">
-          <FormInput
-            autoFocus={ingredients.length !== 0 ? false : true}
+        <div className="mb-2 flex flex-col gap-3 pb-3">
+          <Input
+            id="ingredients"
             label="Ingredients"
-            placeholder="Add ingredient ..."
+            placeholder={
+              ingredients.length === 0
+                ? 'e.g., Olive oil or Garlic cloves'
+                : 'Ingredient name...'
+            }
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <div className="z-10 flex items-center justify-between rounded-xl border bg-gray-100 px-1 py-1 dark:border-[#6f6f6f21] dark:bg-[#29292b]">
+          <div className="z-10 flex items-center justify-between rounded-xl border border-[#e6e6e6] bg-[#f9f9f9] px-1 py-1 dark:border-transparent dark:bg-[#2c2c2e]">
             <QuantityStepper
               incVal={['g', 'ml'].includes(unit) ? 100 : 1}
               decVal={['g', 'ml'].includes(unit) ? 100 : 1}
               value={quantity}
               onChange={setQuantity}
             />
-            <VerticalSep />
+
             <Select value={unit} onChange={setUnit} options={units} />
-            <VerticalSep />
+
             <AddItemButton
               disabled={!name || quantity === 0}
               onClick={addIngredient}

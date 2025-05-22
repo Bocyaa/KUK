@@ -62,7 +62,7 @@ export default function QuantityStepper({
   return (
     <FrontPrimaryCard height="full">
       <Button onClick={dec}>
-        <Minus className="h-4 w-4" />
+        <Minus className="h-5 w-5 stroke-1" />
       </Button>
       <CurrencyInput
         ref={inputRef}
@@ -74,71 +74,14 @@ export default function QuantityStepper({
         decimalSeparator=","
         groupSeparator="."
         placeholder="0"
-        className={`w-10 py-1 text-center focus:outline-none ${className && className}`}
+        className={`w-10 bg-white py-1 text-center focus:outline-none dark:bg-[#1a1a1a] ${className && className}`}
         allowNegativeValue={false}
         disableAbbreviations
         inputMode="decimal"
       />
       <Button onClick={inc}>
-        <Plus className="h-4 w-4" />
+        <Plus className="h-5 w-5 stroke-1" />
       </Button>
     </FrontPrimaryCard>
   );
 }
-
-/** Simple Version
- 
-import { Minus, Plus } from 'lucide-react';
-import FrontPrimaryCard from '../ui/controllers/FrontPrimaryCard';
-import Button from '../ui/controllers/Button';
-
-type Props = {
-  value: number;
-  min?: number;
-  max?: number;
-  incVal?: number;
-  decVal?: number;
-  onChange: (v: number) => void;
-  className?: string;
-};
-
-export default function QuantityStepper({
-  value,
-  min = 0,
-  max = Infinity,
-  incVal = 1,
-  decVal = 1,
-  onChange,
-  // className,
-}: Props) {
-  const dec = () => onChange(Math.max(min, value - decVal));
-  const inc = () => onChange(Math.min(max, value + incVal));
-
-  return (
-    <FrontPrimaryCard>
-      <Button onClick={dec}>
-        <Minus className="h-4 w-4" />
-      </Button>
-      <input
-        type="number"
-        value={value === 0 ? '' : value}
-        onFocus={(e) => e.currentTarget.select()}
-        onChange={(e) => {
-          const n = Number(e.target.value);
-          if (!Number.isNaN(n)) onChange(n);
-          else onChange(0);
-        }}
-        onBlur={(e) => {
-          if (e.target.value === '') onChange(0);
-        }}
-        placeholder="0"
-        className="w-8 text-center focus:outline-none"
-      />
-      <Button onClick={inc}>
-        <Plus className="h-4 w-4" />
-      </Button>
-    </FrontPrimaryCard>
-  );
-}
-
- */

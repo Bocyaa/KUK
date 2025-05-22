@@ -6,6 +6,8 @@ import Right from '@app/components/ui/Right';
 
 const ROOT_PATHS = ['/dashboard', '/search', '/settings', '/create-recipe'];
 
+const ALTERNATIVE_HEADER = ['Create Recipe', 'Recipes'];
+
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,52 +39,52 @@ function Header() {
     setIsDirty(false);
   }
 
-  const styleHeader =
-    'fixed left-0 right-0 border-b border-gray-300 bg-[#f9fafb] px-5 py-3 dark:border-[#1c1c1c] dark:bg-[#242533] dark:text-gray-200 z-50';
-
-  const styleHeaderDiv =
-    'absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between px-1';
-
   return (
-    <header className={styleHeader}>
-      <div className="relative left-0 right-0 flex items-center justify-center">
-        <span className="h-6 font-semibold">{title}</span>
-      </div>
+    <>
+      {!ALTERNATIVE_HEADER.includes(title) && (
+        <header className="fixed left-0 right-0 z-50 border-b border-[#e6e6e6] bg-[#ffffff]/70 px-5 py-3 backdrop-blur-sm dark:border-[#1a1a1a] dark:bg-[#000000]/70 dark:text-[#ffffff]">
+          {/*  */}
+          <div className="relative left-0 right-0 flex items-center justify-center">
+            <span className="text-lg font-semibold">{title}</span>
+          </div>
 
-      <div className={styleHeaderDiv}>
-        {showBack ? (
-          <button onClick={() => handleBack()} aria-label="Back">
-            <Left label={labelLeft} />
-          </button>
-        ) : labelLeft && isDirty ? (
-          <button onClick={() => onLeftClick!()} aria-label="Back">
-            <Left label={labelLeft} />
-          </button>
-        ) : (
-          <button onClick={() => onLeftClick!()} aria-label="Back">
-            <Left
-              label={labelLeft}
-              className="text-gray-300 dark:text-[#2d2d2d]"
-            />
-          </button>
-        )}
+          <div className="absolute bottom-0 left-0 right-0 top-0 flex items-center justify-between px-2">
+            {showBack ? (
+              <button onClick={() => handleBack()} aria-label="Back">
+                <Left label={labelLeft} />
+              </button>
+            ) : labelLeft && isDirty ? (
+              <button onClick={() => onLeftClick!()} aria-label="Back">
+                <Left label={labelLeft} />
+              </button>
+            ) : (
+              // <button onClick={() => onLeftClick!()} aria-label="Back">
+              //   <Left
+              //     label={labelLeft}
+              //     className="text-gray-300 dark:text-[#2d2d2d]"
+              //   />
+              // </button>
+              <span>&nbsp;</span>
+            )}
 
-        {labelRight ? (
-          isDirty && labelRight ? (
-            <button onClick={() => onRightClick!()} aria-label="Back">
-              <Right label={labelRight} />
-            </button>
-          ) : (
-            <Right
-              label={labelRight}
-              className="text-gray-300 dark:text-[#2d2d2d]"
-            />
-          )
-        ) : (
-          <span>&nbsp;</span>
-        )}
-      </div>
-    </header>
+            {labelRight ? (
+              isDirty && labelRight ? (
+                <button onClick={() => onRightClick!()} aria-label="Back">
+                  <Right label={labelRight} />
+                </button>
+              ) : (
+                <Right
+                  label={labelRight}
+                  className="text-gray-300 dark:text-[#2d2d2d]"
+                />
+              )
+            ) : (
+              <span>&nbsp;</span>
+            )}
+          </div>
+        </header>
+      )}
+    </>
   );
 }
 

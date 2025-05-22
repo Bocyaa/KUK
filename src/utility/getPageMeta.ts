@@ -1,7 +1,7 @@
 export const pageMeta = [
   // Depth: 1
   { path: '/dashboard', title: 'Home' },
-  { path: '/search', title: 'Search' },
+  { path: '/recipes', title: 'Recipes' },
   { path: '/create-recipe', title: 'Create Recipe' },
   { path: '/settings', title: 'Settings' },
   { path: '/recipe', title: 'Recipe Details' },

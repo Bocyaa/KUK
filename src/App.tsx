@@ -55,7 +55,7 @@ function App() {
               <Route element={<AppLayout />}>
                 <Route index element={<Navigate replace to="dashboard" />} />
                 <Route path="dashboard" element={<Dashboard />} />
-                <Route path="search" element={<Search />} />
+                <Route path="recipes" element={<Search />} />
                 <Route path="recipe" element={<Recipe />} />
                 <Route path="settings" element={<SettingsLayout />}>
                   <Route index element={<SettingsList />} />
@@ -66,6 +66,7 @@ function App() {
                     <Route path="deleteAccount" element={<DeleteAccount />} />
                   </Route>
                   <Route path="language" element={<Language />} />
+                  {/* <Route path="language" element={<CompleteProfile />} /> */}
                   <Route path="notifications" element={<Notifications />} />
                   <Route path="privacyData" element={<PrivacyData />} />
                   <Route path="dashboard" element={<DashboardSettings />} />

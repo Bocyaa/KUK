@@ -32,7 +32,7 @@ export function useForgotPassword() {
             existingProfile.authProvider.charAt(0).toUpperCase() +
             existingProfile.authProvider.slice(1);
           toast.error(
-            `An account with this email exists. Please sign in via ${formattedProvider}.`
+            `An account with this email exists. Please sign in via ${formattedProvider}.`,
           );
           return;
         }
@@ -49,9 +49,9 @@ export function useForgotPassword() {
           return;
         }
 
-        toast.success(
-          'Reset link sent! Check your email inbox and spam folder.'
-        );
+        // toast.success(
+        //   'Reset link sent! Check your email inbox and spam folder.'
+        // );
       } else {
         toast.error("This email address doesn't exists!");
       }

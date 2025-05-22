@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
-import InputLabel from '@app/components/ui/InputLabel';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
@@ -69,47 +68,30 @@ function Register() {
         <AuthCardBody>
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
-              <div>
-                <InputLabel>Email</InputLabel>
-                <div className="mt-1">
-                  <Input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="hello@example.com"
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
+              <Input
+                label="Email"
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="hello@example.com"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
               <div>
-                <InputLabel>Password</InputLabel>
-                <div className="mt-1">
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder=""
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                    eye={true}
-                  />
-                </div>
+                <Input
+                  label="Password"
+                  id="password"
+                  type="password"
+                  placeholder=""
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                  eye={true}
+                />
                 <p className="mt-2 pl-2 text-xs text-[#74747b] dark:text-[#afafaf]">
                   Min 6 chars. Adding upper, lower & special chars increases
                   security.
                 </p>
-                {/* <div className="overflow-hidden rounded-bl-lg rounded-br-lg border-b border-l border-r border-gray-300 dark:border-[#3b3f4e]">
-                  <Input
-                    id="passwordConfirm"
-                    type="password"
-                    placeholder="Confirm new password"
-                    required
-                    bottom={true}
-                    onChange={(e) => setPasswordConfirm(e.target.value)}
-                    eye={true}
-                  />
-                </div> */}
               </div>
 
               <div className="pb-2">

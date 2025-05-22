@@ -1,11 +1,13 @@
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '../contexts/hooks/useAuth';
+import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
+import { useEffect } from 'react';
 
 function Dashboard() {
-  const { isEmailVerified } = useAuth();
-  if (!isEmailVerified) {
-    return <Navigate to="/confirm-email" replace />;
-  }
+  const { setLabelLeft, setLabelRight } = useFormConfirm();
+
+  useEffect(() => {
+    setLabelLeft('');
+    setLabelRight('');
+  }, []);
 
   return (
     <div className="mt-20">

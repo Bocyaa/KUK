@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
 
-import InputLabel from '@app/components/ui/InputLabel';
 import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
@@ -70,38 +69,30 @@ function Login() {
         <AuthCardBody>
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
-              <div>
-                <InputLabel>Email</InputLabel>
-                <div className="mt-1">
-                  <Input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="hello@example.com"
-                    disabled={isPending}
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
+              <Input
+                label="Email"
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="hello@example.com"
+                disabled={isPending}
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-              <div>
-                <InputLabel>Password</InputLabel>
-                <div className="mt-1">
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    disabled={isPending}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    eye={true}
-                  />
-                </div>
-              </div>
+              <Input
+                label="Password"
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                disabled={isPending}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                eye={true}
+              />
 
               <div>
                 <SubmitButton

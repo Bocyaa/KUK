@@ -13,20 +13,18 @@ const FormInput: React.FC<FormInputProps> = ({
 }) => (
   <div className="parent flex flex-col gap-1">
     <label
-      className={`mb-1 text-xs uppercase tracking-wide transition-colors ${disabled ? 'text-gray-300 dark:text-[#6f6f6f76]' : 'label-focus-within:text-custom text-gray-500 dark:text-[#7c7c7c]'} `}
+      className={`font-regular mb-1 text-xs uppercase tracking-wider transition-colors ${disabled ? 'dark:text-[#afafaf]' : 'label-focus-within:text-custom'} `}
     >
       {label}
     </label>
     <input
       disabled={disabled}
-      className={`rounded-none border-b bg-transparent px-0 py-2 transition-all focus:border-[#0094f6] focus:outline-none dark:text-[#f9f9f9] dark:placeholder-[#6f6f6f64] ${addClass && addClass} ${
-        disabled
-          ? 'dark:border-[#4c4c4c]'
-          : 'placeholder-gray-300 dark:border-[#4c4c4c]'
-      } `}
+      className={`w-full rounded-lg border border-[#e6e6e6] bg-white px-3 py-2 transition-all focus:border-[#0094f6] focus:outline-none dark:text-[#ffffff] dark:placeholder-[#b4b4b4] ${addClass && addClass}`}
       {...props}
     />
   </div>
 );
+
+// className={`w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none placeholder:text-gray-400 dark:border-[#424242] dark:bg-transparent dark:text-white dark:placeholder:text-[#b4b4b4] ${eye ? 'pr-10' : ''} ${className}`}
 
 export default FormInput;

@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import toast from 'react-hot-toast';
 
+import { supabase } from '@app/lib/supabaseClient';
+import Ingredient from '@app/types/IngredientType';
+import processImage from '@app/utility/processImage';
+
+import StepHeader from '@app/components/ui/StepHeader';
 import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
-import Ingredient from '@app/types/IngredientType';
-import { supabase } from '@app/lib/supabaseClient';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import processImage from '@app/utility/processImage';
+import { useInvalidateRecipes } from '@app/hooks/useGetRecipes';
 
 type RecipeFormData = {
   image: string;
@@ -40,25 +43,63 @@ const initialForm: RecipeFormData = {
   isPrivate: true,
 };
 
+const STEPS_CONFIG = [
+  { id: 1, label: 'Step 1' },
+  { id: 2, label: 'Step 2' },
+  { id: 3, label: 'Step 3' },
+];
+
 function AddRecipeFlow() {
-  const [step, setStep] = useState(1);
   const [form, setForm] = useState<RecipeFormData>(() => {
     const saved = localStorage.getItem('recipeForm');
     return saved ? JSON.parse(saved) : initialForm;
   });
   const navigate = useNavigate();
+  const invalidateRecipes = useInvalidateRecipes();
+
+  // State for multi-step navigation
+  const [step, setStep] = useState(1);
+  const [maxReachedStep, setMaxReachedStep] = useState(1);
+
+  // Handler for clicking on step labels in the header
+  const handleVisualStepClick = (stepId: number) => {
+    if (stepId >= 1) {
+      if (form.title !== '') {
+        setStep(stepId);
+      }
+    }
+  };
+
+  // Handler for the Next/Create button in the header
+  const handleHeaderNextOrCreateClick = () => {
+    if (step < STEPS_CONFIG.length && form.title !== '') {
+      // Call the existing handleNext to advance the form step
+      handleNext();
+    } else if (step === STEPS_CONFIG.length) {
+      // If on the last step, call handleSubmit
+      handleSubmit();
+    }
+  };
+
+  // Modified to update maxReachedStep
+  function handleNext() {
+    setStep((s) => {
+      const nextS = s + 1;
+      if (nextS <= STEPS_CONFIG.length) {
+        setMaxReachedStep((prevMax) => Math.max(prevMax, nextS));
+        return nextS;
+      }
+      return s; // Don't go beyond the last step
+    });
+  }
 
   function updateForm(fields: Partial<RecipeFormData>) {
     setForm((prev) => ({ ...prev, ...fields }));
   }
 
-  function handleNext() {
-    setStep((s) => s + 1);
-  }
-
-  function handleBack() {
-    setStep((s) => s - 1);
-  }
+  // function handleBack() {
+  //   setStep((s) => (s > 1 ? s - 1 : s));
+  // }
 
   async function handleFileSelect(file: File | null) {
     if (!file) {
@@ -83,7 +124,7 @@ function AddRecipeFlow() {
           image: base64String, // Store base64 data URL for persistence
         }));
         toast.dismiss();
-        toast.success('Image processed successfully');
+        // toast.success('Image processed successfully');
       };
       reader.readAsDataURL(processedFile);
     } catch (error) {
@@ -165,17 +206,15 @@ function AddRecipeFlow() {
       }
 
       toast.dismiss(loadingToast);
-      toast.success('Recipe successfully created!');
+      // toast.success('Recipe successfully created!');
       console.log('Recipe submitted:', data);
 
-      // Clear form after successful submission
-      handleReset();
-
-      // Navigate to the recipe page or dashboard
+      handleReset(); // Clear form and reset step
+      invalidateRecipes();
       navigate('/search');
     } catch (error) {
       console.error('Error in submission process:', error);
-      toast.dismiss();
+      toast.dismiss(); // Dismiss any active toast
       toast.error('An unexpected error occurred');
     }
   }
@@ -184,6 +223,7 @@ function AddRecipeFlow() {
     setForm(initialForm);
     localStorage.removeItem('recipeForm');
     setStep(1);
+    setMaxReachedStep(1); // Reset maxReachedStep
   }
 
   useEffect(() => {
@@ -195,32 +235,26 @@ function AddRecipeFlow() {
   }, [form]);
 
   return (
-    <div>
+    <div className="px-4 py-2">
+      <StepHeader
+        form={form}
+        step={step}
+        maxReachedStep={maxReachedStep}
+        onReset={handleReset}
+        onStepClick={handleVisualStepClick}
+        onNextClick={handleHeaderNextOrCreateClick}
+        disableNext={form.title === ''}
+      />
+
       {step === 1 && (
         <AddRecipeStep1
           form={form}
           updateForm={updateForm}
-          onReset={handleReset}
-          onNext={handleNext}
           onFileSelect={handleFileSelect}
         />
       )}
-      {step === 2 && (
-        <AddRecipeStep2
-          form={form}
-          updateForm={updateForm}
-          onNext={handleNext}
-          onBack={handleBack}
-        />
-      )}
-      {step === 3 && (
-        <AddRecipeStep3
-          form={form}
-          updateForm={updateForm}
-          onBack={handleBack}
-          onSubmit={handleSubmit}
-        />
-      )}
+      {step === 2 && <AddRecipeStep2 form={form} updateForm={updateForm} />}
+      {step === 3 && <AddRecipeStep3 form={form} updateForm={updateForm} />}
     </div>
   );
 }

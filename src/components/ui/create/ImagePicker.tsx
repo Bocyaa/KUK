@@ -70,10 +70,10 @@ function ImagePicker({
   const imageToShow = localImage || src;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border-8 border-white shadow-sm transition-all dark:border-8 dark:border-[#242533]">
-      <div className="relative overflow-hidden rounded-[0.55rem] border dark:border-[#3b3f4e]">
+    <div className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-2xl border border-[#e6e6e6] shadow-sm transition-all dark:border-none">
+      <div className="relative">
         <div
-          className={`relative flex h-52 items-center justify-center bg-gray-100 transition-all hover:ring-1 hover:ring-blue-400 dark:bg-[#333442]`}
+          className={`relative flex h-52 items-center justify-center transition-all dark:bg-[#212121]`}
         >
           {imageToShow ? (
             <>
@@ -99,8 +99,8 @@ function ImagePicker({
             <SpinnerBar />
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <PhotoIcon className="h-28 w-28 text-gray-200 dark:text-[#5454625b]" />
-              <span className="text-xs text-[#6b7280] dark:text-[#545462]">
+              <PhotoIcon className="h-28 w-28 text-gray-200 dark:text-[#424242]" />
+              <span className="text-xs text-[#5d5d5d] dark:text-[#e3e3e3]">
                 Tap to add image
               </span>
             </div>
@@ -118,7 +118,7 @@ function ImagePicker({
         />
         {form.image && (
           <button
-            className="absolute bottom-0 right-0 m-2 rounded-lg p-1 text-red-700 shadow-sm"
+            className="absolute bottom-0 right-0 m-2 rounded-lg border border-transparent bg-white p-1.5 text-red-600 shadow-sm dark:border-[#424242] dark:bg-[#212121]"
             onClick={() => {
               setLocalImage(null);
               updateForm({ image: '' });

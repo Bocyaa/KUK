@@ -1,7 +1,8 @@
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
-import { Ingredient } from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientType';
 import { useEffect, useState } from 'react';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
+import HelperText from './HelperText';
 
 type CaloryPickerProps = {
   form: {
@@ -28,17 +29,27 @@ function CaloryPicker({ form, updateForm }: CaloryPickerProps) {
   }
 
   return (
-    <BackSecondaryCard>
-      <span className="pl-1 text-gray-500">
-        Calories <span className="text-xs text-gray-400">(kcal / portion)</span>
-      </span>
-      <QuantityStepper
-        value={calory}
-        onChange={handleCaloryChange}
-        incVal={50}
-        decVal={50}
+    <>
+      <BackSecondaryCard>
+        <span className="pl-1 text-[#0d0d0d] dark:text-[#e3e3e3]">
+          Calories{' '}
+          <span className="text-xs text-[#5d5d5d] dark:text-[#afafaf]">
+            (kcal / portion)
+          </span>
+        </span>
+        <QuantityStepper
+          value={calory}
+          onChange={handleCaloryChange}
+          incVal={50}
+          decVal={50}
+        />
+      </BackSecondaryCard>
+
+      <HelperText
+        text="Set calories per portion to track intake and sort meals by calorie
+        amount."
       />
-    </BackSecondaryCard>
+    </>
   );
 }
 

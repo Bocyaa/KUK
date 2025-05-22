@@ -49,7 +49,7 @@ function ConfirmEmail() {
     });
 
     if (!error) {
-      toast.success('Verification email has been resent.');
+      // toast.success('Verification email has been resent.');
       setCountdown(30);
       setIsTimerActive(true);
     } else {

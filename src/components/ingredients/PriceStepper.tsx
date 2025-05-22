@@ -81,7 +81,7 @@ export default function PriceStepper({
         decimalSeparator=","
         groupSeparator="."
         placeholder="0,00"
-        className="w-8 py-1 text-center focus:outline-none"
+        className="w-8 py-1 text-center focus:outline-none dark:bg-[#1a1a1a]"
         allowNegativeValue={false}
         disableAbbreviations
         inputMode="decimal"

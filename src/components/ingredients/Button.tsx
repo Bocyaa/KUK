@@ -13,8 +13,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const base =
       'inline-flex items-center justify-center font-medium focus:outline-none focus:ring transition';
     const variants: Record<string, string> = {
-      default: 'bg-gray-900 text-white active:bg-gray-600',
-      ghost: 'bg-transparent active:bg-gray-100',
+      default: 'text-white active:bg-[#c1c1c1] dark:active:bg-[#424242]',
+      ghost: 'bg-transparent active:bg-[#c1c1c1] dark:active:bg-[#424242]',
     };
     const sizes: Record<string, string> = {
       default: 'h-8 w-24 px-4 text-sm',

@@ -7,7 +7,11 @@ interface SpinnerBarProps {
   height?: number;
 }
 
-const SpinnerBar: React.FC<SpinnerBarProps> = ({ color, width = 50, height = 2 }) => {
+const SpinnerBar: React.FC<SpinnerBarProps> = ({
+  color,
+  width = 50,
+  height = 2,
+}) => {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -24,7 +28,7 @@ const SpinnerBar: React.FC<SpinnerBarProps> = ({ color, width = 50, height = 2 }
 
   let loaderColor = color;
   if (!loaderColor) {
-    loaderColor = isDark ? '#f9f9f9' : '#0094f6';
+    loaderColor = isDark ? '#e3e3e3' : '#000000';
   }
 
   return <BarLoader width={width} height={height} color={loaderColor} />;

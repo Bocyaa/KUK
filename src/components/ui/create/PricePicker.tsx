@@ -1,4 +1,4 @@
-import { Ingredient } from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientType';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
 import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
 import FormSection from '../form/FormSection';
@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import LabelPlaceholder from './LabelPlaceholder';
 import PriceStepper from '@app/components/ingredients/PriceStepper';
 import { UNIT_TO_KG, UNIT_TO_L } from '@app/utility/calculateTotalPrice';
+import HelperText from './HelperText';
 
 type PricePickerProps = {
   form: {
@@ -96,21 +97,21 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
     if (['g', 'kg', 'tbsp', 'tsp'].includes(unit)) {
       return (
         <>
-          <span>1</span>
+          <span className="font-medium">1</span>
           <span className="text-sm text-[#0094f6]">kg</span>{' '}
         </>
       );
     } else if (unit === 'pcs') {
       return (
         <>
-          <span>1</span>
+          <span className="font-medium">1</span>
           <span className="text-sm text-[#0094f6]">pcs</span>{' '}
         </>
       );
     } else {
       return (
         <>
-          <span>1</span>
+          <span className="font-medium">1</span>
           <span className="text-sm text-[#0094f6]">𝓁</span>{' '}
         </>
       );
@@ -119,18 +120,21 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
 
   return (
     <FormSection>
+      {/* <InputLabel className="mb-3">Price Picker</InputLabel> */}
       {form.ingredients.length > 0 && (
         <>
           <div className="flex items-end gap-2 pl-1">
-            <span className="text-xs font-normal uppercase tracking-wide text-gray-500 dark:text-[#7c7c7c]">
-              Total recipe cost:
+            <span className="text-xs font-normal uppercase tracking-wide text-[#5d5d5d] dark:text-[#afafaf]">
+              Total cost:
             </span>
-            <span className="text-xs font-semibold text-[#0094f6] dark:text-[#7c7c7c]">
+            <span className="text-xs font-semibold text-[#5d5d5d] dark:text-[#afafaf]">
               {totalPrice}
             </span>
-            <span className="text-xs text-gray-500 dark:text-[#7c7c7c]">€</span>
+            <span className="text-xs text-[#5d5d5d] dark:text-[#afafaf]">
+              €
+            </span>
           </div>
-          <div className="mx-1 mb-4 mt-2 border-b"></div>
+          <div className="mx-1 mb-4 mt-2 border-b dark:border-[#424242]"></div>
         </>
       )}
       <BackSecondaryCard justify="start" height="full">
@@ -138,17 +142,19 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
           <div className="flex w-full flex-col gap-1">
             {/*  */}
             {ingredients.map((ing) => (
-              <div className="w-full border-b pb-2 pt-1 first:pt-0 last:border-none last:pb-0">
+              <div className="w-full border-b border-[#e6e6e6] pb-2 pt-1 first:pt-0 last:border-none last:pb-0 dark:border-[#303030]">
                 <div className="relative">
                   <div className="no-scrollbar overflow-x-auto" key={ing.name}>
                     <div className="flex min-w-max gap-1 whitespace-nowrap">
                       <FrontPrimaryCard className="mr-28 py-1">
                         <span className="px-2">
                           {ingAmount(ing.unit)}
-                          <span className="text-sm font-light text-gray-600">
+                          <span className="text-sm font-light text-[#5d5d5d] dark:text-[#afafaf]">
                             of{' '}
                           </span>
-                          <span className="capitalize">{ing.name}</span>
+                          <span className="font-medium capitalize">
+                            {ing.name}
+                          </span>
                         </span>
                       </FrontPrimaryCard>
                     </div>
@@ -168,13 +174,16 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
             {/*  */}
           </div>
         ) : (
-          <LabelPlaceholder>empty</LabelPlaceholder>
+          <LabelPlaceholder>Add some ingredients</LabelPlaceholder>
         )}
       </BackSecondaryCard>
       {form.ingredients.length > 0 && (
-        <span className="mt-3 pl-2 text-xs text-gray-500">
-          Prices are applied to an actual amount of ingredients.
-        </span>
+        <div className="mt-3">
+          <HelperText
+            text="Prices are applied to an actual amount of ingredients."
+            marginBottom="mb-0"
+          />
+        </div>
       )}
     </FormSection>
   );

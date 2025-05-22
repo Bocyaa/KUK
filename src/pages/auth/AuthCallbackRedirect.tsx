@@ -47,9 +47,9 @@ function AuthCallbackRedirect() {
 
       if (type === 'signup') {
         if (session.user.email_confirmed_at) {
-          toast.success('Email verified successfully!', {
-            id: 'email-verified',
-          });
+          // toast.success('Email verified successfully!', {
+          //   id: 'email-verified',
+          // });
 
           if (profile?.username && profile?.birthdate && profile?.country) {
             navigate('/dashboard');
@@ -74,7 +74,7 @@ function AuthCallbackRedirect() {
     handleCallback();
   }, [navigate, type]); // hasHandled,
 
-  return <div className='text-center p-4'>Redirecting...</div>;
+  return <div className="p-4 text-center">Redirecting...</div>;
 }
 
 export default AuthCallbackRedirect;

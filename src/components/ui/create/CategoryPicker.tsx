@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
-import FormInput from '../form/FormInput';
 import FormSection from '../form/FormSection';
 import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
 import LabelPlaceholder from './LabelPlaceholder';
+import Input from '../Input';
 
 type CategoryPickerProps = {
   form: {
@@ -53,14 +53,15 @@ function CategoryPicker({ form, updateForm }: CategoryPickerProps) {
 
   return (
     <FormSection>
-      <FormInput
+      <Input
+        id="categories"
         label="Categories"
         placeholder="Category name"
-        addClass="mb-3"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={addCategory}
+        className="mb-3"
       />
       <BackSecondaryCard justify="start">
         {categories.length > 0 ? (
@@ -74,7 +75,7 @@ function CategoryPicker({ form, updateForm }: CategoryPickerProps) {
             ))}
           </div>
         ) : (
-          <LabelPlaceholder>empty</LabelPlaceholder>
+          <LabelPlaceholder>Add some categories</LabelPlaceholder>
         )}
       </BackSecondaryCard>
     </FormSection>

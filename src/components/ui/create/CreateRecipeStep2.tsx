@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
-
-import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
-import { Ingredient } from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientType';
 
 import IngredientPicker from '@app/components/ingredients/IngredientPicker';
 import PortionPicker from './PortionPicker';
@@ -17,30 +14,11 @@ type Props = {
     calory: number;
   };
   updateForm: (fields: Partial<Props['form']>) => void;
-  onNext: () => void;
-  onBack: () => void;
 };
 
-function CreateRecipeStep2({ form, updateForm, onNext, onBack }: Props) {
-  const { setLabelLeft, setLabelRight, setOnLeftClick, setOnRightClick } =
-    useFormConfirm();
-
-  useEffect(() => {
-    setLabelLeft('Step 1');
-    setLabelRight('Step 3');
-    setOnLeftClick(() => onBack);
-    setOnRightClick(() => onNext);
-  }, [
-    setLabelLeft,
-    setLabelRight,
-    setOnLeftClick,
-    setOnRightClick,
-    onNext,
-    onBack,
-  ]);
-
+function CreateRecipeStep2({ form, updateForm }: Props) {
   return (
-    <div className="mb-12 mt-14 flex flex-col gap-5">
+    <div className="mb-12 mt-16 flex flex-col gap-4">
       <IngredientPicker form={form} updateForm={updateForm} />
 
       <FormSection className="gap-3">

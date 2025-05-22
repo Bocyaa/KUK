@@ -37,8 +37,8 @@ function BottomNav() {
       icon: { outline: HomeOutline, solid: HomeSolid },
     },
     {
-      key: 'search',
-      label: 'Search',
+      key: 'recipes',
+      label: 'Recipes',
       icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
       isCustom: true,
     },
@@ -60,7 +60,7 @@ function BottomNav() {
   return (
     <nav
       className={
-        'bottom-nav fixed inset-x-0 bottom-0 z-50 flex h-[70px] items-center justify-around border-t border-gray-300 bg-[#f9fafb] pb-3 pt-2 dark:border-[#1c1c1c] dark:bg-[#242533] standalone:h-[90px] standalone:pb-7'
+        'fixed inset-x-0 bottom-0 z-50 mx-4 mb-2 flex h-[70px] items-center justify-around rounded-full border border-[#e6e6e6] bg-white/75 shadow-md backdrop-blur-sm dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:mb-8 standalone:h-[70px]'
       }
     >
       {navItems.map((item) => (
@@ -85,7 +85,7 @@ function BottomNav() {
                 ) : (
                   <Icon className="h-6 w-6" />
                 )}
-                <span>{item.label}</span>
+                <span className="">{item.label}</span>
               </>
             );
           }}

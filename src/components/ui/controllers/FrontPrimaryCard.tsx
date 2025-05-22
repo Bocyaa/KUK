@@ -15,7 +15,7 @@ function FrontPrimaryCard({
 }: Prop) {
   return (
     <div
-      className={`flex w-[${width}] h-${height} items-center justify-between overflow-hidden rounded-lg border bg-white ${className && className}`}
+      className={`flex w-[${width}] h-${height} items-center justify-between overflow-hidden rounded-lg border border-[#e6e6e6] bg-white dark:border-transparent dark:bg-[#1a1a1a] ${className && className}`}
     >
       {children}
     </div>

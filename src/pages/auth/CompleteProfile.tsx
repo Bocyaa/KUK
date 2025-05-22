@@ -15,7 +15,6 @@ import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
 import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
 import ThemedSelect from '@app/components/ui/ThemedSelect';
 import ThemedDatePicker from '@app/components/ui/ThemedDatePicker';
-import AuthHeader from '@app/components/ui/auth/AuthHeader';
 
 interface FormState {
   first_name: string;
@@ -227,56 +226,50 @@ export default function CompleteProfile() {
         <AuthCardBody>
           <form onSubmit={handleSubmit}>
             <div className="space-y-5">
-              <div className="flex flex-col gap-1">
-                <InputLabel>First Name</InputLabel>
-                <Input
-                  id="first_name"
-                  value={form.first_name}
-                  onChange={handleChange}
-                  disabled={disabledFields.includes('first_name')}
-                />
-              </div>
+              <Input
+                label="First Name"
+                id="first_name"
+                value={form.first_name}
+                onChange={handleChange}
+                disabled={disabledFields.includes('first_name')}
+              />
 
-              <div className="flex flex-col gap-1">
-                <InputLabel>Last Name</InputLabel>
-                <Input
-                  id="last_name"
-                  value={form.last_name}
-                  onChange={handleChange}
-                  disabled={disabledFields.includes('last_name')}
-                />
-              </div>
+              <Input
+                label="Last Name"
+                id="last_name"
+                value={form.last_name}
+                onChange={handleChange}
+                disabled={disabledFields.includes('last_name')}
+              />
 
-              <div className="flex flex-col gap-1">
-                <InputLabel>Username</InputLabel>
-                <div className="relative">
-                  <Input
-                    id="username"
-                    value={form.username}
-                    onChange={handleChange}
-                    disabled={disabledFields.includes('username')}
-                    required
-                    className={`${
-                      form.username &&
-                      (usernameValidation.isValid
-                        ? 'border-green-500 focus:outline-green-500'
-                        : 'border-red-500 focus:outline-red-500')
+              <div className="relative">
+                <Input
+                  label="Username"
+                  id="username"
+                  value={form.username}
+                  onChange={handleChange}
+                  disabled={disabledFields.includes('username')}
+                  required
+                  className={`${
+                    form.username &&
+                    (usernameValidation.isValid
+                      ? 'border-green-500 focus:outline-green-500'
+                      : 'border-red-500 focus:outline-red-500')
+                  }`}
+                />
+                {form.username && (
+                  <div
+                    className={`mt-1 pl-2 text-xs ${
+                      usernameValidation.isValid
+                        ? 'text-green-600'
+                        : 'text-red-600'
                     }`}
-                  />
-                  {form.username && (
-                    <div
-                      className={`mt-1 pl-2 text-xs ${
-                        usernameValidation.isValid
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }`}
-                    >
-                      {usernameValidation.isChecking
-                        ? 'Checking availability...'
-                        : usernameValidation.message}
-                    </div>
-                  )}
-                </div>
+                  >
+                    {usernameValidation.isChecking
+                      ? 'Checking availability...'
+                      : usernameValidation.message}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-1">

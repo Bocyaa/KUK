@@ -14,7 +14,7 @@ function SwitchAuthLink({ question, linkText, to }: SwitchAuthLinkProps) {
       </span>
       <NavLink
         to={`/${to}`}
-        className="flex w-full justify-center rounded-lg border border-[#d2d4db] bg-white py-2 text-sm font-semibold dark:border-[#424242] dark:bg-[#000000] dark:active:bg-[#212121] md:hover:bg-gray-100 dark:md:hover:bg-[#212121]"
+        className="flex w-full justify-center rounded-xl border border-[#d2d4db] bg-white py-2 text-sm font-semibold dark:border-[#424242] dark:bg-[#000000] dark:active:bg-[#212121] md:hover:bg-gray-100 dark:md:hover:bg-[#212121]"
       >
         <span className="text-[#171823] dark:text-white">{linkText}</span>
       </NavLink>

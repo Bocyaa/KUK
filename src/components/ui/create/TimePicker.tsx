@@ -1,9 +1,10 @@
-import { Ingredient } from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientType';
 import { Minus, Plus } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import BackSecondaryCard from '../controllers/BackSecondaryCard';
 import FrontPrimaryCard from '../controllers/FrontPrimaryCard';
 import Button from '../controllers/Button';
+import HelperText from './HelperText';
 
 type TimePickerProps = {
   form: {
@@ -65,81 +66,87 @@ function TimePicker({ form, updateForm }: TimePickerProps) {
   };
 
   return (
-    <BackSecondaryCard>
-      <span className="pl-1 text-gray-500">Time</span>
+    <>
+      <BackSecondaryCard>
+        <span className="pl-1 text-[#0d0d0d] dark:text-[#e3e3e3]">Time</span>
 
-      <div className="flex gap-1">
-        <FrontPrimaryCard className="gap-3">
-          <div className="flex items-center">
-            <Button onClick={decHours}>
-              <Minus className="h-4 w-4" />
-            </Button>
+        <div className="flex gap-1">
+          <FrontPrimaryCard className="gap-3">
+            <div className="flex items-center">
+              <Button onClick={decHours}>
+                <Minus className="h-5 w-5 stroke-1" />
+              </Button>
 
-            <div className="relative flex">
-              <input
-                type="tel"
-                value={time.hours.toString().padStart(2, '0')}
-                onFocus={(e) => e.currentTarget.select()}
-                onChange={(e) => {
-                  const n = Number(e.target.value);
-                  if (!Number.isNaN(n) && n >= 0 && n < 24) {
-                    updateTime({ ...time, hours: n });
-                  }
-                }}
-                className="w-5 py-1 text-right focus:outline-none"
-              />
-              <div
-                className="absolute -right-7 bottom-[0.4rem] text-xs text-gray-400"
-                style={{ width: '1.5rem' }}
-              >
-                h
+              <div className="relative flex">
+                <input
+                  type="tel"
+                  value={time.hours.toString().padStart(2, '0')}
+                  onFocus={(e) => e.currentTarget.select()}
+                  onChange={(e) => {
+                    const n = Number(e.target.value);
+                    if (!Number.isNaN(n) && n >= 0 && n < 24) {
+                      updateTime({ ...time, hours: n });
+                    }
+                  }}
+                  className="w-5 bg-white py-1 text-right focus:outline-none dark:bg-[#1a1a1a]"
+                />
+                <div
+                  className="absolute -right-7 bottom-[0.4rem] text-xs text-[#5d5d5d] dark:text-[#afafaf]"
+                  style={{ width: '1.5rem' }}
+                >
+                  h
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center">
-            <Button onClick={incHours}>
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-        </FrontPrimaryCard>
+            <div className="flex items-center">
+              <Button onClick={incHours}>
+                <Plus className="h-5 w-5 stroke-1" />
+              </Button>
+            </div>
+          </FrontPrimaryCard>
 
-        <FrontPrimaryCard className="gap-3">
-          <div className="flex items-center">
-            <Button onClick={decMinutes}>
-              <Minus className="h-4 w-4" />
-            </Button>
+          <FrontPrimaryCard className="gap-3">
+            <div className="flex items-center">
+              <Button onClick={decMinutes}>
+                <Minus className="h-5 w-5 stroke-1" />
+              </Button>
 
-            <div className="relative flex">
-              <input
-                type="tel"
-                value={time.minutes.toString().padStart(2, '0')}
-                onFocus={(e) => e.currentTarget.select()}
-                onChange={(e) => {
-                  const n = Number(e.target.value);
-                  if (!Number.isNaN(n) && n >= 0 && n < 60) {
-                    updateTime({ ...time, minutes: n });
-                  }
-                }}
-                className="w-5 py-1 text-right focus:outline-none"
-              />
-              <div
-                className="absolute -right-7 bottom-[0.4rem] text-xs text-gray-400"
-                style={{ width: '1.5rem' }}
-              >
-                m
+              <div className="relative flex">
+                <input
+                  type="tel"
+                  value={time.minutes.toString().padStart(2, '0')}
+                  onFocus={(e) => e.currentTarget.select()}
+                  onChange={(e) => {
+                    const n = Number(e.target.value);
+                    if (!Number.isNaN(n) && n >= 0 && n < 60) {
+                      updateTime({ ...time, minutes: n });
+                    }
+                  }}
+                  className="w-5 bg-white py-1 text-right focus:outline-none dark:bg-[#1a1a1a]"
+                />
+                <div
+                  className="absolute -right-7 bottom-[0.4rem] text-xs text-[#5d5d5d] dark:text-[#afafaf]"
+                  style={{ width: '1.5rem' }}
+                >
+                  m
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center">
-            <Button onClick={incMinutes}>
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-        </FrontPrimaryCard>
-      </div>
-    </BackSecondaryCard>
+            <div className="flex items-center">
+              <Button onClick={incMinutes}>
+                <Plus className="h-5 w-5 stroke-1" />
+              </Button>
+            </div>
+          </FrontPrimaryCard>
+        </div>
+      </BackSecondaryCard>
+      <HelperText
+        text="Set cooking time to track how much time you spend cooking and sort
+        recipes by preparation time."
+      />
+    </>
   );
 }
 

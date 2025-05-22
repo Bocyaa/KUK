@@ -165,7 +165,7 @@ a {
 }
 
 .parent:focus-within .label-focus-within\:text-custom {
-  color: #0094f6;
+  font-weight: 600;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

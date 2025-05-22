@@ -6,7 +6,7 @@ type Prop = {
 
 function LabelPlaceholder({ children }: Prop) {
   return (
-    <span className="w-full text-center text-xs uppercase text-gray-400">
+    <span className="w-full py-2 text-center text-xs uppercase text-gray-400">
       {children}
     </span>
   );

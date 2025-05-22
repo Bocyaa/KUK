@@ -148,7 +148,7 @@ function ProfileMain() {
       }
 
       invalidateProfile();
-      toast.success('Profile photo updated!');
+      // toast.success('Profile photo updated!');
     } catch (err) {
       console.error(err);
       toast.error('Failed to process image.');
