@@ -15,6 +15,7 @@ const AutoScrollingText = ({
 }: AutoScrollingTextProps) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+
   const [scrollDistance, setScrollDistance] = useState(0);
   const textRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);

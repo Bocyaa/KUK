@@ -105,7 +105,7 @@ export default function StepHeader({
             <CheckCircleIcon className="h-6 w-6 stroke-green-600 dark:text-green-500" />
           ) : (
             <ArrowLongRightIcon
-              className={`h-6 w-6 ${disableNext ? 'opacity-50' : ''}`}
+              className={`h-6 w-6 ${disableNext ? 'opacity-50' : 'text-[#0094f6]'}`}
             />
           )}
         </button>

@@ -12,6 +12,7 @@ import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
 import { useInvalidateRecipes } from '@app/hooks/useGetRecipes';
+import base64ToFile from '@app/utility/base64ToFile';
 
 type RecipeFormData = {
   image: string;
@@ -97,10 +98,6 @@ function AddRecipeFlow() {
     setForm((prev) => ({ ...prev, ...fields }));
   }
 
-  // function handleBack() {
-  //   setStep((s) => (s > 1 ? s - 1 : s));
-  // }
-
   async function handleFileSelect(file: File | null) {
     if (!file) {
       setForm((prev) => ({ ...prev, imageFile: null, image: '' }));
@@ -152,29 +149,42 @@ function AddRecipeFlow() {
 
       // Handle image upload to Supabase storage
       let imageUrl = '';
-      if (form.imageFile) {
-        // Generate unique filename
-        const fileExt = form.imageFile.name.split('.').pop();
-        const fileName = `${uuidv4()}.${fileExt}`;
-        const filePath = `${session.user.id}/${fileName}`;
 
-        // Upload to supabase
-        const { error: uploadError } = await supabase.storage
-          .from('recipe-images')
-          .upload(filePath, form.imageFile);
+      // Check for either base64 image or imageFile
+      if (form.imageFile || form.image) {
+        let fileToUpload = form.imageFile;
 
-        if (uploadError) {
-          toast.dismiss(loadingToast);
-          toast.error(`Failed to upload image: ${uploadError.message}`);
-          return;
+        // If imageFile is null but we have base64 image (from localStorage), convert it
+        if (!fileToUpload && form.image) {
+          fileToUpload = base64ToFile(form.image);
         }
 
-        // Get the public URL
-        const { data } = supabase.storage
-          .from('recipe-images')
-          .getPublicUrl(filePath);
+        if (fileToUpload) {
+          // Generate unique filename
+          // const fileExt = form.imageFile.name.split('.').pop();
+          // const fileName = `${uuidv4()}.${fileExt}`;
+          // const filePath = `${session.user.id}/${fileName}`;
 
-        imageUrl = data.publicUrl;
+          const fileExt = fileToUpload.name.split('.').pop() || 'jpg';
+          const fileName = `${uuidv4()}.${fileExt}`;
+          const filePath = `${session.user.id}/${fileName}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('recipe-images')
+            .upload(filePath, fileToUpload);
+
+          if (uploadError) {
+            toast.dismiss(loadingToast);
+            toast.error(`Failed to upload image: ${uploadError.message}`);
+            return;
+          }
+
+          const { data } = supabase.storage
+            .from('recipe-images')
+            .getPublicUrl(filePath);
+
+          imageUrl = data.publicUrl;
+        }
       }
 
       const recipeData = {
@@ -211,7 +221,7 @@ function AddRecipeFlow() {
 
       handleReset(); // Clear form and reset step
       invalidateRecipes();
-      navigate('/search');
+      navigate('/recipes');
     } catch (error) {
       console.error('Error in submission process:', error);
       toast.dismiss(); // Dismiss any active toast
@@ -235,7 +245,7 @@ function AddRecipeFlow() {
   }, [form]);
 
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-2 pb-16">
       <StepHeader
         form={form}
         step={step}

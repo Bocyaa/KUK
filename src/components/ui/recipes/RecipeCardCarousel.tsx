@@ -66,7 +66,7 @@ const RecipeCardCarousel: React.FC<RecipeCarouselProps> = ({ children }) => {
     <div className="w-full overflow-hidden">
       <div
         ref={trackRef}
-        className="no-scrollbar flex touch-pan-x snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[max(calc((100vw-360px)/2),1rem)] pb-2"
+        className="no-scrollbar flex touch-pan-x snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-[max(calc((100vw-360px)/2),1rem)] pb-2 md:first:pl-5"
       >
         {children}
       </div>

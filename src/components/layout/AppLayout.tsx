@@ -17,7 +17,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="relative mx-auto flex h-screen max-w-[26rem] flex-col">
       <Header />
 
       {/* overflow-y-auto px-4 py-2 pb-16 */}
