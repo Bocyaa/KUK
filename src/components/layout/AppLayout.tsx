@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import Header from './Header';
+// import Header from './Header';
 import BottomNav from './BottomNav';
 
 import { useAuth } from '@app/contexts/hooks/useAuth';
@@ -18,10 +18,10 @@ function AppLayout() {
 
   return (
     <div className="relative mx-auto flex h-screen max-w-[26rem] flex-col">
-      <Header />
+      {/* <Header /> */}
 
       {/* overflow-y-auto px-4 py-2 pb-16 */}
-      <main className="flex-1 bg-[#ffffff] dark:bg-[#000000] dark:text-[#ffffff]">
+      <main className="bg-[#ffffff] dark:bg-[#000000] dark:text-[#ffffff]">
         <Outlet />
       </main>
 

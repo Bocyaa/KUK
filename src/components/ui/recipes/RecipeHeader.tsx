@@ -1,25 +1,19 @@
-import Avatar from '../settings/Avatar';
+import { ReactNode } from 'react';
 
 interface RecipeHeaderProps {
-  isPending: boolean;
-  profile: {
-    avatar_url: string;
-  };
+  children?: ReactNode;
+  title: string;
+  back?: ReactNode;
 }
 
-function RecipeHeader({ isPending, profile }: RecipeHeaderProps) {
+function RecipeHeader({ children, title, back }: RecipeHeaderProps) {
   return (
     <div className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-[26rem] items-center justify-between bg-white/70 px-5 pb-2 pt-1 shadow-sm backdrop-blur-md dark:bg-black/70 dark:backdrop-blur-md">
-      <h1 className="text-4xl font-bold">Recipes</h1>
-      {isPending ? (
-        <div className="h-10 w-10 rounded-full border bg-[#f9f9f9] dark:bg-[#212121]"></div>
-      ) : (
-        <Avatar
-          src={profile.avatar_url}
-          size={40}
-          accent="bg-[#f6f6f6] dark:text-[#a0a0a0]"
-        />
-      )}
+      <div className="flex flex-col gap-1">
+        <h1 className="text-4xl font-bold">{title}</h1>
+        {back && back}
+      </div>
+      {children && children}
     </div>
   );
 }

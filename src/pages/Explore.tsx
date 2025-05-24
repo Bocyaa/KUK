@@ -3,12 +3,12 @@ import Avatar from '@app/components/ui/settings/Avatar';
 import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
 import { NavLink } from 'react-router-dom';
 
-function Search() {
+function Explore() {
   const { data: profile, isLoading } = useGetUserProfile();
 
   return (
     <div className="mt-20 h-screen">
-      <RecipeHeader title="Search">
+      <RecipeHeader title="Explore">
         <NavLink to="/profile">
           <Avatar
             src={isLoading ? 'Loading' : profile.avatar_url}
@@ -17,10 +17,9 @@ function Search() {
           />
         </NavLink>
       </RecipeHeader>
-
-      <p>Search</p>
+      <p>Explore</p>
     </div>
   );
 }
 
-export default Search;
+export default Explore;

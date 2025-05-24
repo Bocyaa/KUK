@@ -3,18 +3,18 @@ import { NavLink } from 'react-router-dom';
 
 import {
   HomeIcon as HomeOutline,
-  PlusCircleIcon as AddOutline,
   UserIcon as UserOutline,
-  // AdjustmentsHorizontalIcon,
+  SquaresPlusIcon as SquaresPlusOutline,
 } from '@heroicons/react/24/outline';
 
 import {
   HomeIcon as HomeSolid,
-  PlusCircleIcon as AddSolid,
   UserIcon as UserSolid,
+  SquaresPlusIcon as SquaresPlusSolid,
 } from '@heroicons/react/24/solid';
 
 import CustomMagnifyingGlass from '../ui/CustomMagnifyingGlass';
+import { Telescope } from 'lucide-react';
 
 type StandardIcon = FC<{ className?: string }>;
 type CustomIcon = FC<SVGProps<SVGSVGElement> & { bold?: boolean }>;
@@ -37,18 +37,23 @@ function BottomNav() {
       icon: { outline: HomeOutline, solid: HomeSolid },
     },
     {
+      key: 'explore',
+      label: 'Explore',
+      icon: { outline: Telescope, solid: Telescope },
+    },
+    {
       key: 'recipes',
       label: 'Recipes',
-      icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
+      icon: { outline: SquaresPlusOutline, solid: SquaresPlusSolid },
       isCustom: true,
     },
     {
-      key: 'create-recipe',
-      label: 'Create',
-      icon: { outline: AddOutline, solid: AddSolid },
+      key: 'search',
+      label: 'Search',
+      icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
     },
     {
-      key: 'settings',
+      key: 'profile',
       label: 'You',
       icon: {
         outline: UserOutline,
@@ -86,7 +91,7 @@ function BottomNav() {
                   ) : (
                     <Icon className="h-6 w-6" />
                   )}
-                  <span className="">{item.label}</span>
+                  {/* <span className="">{item.label}</span> */}
                 </>
               );
             }}
