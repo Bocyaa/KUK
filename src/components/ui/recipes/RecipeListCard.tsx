@@ -1,6 +1,6 @@
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import GradientShadow from '../GradientShadow';
-import AutoScrollingText from '@app/components/ingredients/AutoScrollingText';
+import { truncateText } from '@app/utility/truncateDescription';
 
 interface RecipeListCardProps {
   recipe: {
@@ -32,13 +32,12 @@ function RecipeListCard({ recipe }: RecipeListCardProps) {
         {/* Title & Description */}
         <div className="flex min-w-0 flex-1 items-center justify-between">
           <div className="flex min-w-0 flex-1 flex-col justify-center">
-            <h3 className="whitespace-nowrap text-base leading-4">
-              {recipe.title}
+            <h3 className="overflow-hidden whitespace-nowrap text-base leading-4">
+              {truncateText(recipe.title, 6)}
             </h3>
-            <AutoScrollingText
-              text={recipe.description}
-              className="text-sm text-[#5d5d5d] dark:text-[#afafaf]"
-            />
+            <span className="overflow-hidden whitespace-nowrap text-sm text-[#5d5d5d] dark:text-[#afafaf]">
+              {truncateText(recipe.description, 10)}
+            </span>
           </div>
           <div className="">
             <EllipsisHorizontalIcon className="mx-2 h-6 w-6" />

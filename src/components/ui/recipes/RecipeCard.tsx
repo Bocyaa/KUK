@@ -1,5 +1,5 @@
-import AutoScrollingText from '@app/components/ingredients/AutoScrollingText';
 import GradientShadow from '../GradientShadow';
+import { truncateText } from '@app/utility/truncateDescription';
 
 interface RecipeCardProps {
   username: string;
@@ -17,12 +17,17 @@ function RecipeCard({
   img = '',
   price = 0,
 }: RecipeCardProps) {
+  const descToDisplay = truncateText(description, 13);
+  const titleToDisplay = truncateText(title, 6);
+
   return (
     <div className="flex w-[21rem] flex-shrink-0 snap-center flex-col">
       <span className="text-xs font-semibold uppercase text-[#0094f6]">
         {username}
       </span>
-      <h3 className="mb-2 text-2xl font-normal leading-6">{title}</h3>
+      <h3 className="no-scrollbar mb-2 overflow-x-auto whitespace-nowrap text-2xl font-normal leading-6">
+        {titleToDisplay}
+      </h3>
 
       <div className="relative h-56 w-[21rem] rounded-xl bg-neutral-100 shadow-md">
         <img src={img} alt="Recipe Image" className="rounded-xl" />
@@ -39,11 +44,10 @@ function RecipeCard({
           topOpacity={20}
           bottomOpacity={60}
         />
-        <div className="absolute bottom-0 left-0 px-3 pb-2">
-          <AutoScrollingText
-            text={description}
-            className="text-xs text-[#ffffff] dark:text-[#e3e3e3]"
-          />
+        <div className="absolute bottom-0 left-0 right-0 px-3 pb-2">
+          <p className="text-xs text-[#ffffff] dark:text-[#e3e3e3]">
+            {descToDisplay}
+          </p>
         </div>
       </div>
     </div>
