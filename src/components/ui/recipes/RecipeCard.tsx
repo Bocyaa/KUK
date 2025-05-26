@@ -21,7 +21,7 @@ function RecipeCard({
   const titleToDisplay = truncateText(title, 6);
 
   return (
-    <div className="flex w-[21rem] flex-shrink-0 snap-center flex-col">
+    <div className="flex w-[22rem] flex-shrink-0 snap-center flex-col">
       <span className="text-xs font-semibold uppercase text-[#0094f6]">
         {username}
       </span>
@@ -29,7 +29,7 @@ function RecipeCard({
         {titleToDisplay}
       </h3>
 
-      <div className="relative h-56 w-[21rem] rounded-xl bg-neutral-100 shadow-md">
+      <div className="relative h-56 w-[22rem] rounded-xl bg-neutral-100 shadow-md">
         <img src={img} alt="Recipe Image" className="rounded-xl" />
         {price > 0 && (
           <div className="absolute right-0 top-0 mr-2 mt-2 flex items-center rounded-lg bg-[#424242]/70 px-2 py-1 backdrop-blur-sm">

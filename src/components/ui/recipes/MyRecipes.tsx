@@ -14,7 +14,7 @@ function MyRecipes({ children }: MyRecipesProps) {
 
   return (
     <div className="mt-6">
-      <div className="mb-4 ml-5 mr-1 flex items-center justify-between">
+      <div className="mx-5 mb-4 flex items-center justify-between">
         <NavLink to="details">
           <div className="flex items-center">
             <h2 className="text-2xl font-bold">My Recipes</h2>
@@ -30,7 +30,7 @@ function MyRecipes({ children }: MyRecipesProps) {
         {chunkedChildren.map((chunk, index) => (
           <div
             key={index}
-            className="flex w-[21rem] flex-shrink-0 snap-center flex-col gap-2"
+            className="flex w-[22rem] flex-shrink-0 snap-center flex-col gap-2"
           >
             {chunk}
           </div>

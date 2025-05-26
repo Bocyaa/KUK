@@ -4,13 +4,14 @@ import RecipeCardCarousel from '@app/components/ui/recipes/RecipeCardCarousel';
 import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
 import RecipeListCard from '@app/components/ui/recipes/RecipeListCard';
 import Avatar from '@app/components/ui/settings/Avatar';
+import SpinnerBar from '@app/components/ui/SpinnerBar';
 import { useGetRecipes } from '@app/hooks/useGetRecipes';
 import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
 import { NavLink } from 'react-router-dom';
 
 function Recipes() {
-  const { data: profile, isLoading } = useGetUserProfile();
-  const { data: recipes } = useGetRecipes(); // error, isLoading
+  const { data: profile, isLoading: isLoadingProfile } = useGetUserProfile();
+  const { data: recipes, isLoading: isLoadingRecipes } = useGetRecipes(); // error, isLoading
 
   const randomRecipes = recipes
     ? [...recipes].sort(() => Math.random() - 0.5)
@@ -23,12 +24,15 @@ function Recipes() {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     ) || [''];
 
+  if (isLoadingProfile) return <SpinnerBar />;
+  if (isLoadingRecipes) return <SpinnerBar />;
+
   return (
     <div className="mb-12 h-screen">
       <RecipeHeader title="Recipes">
         <NavLink to="/profile">
           <Avatar
-            src={isLoading ? 'Loading' : profile.avatar_url}
+            src={profile.avatar_url}
             size={40}
             accent="bg-[#f6f6f6] dark:text-[#a0a0a0]"
           />
