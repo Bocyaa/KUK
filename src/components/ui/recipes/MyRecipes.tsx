@@ -14,7 +14,7 @@ function MyRecipes({ children }: MyRecipesProps) {
   return (
     <div className="mt-6">
       <div className="mx-5 mb-3 flex items-center border-b border-[#f8f8f8] pb-1 dark:border-[#171418]">
-        <NavLink to="details">
+        <NavLink to="my-recipes-list">
           <h2 className="text-2xl font-bold">My Recipes</h2>
         </NavLink>
       </div>

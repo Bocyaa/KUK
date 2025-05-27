@@ -2,8 +2,9 @@ import { ReactNode } from 'react';
 
 interface RecipeHeaderProps {
   children?: ReactNode;
-  title: string;
+  title?: string;
   back?: ReactNode;
+  customClasses?: string;
 }
 
 const mainStyle =
@@ -13,14 +14,19 @@ const light = 'bg-gradient-to-b from-white to-white/70 backdrop-blur-sm';
 const dark =
   'dark:bg-gradient-to-b dark:from-black dark:to-black/70 dark:backdrop-blur-sm';
 
-function RecipeHeader({ children, title, back }: RecipeHeaderProps) {
+function RecipeHeader({
+  children,
+  title,
+  back,
+  customClasses,
+}: RecipeHeaderProps) {
   return (
-    <div className={`${mainStyle} ${light} ${dark}`}>
-      <div className="flex h-full flex-col gap-1">
-        <h1 className="text-4xl font-bold">{title}</h1>
-      </div>
+    <div
+      className={`${customClasses ? customClasses : mainStyle + light + dark}`}
+    >
+      {title && <h1 className="text-4xl font-bold">{title}</h1>}
       {children && children}
-      <div className="absolute left-0 top-1 standalone:top-0">
+      <div className="absolute left-1 top-1 standalone:top-0">
         {back && back}
       </div>
     </div>

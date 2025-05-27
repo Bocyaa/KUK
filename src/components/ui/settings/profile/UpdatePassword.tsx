@@ -6,7 +6,7 @@ import { useAuth } from '@app/contexts/hooks/useAuth';
 import { useResetPassword } from '@app/hooks/auth/useResetPassword';
 import AnimatedMessage from '../../AnimatedMessage';
 import PasswordInputWithVerification from './PasswordInputWithVerification';
-import { usePasswordVerification } from '@app/hooks/usePasswordVerification';
+import { usePasswordVerification } from '@app/hooks/auth/usePasswordVerification';
 
 function UpdatePassword() {
   const [passNew, setPassNew] = useState('');
@@ -55,7 +55,15 @@ function UpdatePassword() {
     } else {
       setIsDirty(false);
     }
-  }, [isVerified, passNew, passConfirm, handleConfirm, setIsDirty, setOnConfirm, setLabel]);
+  }, [
+    isVerified,
+    passNew,
+    passConfirm,
+    handleConfirm,
+    setIsDirty,
+    setOnConfirm,
+    setLabel,
+  ]);
 
   // Message timer
   useEffect(() => {

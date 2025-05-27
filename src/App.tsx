@@ -47,12 +47,15 @@ function App() {
                 <Route path="explore" element={<Explore />} />
                 <Route path="recipes" element={<RecipesLayout />}>
                   <Route index element={<Recipes />} />
-                  <Route path="details" element={<MyRecipesDetails />} />
+                  <Route
+                    path="my-recipes-list"
+                    element={<MyRecipesDetails />}
+                  />
                   <Route path="create-recipe" element={<CreateRecipeFlow />} />
+                  <Route path=":recipeId" element={<Recipe />} />
                 </Route>
                 <Route path="search" element={<Search />} />
                 <Route path="profile" element={<Profile />} />
-                <Route path="recipe" element={<Recipe />} />
               </Route>
               <Route path="auth/callback" element={<AuthCallbackRedirect />} />
               <Route path="forgot-password" element={<ForgotPassword />} />

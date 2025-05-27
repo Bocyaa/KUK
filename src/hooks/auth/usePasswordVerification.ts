@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { checkCurrentPassword } from '@app/hooks/useCheckCurrentPassword';
+import { checkCurrentPassword } from '@app/hooks/auth/useCheckCurrentPassword';
 
 export function usePasswordVerification(email: string) {
   const [value, setValue] = useState('');

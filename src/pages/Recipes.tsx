@@ -8,9 +8,11 @@ import SpinnerBar from '@app/components/ui/SpinnerBar';
 import { useGetRecipes } from '@app/hooks/useGetRecipes';
 
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
+import { useNavigate } from 'react-router-dom';
 
 function Recipes() {
   const { data: recipes, isLoading: isLoadingRecipes } = useGetRecipes();
+  const navigate = useNavigate();
 
   const randomRecipes = recipes
     ? [...recipes].sort(() => Math.random() - 0.5)
@@ -23,11 +25,15 @@ function Recipes() {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     ) || [''];
 
+  const handleRecipeClick = (recipeId: string) => {
+    navigate(`/recipes/${recipeId}`);
+  };
+
   return (
     <div className="mb-12 h-screen">
       <RecipeHeader title="Recipes">
         <div className="flex gap-2">
-          <HeaderButtonLink to="details" icon="list" />
+          <HeaderButtonLink to="my-recipes-list" icon="list" />
           <HeaderButtonLink to="create-recipe" icon="plus" />
         </div>
       </RecipeHeader>
@@ -46,6 +52,7 @@ function Recipes() {
                   description={r.description}
                   img={r.image_url}
                   price={r.price}
+                  onClick={() => handleRecipeClick(r.id)}
                 />
               ))}
             </>
