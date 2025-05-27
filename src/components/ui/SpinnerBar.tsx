@@ -31,7 +31,11 @@ const SpinnerBar: React.FC<SpinnerBarProps> = ({
     loaderColor = isDark ? '#e3e3e3' : '#000000';
   }
 
-  return <BarLoader width={width} height={height} color={loaderColor} />;
+  return (
+    <div className="flex w-full justify-center">
+      <BarLoader width={width} height={height} color={loaderColor} />
+    </div>
+  );
 };
 
 export default SpinnerBar;

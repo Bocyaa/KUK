@@ -1,13 +1,11 @@
+import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
 import RecipeListCard from '@app/components/ui/recipes/RecipeListCard';
-import Avatar from '@app/components/ui/settings/Avatar';
 import { useGetRecipes } from '@app/hooks/useGetRecipes';
-import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 
 function MyRecipesDetails() {
-  const { data: profile, isLoading } = useGetUserProfile();
   const { data: recipes } = useGetRecipes();
 
   const sortedRecipes = recipes
@@ -18,15 +16,9 @@ function MyRecipesDetails() {
     ) || [''];
 
   return (
-    <div className="mt-24 h-screen">
+    <div className="mt-20 h-screen">
       <RecipeHeader title="My Recipes" back={<Back />}>
-        <NavLink to="/profile">
-          <Avatar
-            src={isLoading ? 'Loading' : profile.avatar_url}
-            size={40}
-            accent="bg-[#f6f6f6] dark:text-[#a0a0a0]"
-          />
-        </NavLink>
+        <HeaderButtonLink to="/create-recipe" icon="plus" />
       </RecipeHeader>
 
       <div className="flex flex-col gap-1 px-5">

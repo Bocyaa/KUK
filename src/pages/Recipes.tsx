@@ -1,17 +1,16 @@
-import MyRecipes from '@app/components/ui/recipes/MyRecipes';
-import RecipeCard from '@app/components/ui/recipes/RecipeCard';
-import RecipeCardCarousel from '@app/components/ui/recipes/RecipeCardCarousel';
 import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
+import RecipeCardCarousel from '@app/components/ui/recipes/RecipeCardCarousel';
+import RecipeCard from '@app/components/ui/recipes/RecipeCard';
+import MyRecipes from '@app/components/ui/recipes/MyRecipes';
 import RecipeListCard from '@app/components/ui/recipes/RecipeListCard';
-import Avatar from '@app/components/ui/settings/Avatar';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
+
 import { useGetRecipes } from '@app/hooks/useGetRecipes';
-import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
-import { NavLink } from 'react-router-dom';
+
+import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 
 function Recipes() {
-  const { data: profile, isLoading: isLoadingProfile } = useGetUserProfile();
-  const { data: recipes, isLoading: isLoadingRecipes } = useGetRecipes(); // error, isLoading
+  const { data: recipes, isLoading: isLoadingRecipes } = useGetRecipes();
 
   const randomRecipes = recipes
     ? [...recipes].sort(() => Math.random() - 0.5)
@@ -24,37 +23,48 @@ function Recipes() {
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     ) || [''];
 
-  if (isLoadingProfile) return <SpinnerBar />;
-  if (isLoadingRecipes) return <SpinnerBar />;
-
   return (
     <div className="mb-12 h-screen">
       <RecipeHeader title="Recipes">
-        <NavLink to="/profile">
-          <Avatar
-            src={profile.avatar_url}
-            size={40}
-            accent="bg-[#f6f6f6] dark:text-[#a0a0a0]"
-          />
-        </NavLink>
+        <div className="flex gap-2">
+          <HeaderButtonLink to="details" icon="list" />
+          <HeaderButtonLink to="create-recipe" icon="plus" />
+        </div>
       </RecipeHeader>
 
-      <div className="mt-16">
+      <div className="mt-20">
         <RecipeCardCarousel>
-          {randomRecipes?.map((r) => (
-            <RecipeCard
-              username="fazi"
-              title={r.title}
-              description={r.description}
-              img={r.image_url}
-              price={r.price}
-            />
-          ))}
+          {isLoadingRecipes ? (
+            <SpinnerBar />
+          ) : (
+            <>
+              {randomRecipes?.map((r, i) => (
+                <RecipeCard
+                  key={i}
+                  username="fazi"
+                  title={r.title}
+                  description={r.description}
+                  img={r.image_url}
+                  price={r.price}
+                />
+              ))}
+            </>
+          )}
         </RecipeCardCarousel>
 
-        <MyRecipes>
-          {sortedRecipes?.map((r) => <RecipeListCard recipe={r} />)}
-        </MyRecipes>
+        {isLoadingRecipes ? (
+          <MyRecipes>
+            <SpinnerBar />
+          </MyRecipes>
+        ) : (
+          <>
+            <MyRecipes>
+              {sortedRecipes?.map((r, i) => (
+                <RecipeListCard key={i} recipe={r} />
+              ))}
+            </MyRecipes>
+          </>
+        )}
       </div>
     </div>
   );
