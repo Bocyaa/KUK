@@ -1,38 +1,37 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 import { AuthProvider } from './contexts/providers/AuthProvider.tsx';
 import { ConfirmProvider } from './contexts/providers/ConfirmProvider.tsx';
-
-import AppLayout from './components/layout/AppLayout.tsx';
-
-import Dashboard from './pages/Dashboard.tsx';
-import Recipe from './pages/Recipe.tsx';
-import Profile from './pages/Profile.tsx';
-import CreateRecipeFlow from './pages/CreateRecipeFlow.tsx';
-import PageNotFound from './pages/PageNotFound.tsx';
-import Search from './pages/Search.tsx';
-import Register from '@app/pages/auth/Register.tsx';
-import Login from '@app/pages/auth/Login.tsx';
-import CompleteProfile from '@app/pages/auth/CompleteProfile.tsx';
-import AuthCallbackRedirect from '@app/pages/auth/AuthCallbackRedirect.tsx';
-import ForgotPassword from '@app/pages/auth/ForgotPassword.tsx';
-import ResetPassword from '@app/pages/auth/ResetPassword.tsx';
-import ConfirmEmail from '@app/pages/auth/ConfirmEmail.tsx';
-
-import Recipes from './pages/Recipes.tsx';
-import Explore from './pages/Explore.tsx';
-import RecipesLayout from './components/layout/RecipesLayout.tsx';
-import MyRecipesDetails from './pages/MyRecipesDetails.tsx';
+import AnimatedRoutes from './components/AnimatedRoutes.tsx';
+import { useGetRecipes } from './hooks/useGetRecipes.tsx';
+import { colorExtractionService } from './services/colorExtractionService.ts';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0, // data is considered as not fresh (in 0 milliseconds)
+      staleTime: 1000 * 60 * 60 * 24, // 24 hours - recipes stay fresh for a day
+      gcTime: 1000 * 60 * 60 * 24, // 24 hours - keep in cache
+      refetchOnWindowFocus: false, // Don't refetch when window regains focus
+      refetchOnMount: false, // Don't refetch when component mounts
     },
   },
 });
+
+// Create a separate component for the color initialization
+function ColorInitializer() {
+  const { data: recipes } = useGetRecipes();
+
+  useEffect(() => {
+    if (recipes && recipes.length > 0) {
+      colorExtractionService.initializeColors(recipes);
+    }
+  }, [recipes]);
+
+  return null; // This component doesn't render anything
+}
 
 function App() {
   return (
@@ -40,32 +39,8 @@ function App() {
       <BrowserRouter>
         <AuthProvider>
           <ConfirmProvider>
-            <Routes>
-              <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to="dashboard" />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="recipes" element={<RecipesLayout />}>
-                  <Route index element={<Recipes />} />
-                  <Route
-                    path="my-recipes-list"
-                    element={<MyRecipesDetails />}
-                  />
-                  <Route path="create-recipe" element={<CreateRecipeFlow />} />
-                  <Route path=":recipeId" element={<Recipe />} />
-                </Route>
-                <Route path="search" element={<Search />} />
-                <Route path="profile" element={<Profile />} />
-              </Route>
-              <Route path="auth/callback" element={<AuthCallbackRedirect />} />
-              <Route path="forgot-password" element={<ForgotPassword />} />
-              <Route path="reset-password" element={<ResetPassword />} />
-              <Route path="complete-profile" element={<CompleteProfile />} />
-              <Route path="confirm-email" element={<ConfirmEmail />} />
-              <Route path="register" element={<Register />} />
-              <Route path="login" element={<Login />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
+            <ColorInitializer />
+            <AnimatedRoutes />
           </ConfirmProvider>
         </AuthProvider>
       </BrowserRouter>
@@ -95,24 +70,3 @@ function App() {
 }
 
 export default App;
-
-/**
-  <Route path="settings" element={<SettingsLayout />}>
-    <Route index element={<SettingsList />} />
-    <Route path="profile" element={<Profile />}>
-      <Route index element={<ProfileMain />} />
-      <Route path="personalInfo" element={<PersonalInfo />} />
-      <Route path="passwordUpdate" element={<UpdatePassword />} />
-      <Route path="deleteAccount" element={<DeleteAccount />} />
-    </Route>
-    <Route path="language" element={<Language />} />
-    <Route path="notifications" element={<Notifications />} />
-    <Route path="privacyData" element={<PrivacyData />} />
-    <Route path="dashboard" element={<DashboardSettings />} />
-    <Route path="personalization" element={<Personalization />} />
-    <Route path="layout" element={<Layout />} />
-    <Route path="theme" element={<Theme />} />
-    <Route path="accentColor" element={<AccentColor />} />
-    <Route path="fontSize" element={<FontSize />} />
-  </Route>
-**/

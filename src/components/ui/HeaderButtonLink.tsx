@@ -5,24 +5,21 @@ interface HeaderButtonLinkProps {
   to: string;
   icon: string;
   iconColor?: string;
-  bgLight?: string;
-  bgDark?: string;
+  transparent?: boolean;
 }
 
 function HeaderButtonLink({
   to,
   icon,
   iconColor,
-  bgLight,
-  bgDark,
+  transparent,
 }: HeaderButtonLinkProps) {
   return (
     <NavLink to={to}>
       <HeaderButtonIcon
         icon={icon}
         iconColor={iconColor}
-        bgLight={bgLight}
-        bgDark={bgDark}
+        transparent={transparent}
       />
     </NavLink>
   );

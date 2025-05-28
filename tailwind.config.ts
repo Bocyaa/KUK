@@ -23,6 +23,16 @@ const config: Config = {
           'sans-serif',
         ],
       },
+      fontWeight: {
+        ultralight: '100',
+        thin: '200',
+        light: '300',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+        heavy: '800',
+      },
       fontSize: {
         // Optional: add a breakpoint where text switches from Text to Display
         // These match Apple's typical behavior
@@ -37,12 +47,32 @@ const config: Config = {
         '5xl': ['3rem', { lineHeight: '1' }], // SF Pro Display
         '6xl': ['3.75rem', { lineHeight: '1' }], // SF Pro Display
       },
-      /* add a raw media‑query breakpoint */
       screens: {
         standalone: { raw: '(display-mode: standalone)' },
+        // Add common mobile breakpoints
+        xs: '375px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
+      // Add some Apple-like colors if needed
+      colors: {
+        'ios-blue': '#007AFF',
+        'ios-green': '#34C759',
+        'ios-orange': '#FF9500',
+        'ios-red': '#FF3B30',
+        'ios-gray': '#8E8E93',
+        'ios-gray2': '#AEAEB2',
+        'ios-gray3': '#C7C7CC',
+        'ios-gray4': '#D1D1D6',
+        'ios-gray5': '#E5E5EA',
+        'ios-gray6': '#F2F2F7',
       },
     },
   },
+  plugins: [],
 };
 
 export default config;

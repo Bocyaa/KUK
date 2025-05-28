@@ -4,7 +4,7 @@
   "description": "Recipe management and cooking assistant",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3f2f8",
+  "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
     {

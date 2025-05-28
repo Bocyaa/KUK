@@ -11,10 +11,12 @@ async function fetchRecipes() {
 // Custom hook to get recipes with caching
 export function useGetRecipes() {
   return useQuery({
-    queryKey: ['recipes'], // Unique key for caching
-    queryFn: fetchRecipes, // Function to fetch data
-    staleTime: Infinity, // Cache data for Infinity
-    gcTime: Infinity, // Keep unused data in cache for Infinity
+    queryKey: ['recipes'], // Consistent query key for caching
+    queryFn: fetchRecipes,
+    staleTime: 1000 * 60 * 60 * 24, // 24 hours
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 }
 

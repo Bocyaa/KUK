@@ -9,14 +9,15 @@ import { useGetRecipes } from '@app/hooks/useGetRecipes';
 
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import { useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 
 function Recipes() {
   const { data: recipes, isLoading: isLoadingRecipes } = useGetRecipes();
   const navigate = useNavigate();
 
-  const randomRecipes = recipes
-    ? [...recipes].sort(() => Math.random() - 0.5)
-    : [];
+  const randomRecipes = useMemo(() => {
+    return recipes ? [...recipes].sort(() => Math.random() - 0.5) : [];
+  }, [recipes]);
 
   const sortedRecipes = recipes
     ?.slice()
