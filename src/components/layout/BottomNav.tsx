@@ -86,7 +86,7 @@ function BottomNav() {
     return false;
   };
 
-  // TODO: Reimplement this nav bar in other way and make the middle button usable for other cases as well, for example for cancelling recipe creation
+  // TODO: Reimplement this nav bar in other way and make the middle button usable for other cases as well, for example for cancelling recipe creation.
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 mb-2 flex justify-center px-4 standalone:mb-8">
