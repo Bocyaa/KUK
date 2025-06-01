@@ -1,10 +1,9 @@
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
-import SpinnerBar from '@app/components/ui/SpinnerBar';
+// import SpinnerBar from '@app/components/ui/SpinnerBar';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
-import { ChevronRight } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+// import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
 import {
   restoreThemeColor,
   updateThemeColor,
@@ -16,46 +15,68 @@ import HeaderButtonIcon from '@app/components/ui/HeaderButtonIcon';
 import { useGetRecipes } from '@app/hooks/useGetRecipes';
 import BackSecondaryCard from '@app/components/ui/controllers/BackSecondaryCard';
 
+type RecipeTypes = {
+  id: string;
+  title: string;
+  description: string;
+  difficulty: string;
+  calories: number;
+  cook_time: number;
+  categories: string[];
+  image_url?: string;
+  created_at: string;
+  ingredients: {
+    name: string;
+    unit?: string;
+    comment?: string;
+    quantity?: number;
+    pricePerUnit?: number;
+  }[];
+};
+
 function Recipe() {
   const { recipeId } = useParams<{ recipeId: string }>();
-
   const { data: recipes } = useGetRecipes();
-
-  const recipe = recipes?.find((r) => r.id === recipeId);
-
-  const {
-    data: profile,
-    isLoading: isLoadingProfile,
-    error: errorProfile,
-  } = useGetUserProfile();
-
+  const recipe = recipes?.find((r) => r.id === recipeId) as RecipeTypes;
   const { color: dominantColor } = useRecipeColor(
     recipe?.id,
     recipe?.image_url,
   );
-
   const navigate = useNavigate();
 
+  // Track if component is being unmounted due to navigation
+  const isNavigatingRef = useRef(false);
+
+  // const {
+  //   data: profile,
+  //   isLoading: isLoadingProfile,
+  //   error: errorProfile,
+  // } = useGetUserProfile();
+
   useEffect(() => {
-    // Set theme color immediately when dominantColor changes
     updateThemeColor(dominantColor);
 
     return () => {
-      restoreThemeColor();
+      // Only restore theme color if we're actually navigating away
+      // not just during transition animations
+      if (isNavigatingRef.current) {
+        restoreThemeColor();
+      }
     };
   }, [dominantColor]);
 
+  const handleNavigation = () => {
+    isNavigatingRef.current = true;
+    restoreThemeColor();
+    navigate('/recipes');
+  };
+
   return (
-    <div className="pb-24">
-      {/*  */}
+    <div className="h-screen overflow-y-auto pb-24">
+      {/* Header */}
       <RecipeHeader dominantColor={dominantColor}>
         <>
-          <button
-            onClick={() => {
-              restoreThemeColor();
-              navigate('/recipes');
-            }}
-          >
+          <button onClick={handleNavigation}>
             <HeaderButtonIcon
               icon="xmark"
               transparent={true}
@@ -72,8 +93,9 @@ function Recipe() {
         </>
       </RecipeHeader>
 
-      {/*  */}
-      <div className="flex min-h-[calc(100vh/1.5)] flex-col">
+      {/* Section 1 */}
+      {/* min-h-[calc(100vh/1.5)] */}
+      <div className="flex flex-col">
         <div
           className="flex h-full flex-col items-center pt-20"
           style={{ backgroundColor: dominantColor }}
@@ -145,26 +167,35 @@ function Recipe() {
         </div>
       </div>
 
-      {/* White Bg */}
-      <div className="px-7 py-5">
-        <h3 className="text-lg font-semibold">Ingredients</h3>
-        <div>
-          <BackSecondaryCard justify="start" height="full">
-            <div className="flex w-full flex-col gap-1">
-              {recipe.ingredients.map(
-                (r, i) =>
-                  // <IngredientRow
-                  //   key={`${ing.id ?? ing.name}-${i}`}
-                  //   ingredient={ing}
-                  //   index={i}
-                  //   onRemove={() => onRemove(i)}
-                  //   onUpdateComment={onUpdateComment}
-                  // />
-                  r.name,
-              )}
-            </div>
-          </BackSecondaryCard>
-        </div>
+      {/* Section 2 */}
+      <div className="px-7 py-7">
+        <h3 className="mb-4 text-lg font-semibold">Ingredients</h3>
+
+        <BackSecondaryCard height="full">
+          <div className="flex w-full flex-col gap-1">
+            {recipe.ingredients.map((ing, i) => (
+              <div className="no-scrollbar flex w-full items-center justify-between overflow-x-auto border-b border-[#f1f1f1] pb-1 last:border-none last:pb-0 dark:border-transparent">
+                {/*  */}
+                <div className="py-1">
+                  <span className="px-3">{i + 1}</span>
+
+                  <span className="px-3 capitalize">{ing.name}</span>
+                </div>
+
+                <div className="mx-3 flex gap-3">
+                  <span className="w-7 text-right">
+                    {String(ing.quantity).replace('.', ',')}
+                  </span>
+                  {/* <span>|</span> */}
+                  <span className="w-7 text-left font-light text-gray-500">
+                    {ing.unit}
+                  </span>
+                </div>
+                {/*  */}
+              </div>
+            ))}
+          </div>
+        </BackSecondaryCard>
       </div>
     </div>
   );

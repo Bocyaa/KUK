@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import AppLayout from './layout/AppLayout.tsx';
 import Dashboard from '../pages/Dashboard.tsx';
@@ -27,43 +26,29 @@ export default function AnimatedRoutes() {
 
   return (
     <div className="page-container">
-      <TransitionGroup>
-        <CSSTransition
-          key={location.pathname}
-          classNames="fade"
-          timeout={300}
-          unmountOnExit
-        >
-          <div>
-            <Routes location={location}>
-              <Route element={<AppLayout />}>
-                <Route index element={<Navigate replace to="dashboard" />} />
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="explore" element={<Explore />} />
-                <Route path="recipes" element={<RecipesLayout />}>
-                  <Route index element={<Recipes />} />
-                  <Route
-                    path="my-recipes-list"
-                    element={<MyRecipesDetails />}
-                  />
-                  <Route path="create-recipe" element={<CreateRecipeFlow />} />
-                  <Route path=":recipeId" element={<Recipe />} />
-                </Route>
-                <Route path="search" element={<Search />} />
-                <Route path="profile" element={<Profile />} />
-              </Route>
-              <Route path="auth/callback" element={<AuthCallbackRedirect />} />
-              <Route path="forgot-password" element={<ForgotPassword />} />
-              <Route path="reset-password" element={<ResetPassword />} />
-              <Route path="complete-profile" element={<CompleteProfile />} />
-              <Route path="confirm-email" element={<ConfirmEmail />} />
-              <Route path="register" element={<Register />} />
-              <Route path="login" element={<Login />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </div>
-        </CSSTransition>
-      </TransitionGroup>
+      <Routes location={location}>
+        <Route element={<AppLayout />}>
+          <Route index element={<Navigate replace to="dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="explore" element={<Explore />} />
+          <Route path="recipes" element={<RecipesLayout />}>
+            <Route index element={<Recipes />} />
+            <Route path="my-recipes-list" element={<MyRecipesDetails />} />
+            <Route path="create-recipe" element={<CreateRecipeFlow />} />
+            <Route path=":recipeId" element={<Recipe />} />
+          </Route>
+          <Route path="search" element={<Search />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route path="auth/callback" element={<AuthCallbackRedirect />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="complete-profile" element={<CompleteProfile />} />
+        <Route path="confirm-email" element={<ConfirmEmail />} />
+        <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </div>
   );
 }

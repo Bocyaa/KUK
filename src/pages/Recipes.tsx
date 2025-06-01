@@ -39,7 +39,7 @@ function Recipes() {
         </div>
       </RecipeHeader>
 
-      <div className="mt-20">
+      <div className="pt-20">
         <RecipeCardCarousel>
           {isLoadingRecipes ? (
             <SpinnerBar />
