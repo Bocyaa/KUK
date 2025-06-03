@@ -20,8 +20,8 @@ export const updateThemeColor = (color: string) => {
     defaultThemeTag.setAttribute('content', color);
   }
 
-  // Update body background color
-  document.body.style.backgroundColor = color;
+  // Update CSS custom properties instead of inline styles
+  document.documentElement.style.setProperty('--theme-bg-color', color);
 };
 
 export const restoreThemeColor = () => {
@@ -45,7 +45,6 @@ export const restoreThemeColor = () => {
     defaultThemeTag.setAttribute('content', '#ffffff');
   }
 
-  // Restore body background color based on color scheme preference
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  document.body.style.backgroundColor = prefersDark ? '#000000' : '#ffffff';
+  // Remove the custom property to restore default behavior
+  document.documentElement.style.removeProperty('--theme-bg-color');
 };

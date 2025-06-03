@@ -27,7 +27,7 @@ function Recipes() {
   };
 
   return (
-    <div className="mb-12 h-screen">
+    <div className="mb-12 h-screen bg-white dark:bg-black">
       <RecipeHeader title="Recipes">
         <div className="flex gap-2">
           <HeaderButtonLink to="my-recipes-list" icon="list" />

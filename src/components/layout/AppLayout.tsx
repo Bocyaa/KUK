@@ -20,7 +20,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="no-scrollbar relative mx-auto flex h-screen max-w-[26rem] flex-col overflow-y-auto bg-[#ffffff] dark:bg-[#000000] dark:text-[#ffffff]">
+    <div className="no-scrollbar relative mx-auto flex h-screen max-w-[26rem] flex-col overflow-y-auto">
       <TransitionGroup>
         <CSSTransition
           key={location.pathname}
