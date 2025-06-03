@@ -7,7 +7,8 @@ function useFormConfirm() {
   const context = useContext(ConfirmContext);
 
   // 2. Check for correct usage
-  if (context === undefined) throw new Error('useFormConfirm must be used within ConfirmProvider');
+  if (context === undefined)
+    throw new Error('useFormConfirm must be used within ConfirmProvider');
 
   // 3. Return Context
   return context;

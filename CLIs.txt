@@ -1,0 +1,10 @@
+# Generate db types in supabase.ts 
+
+npx supabase gen types typescript \
+  --schema public \
+  --project-id ztzpbxzqrygdooznjxww \
+  > src/types/supabase.ts
+  
+supabase init
+supabase start
+supabase db dump > schema.sql

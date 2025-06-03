@@ -183,7 +183,6 @@ h6 {
   /* Only apply hover effects on devices that support hover */
   .hover-effect:hover {
     background-color: #f0f0f0;
-    /* your hover styles */
   }
 }
 
@@ -232,6 +231,41 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #212121 inset !important;
   box-shadow: 0 0 0 1000px #212121 inset !important;
   -webkit-text-fill-color: #fff !important;
+}
+
+/* Remove tap highlight and focus effects */
+input[type='text'],
+input[type='search'],
+input[type='email'],
+input[type='password'],
+textarea {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-appearance: none;
+  -webkit-user-select: text;
+  outline: none !important;
+  /* border: none !important; */
+  box-shadow: none !important;
+}
+
+input[type='text']:focus,
+input[type='search']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+textarea:focus {
+  -webkit-tap-highlight-color: transparent !important;
+  outline: none !important;
+  /* border: none !important; */
+  box-shadow: none !important;
+  -webkit-appearance: none;
+}
+
+/* Remove any webkit autofill highlighting */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-tap-highlight-color: transparent !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Auto-scrolling text animation */

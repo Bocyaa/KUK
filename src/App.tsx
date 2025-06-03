@@ -1,13 +1,11 @@
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import { useEffect } from 'react';
 
 import { AuthProvider } from './contexts/providers/AuthProvider.tsx';
 import { ConfirmProvider } from './contexts/providers/ConfirmProvider.tsx';
 import AnimatedRoutes from './components/AnimatedRoutes.tsx';
-import { useGetRecipes } from './hooks/useGetRecipes.tsx';
-import { colorExtractionService } from './services/colorExtractionService.ts';
+import { ColorInitializer } from './components/ColorInitializer.tsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,22 +14,13 @@ const queryClient = new QueryClient({
       gcTime: 1000 * 60 * 60 * 24, // 24 hours - keep in cache
       refetchOnWindowFocus: false, // Don't refetch when window regains focus
       refetchOnMount: false, // Don't refetch when component mounts
+      refetchOnReconnect: false, // Refetch when reconnecting
+      retry: 3, // Limit retries to prevent infinite loading
+      retryDelay: (i) => Math.min(1000 * 2 ** i, 30_000),
+      networkMode: 'online', // Only run when online
     },
   },
 });
-
-// Create a separate component for the color initialization
-function ColorInitializer() {
-  const { data: recipes } = useGetRecipes();
-
-  useEffect(() => {
-    if (recipes && recipes.length > 0) {
-      colorExtractionService.initializeColors(recipes);
-    }
-  }, [recipes]);
-
-  return null; // This component doesn't render anything
-}
 
 function App() {
   return (

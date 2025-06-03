@@ -1,23 +1,23 @@
-import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
-import Avatar from '@app/components/ui/settings/Avatar';
-import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+
+import RecipeGrid from '@app/components/explore/RecipeGrid';
+import SearchBar from '@app/components/explore/SearchBar';
+import RecipeHeader from '@app/components/recipes/RecipeHeader';
+
+import { useGetPublicRecipes } from '@app/hooks/recipes/useGetPublicRecipes';
 
 function Explore() {
-  const { data: profile, isLoading } = useGetUserProfile();
+  // const [searchQuery, setSearchQuery] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const { data: recipes } = useGetPublicRecipes(); // Fetch public recipes
 
   return (
-    <div className="mt-20 h-screen">
-      <RecipeHeader title="Explore">
-        <NavLink to="/profile">
-          <Avatar
-            src={isLoading ? 'Loading' : profile.avatar_url}
-            size={40}
-            accent="bg-[#f6f6f6] dark:text-[#a0a0a0]"
-          />
-        </NavLink>
+    <div className="mt-[3.7rem] h-screen">
+      <RecipeHeader>
+        <SearchBar isFocused={isFocused} setIsFocused={setIsFocused} />
       </RecipeHeader>
-      <p>Explore</p>
+
+      <RecipeGrid recipes={recipes} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import ProfileCard from '@app/components/ui/settings/ProfileCard';
-import SectionBg from '@app/components/ui/settings/SectionBg';
-import SettingItem from '@app/components/ui/settings/SettingItem';
+import ProfileCard from '@app/components/settings/ProfileCard';
+import SectionBg from '@app/components/settings/SectionBg';
+import SettingItem from '@app/components/settings/SettingItem';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';

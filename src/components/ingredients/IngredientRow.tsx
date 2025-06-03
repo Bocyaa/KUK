@@ -1,4 +1,4 @@
-import Ingredient from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientTypes';
 import { Button } from './Button';
 import {
   ChatBubbleBottomCenterIcon,
@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { ChatBubbleBottomCenterIcon as ChatBubbleBottomCenterIconSolid } from '@heroicons/react/24/solid';
 import { useEffect, useRef, useState } from 'react';
-import FrontPrimaryCard from '../ui/controllers/FrontPrimaryCard';
+import FrontPrimaryCard from '../ui/FrontPrimaryCard';
 import AutoScrollingText from './AutoScrollingText';
 
 interface Props {
@@ -161,11 +161,11 @@ function IngredientRow({
 
           {comment && (
             <AutoScrollingText
-              text={comment}
               className="mt-1 flex border-b px-2 pb-1 text-xs text-[#5d5d5d] dark:border-[#212121] dark:text-[#afafaf]"
-              capitalize={true}
               speed={10}
-            />
+            >
+              {comment}
+            </AutoScrollingText>
           )}
         </div>
       )}

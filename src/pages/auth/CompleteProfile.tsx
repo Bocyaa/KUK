@@ -9,10 +9,10 @@ import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { supabase } from '@app/lib/supabaseClient';
-import AuthLayout from '@app/components/ui/auth/AuthLayout';
-import AuthCard from '@app/components/ui/auth/AuthCard';
-import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
+import AuthLayout from '@app/components/auth/AuthLayout';
+import AuthCard from '@app/components/auth/AuthCard';
+import AuthCardHeader from '@app/components/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/auth/AuthCardBody';
 import ThemedSelect from '@app/components/ui/ThemedSelect';
 import ThemedDatePicker from '@app/components/ui/ThemedDatePicker';
 

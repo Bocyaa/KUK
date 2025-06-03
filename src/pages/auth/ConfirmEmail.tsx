@@ -7,11 +7,11 @@ import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { useAuth } from '@app/contexts/hooks/useAuth';
 import { supabase } from '@app/lib/supabaseClient';
-import AuthLayout from '@app/components/ui/auth/AuthLayout';
-import AuthHeader from '@app/components/ui/auth/AuthHeader';
-import AuthCard from '@app/components/ui/auth/AuthCard';
-import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
+import AuthLayout from '@app/components/auth/AuthLayout';
+import AuthHeader from '@app/components/auth/AuthHeader';
+import AuthCard from '@app/components/auth/AuthCard';
+import AuthCardHeader from '@app/components/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/auth/AuthCardBody';
 
 function ConfirmEmail() {
   const [isResending, setIsResending] = useState(false);

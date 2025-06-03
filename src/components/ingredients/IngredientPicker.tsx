@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Select from '@app/components/ingredients/Select';
-import FormSection from '@app/components/ui/form/FormSection';
+import FormSection from '@app/components/form/FormSection';
 import QuantityStepper from './QuantityStepper';
 
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
-import Ingredient from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientTypes';
 import Input from '../ui/Input';
 
 type IngredientPickerProps = {

@@ -1,6 +1,6 @@
 import { Minus, Plus } from 'lucide-react';
-import FrontPrimaryCard from '../ui/controllers/FrontPrimaryCard';
-import Button from '../ui/controllers/Button';
+import FrontPrimaryCard from '../ui/FrontPrimaryCard';
+import Button from '../ui/Button';
 import CurrencyInput from 'react-currency-input-field';
 import { useEffect, useRef, useState } from 'react';
 

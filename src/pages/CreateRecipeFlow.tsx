@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
 
 import { supabase } from '@app/lib/supabaseClient';
-import Ingredient from '@app/types/IngredientType';
+import Ingredient from '@app/types/IngredientTypes';
 import processImage from '@app/utility/processImage';
 
 import StepHeader from '@app/components/ui/StepHeader';
-import AddRecipeStep1 from '@app/components/ui/create/CreateRecipeStep1';
-import AddRecipeStep2 from '@app/components/ui/create/CreateRecipeStep2';
-import AddRecipeStep3 from '@app/components/ui/create/CreateRecipeStep3';
-import { useInvalidateRecipes } from '@app/hooks/useGetRecipes';
+import AddRecipeStep1 from '@app/components/create/CreateRecipeStep1';
+import AddRecipeStep2 from '@app/components/create/CreateRecipeStep2';
+import AddRecipeStep3 from '@app/components/create/CreateRecipeStep3';
+import { useInvalidateRecipes } from '@app/hooks/recipes/useGetRecipes';
 import base64ToFile from '@app/utility/base64ToFile';
 
 type RecipeFormData = {

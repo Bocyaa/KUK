@@ -5,12 +5,14 @@ interface SpinnerBarProps {
   color?: string;
   width?: number;
   height?: number;
+  justify?: string;
 }
 
 const SpinnerBar: React.FC<SpinnerBarProps> = ({
   color,
   width = 50,
   height = 2,
+  justify = 'center',
 }) => {
   const [isDark, setIsDark] = useState(false);
 
@@ -32,7 +34,7 @@ const SpinnerBar: React.FC<SpinnerBarProps> = ({
   }
 
   return (
-    <div className="flex w-full justify-center">
+    <div className={`flex w-full justify-${justify}`}>
       <BarLoader width={width} height={height} color={loaderColor} />
     </div>
   );

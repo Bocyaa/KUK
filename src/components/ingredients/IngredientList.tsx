@@ -1,6 +1,6 @@
-import type Ingredient from '@app/types/IngredientType';
+import type Ingredient from '@app/types/IngredientTypes';
 import IngredientRow from './IngredientRow';
-import BackSecondaryCard from '../ui/controllers/BackSecondaryCard';
+import BackSecondaryCard from '../ui/BackSecondaryCard';
 
 interface Props {
   items: Ingredient[];

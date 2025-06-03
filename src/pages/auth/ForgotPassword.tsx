@@ -6,11 +6,11 @@ import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { useForgotPassword } from '@app/hooks/auth/useForgotPassword';
-import AuthHeader from '@app/components/ui/auth/AuthHeader';
-import AuthLayout from '@app/components/ui/auth/AuthLayout';
-import AuthCard from '@app/components/ui/auth/AuthCard';
-import AuthCardHeader from '@app/components/ui/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/ui/auth/AuthCardBody';
+import AuthHeader from '@app/components/auth/AuthHeader';
+import AuthLayout from '@app/components/auth/AuthLayout';
+import AuthCard from '@app/components/auth/AuthCard';
+import AuthCardHeader from '@app/components/auth/AuthCardHeader';
+import AuthCardBody from '@app/components/auth/AuthCardBody';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');

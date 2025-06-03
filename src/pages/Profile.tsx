@@ -1,5 +1,5 @@
-import RecipeHeader from '@app/components/ui/recipes/RecipeHeader';
-import Avatar from '@app/components/ui/settings/Avatar';
+import RecipeHeader from '@app/components/recipes/RecipeHeader';
+import Avatar from '@app/components/settings/Avatar';
 import { useGetUserProfile } from '@app/hooks/useGetUserProfile';
 import { NavLink } from 'react-router-dom';
 
