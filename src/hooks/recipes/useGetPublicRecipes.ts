@@ -5,7 +5,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 async function fetchPublicRecipes(userId: string) {
   const { data, error } = await supabase
     .from('recipes')
-    .select('*')
+    .select(`
+      *,
+      owner:public_profiles!recipes_user_id_fkey(username, avatar_url)
+    `)
     .eq('is_private', false)
     .neq('user_id', userId);
     

@@ -1,6 +1,6 @@
 import BackLink from '@app/components/ui/BackLink';
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
-import RecipeHeader from '@app/components/recipes/RecipeHeader';
+import Header from '@app/components/recipes/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import RecipeTypes from '@app/types/RecipeTypes';
 import { useNavigate } from 'react-router-dom';
@@ -25,12 +25,12 @@ function MyRecipesDetails() {
 
   return (
     <div className="pt-20">
-      <RecipeHeader
+      <Header
         title="My Recipes"
         back={<BackLink to="/recipes" label="Back to recipes" />}
       >
         <HeaderButtonLink to="/create-recipe" icon="plus" />
-      </RecipeHeader>
+      </Header>
 
       <div className="flex flex-col gap-1 px-5">
         {sortedRecipes?.map((r) => (

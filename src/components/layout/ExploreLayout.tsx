@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-function RecipesLayout() {
+function ExploreLayout() {
   return (
     <div>
       <Outlet />
@@ -8,4 +8,4 @@ function RecipesLayout() {
   );
 }
 
-export default RecipesLayout;
+export default ExploreLayout;

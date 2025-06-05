@@ -1,6 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
-// import Header from './Header';
 import BottomNav from './BottomNav';
 
 import { useAuth } from '@app/contexts/hooks/useAuth';

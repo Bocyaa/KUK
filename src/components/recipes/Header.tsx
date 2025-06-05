@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-interface RecipeHeaderProps {
+interface HeaderProps {
   children?: ReactNode;
   title?: string;
   back?: ReactNode;
@@ -17,13 +17,13 @@ const light = 'bg-gradient-to-b from-white to-white/70 backdrop-blur-sm';
 const dark =
   'dark:bg-gradient-to-b dark:from-black dark:to-black/70 dark:backdrop-blur-sm';
 
-function RecipeHeader({
+function Header({
   children,
   title,
   back,
   customClasses,
   dominantColor,
-}: RecipeHeaderProps) {
+}: HeaderProps) {
   // Create dynamic gradient style when dominantColor is provided
   const dynamicStyle = dominantColor
     ? {
@@ -49,4 +49,4 @@ function RecipeHeader({
   );
 }
 
-export default RecipeHeader;
+export default Header;

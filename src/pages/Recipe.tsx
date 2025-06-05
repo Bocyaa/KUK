@@ -1,6 +1,4 @@
-import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
-import RecipeHeader from '@app/components/recipes/RecipeHeader';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   restoreThemeColor,
@@ -9,27 +7,29 @@ import {
 import { formatCookTime } from '@app/utility/formatCookTime';
 import { formatCreatedAt } from '@app/utility/formatCreatedAt';
 import { useRecipeColor } from '@app/hooks/useRecipeColor';
-import HeaderButtonIcon from '@app/components/ui/HeaderButtonIcon';
 import BackSecondaryCard from '@app/components/ui/BackSecondaryCard';
-import { useGetUserById } from '@app/hooks/useGetUserById';
-import SpinnerBar from '@app/components/ui/SpinnerBar';
 import FrontPrimaryCard from '@app/components/ui/FrontPrimaryCard';
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
 import { useGetRecipe } from '@app/hooks/recipes/useGetRecipe';
 import RecipeTypes from '@app/types/RecipeTypes';
+import Avatar from '@app/components/settings/Avatar';
+import { HeartIcon } from '@heroicons/react/24/outline';
+import { useGetPublicRecipe } from '@app/hooks/recipes/useGetPublicRecipe';
+import RecipeHeader from '@app/components/recipe/RecipeHeader';
 
 function Recipe() {
   const { recipeId } = useParams<{ recipeId: string }>();
-  const { data } = useGetRecipe(recipeId);
-  const recipe = data as RecipeTypes;
+
+  const { data: dataUser } = useGetRecipe(recipeId);
+  const { data: publicData } = useGetPublicRecipe(recipeId);
+
+  let recipe = dataUser as RecipeTypes;
+  if (!recipe) {
+    recipe = publicData as RecipeTypes;
+  }
 
   const isNavigatingRef = useRef(false); // Track if component is being unmounted due to navigation
   const [portions, setPortions] = useState(recipe?.portions || 1);
-
-  const navigate = useNavigate();
-  const { data: recipeAuthor, isLoading: isLoadingAuthor } = useGetUserById(
-    recipe?.user_id,
-  );
 
   // Store original ingredient amounts
   const originalIngredients = useMemo(() => {
@@ -77,129 +77,130 @@ function Recipe() {
     updateThemeColor(dominantColor);
 
     return () => {
-      // Only restore theme color if we're actually navigating away
-      // not just during transition animations
+      // Only restore theme color if we're actually navigating away, not during transition animations
       if (isNavigatingRef.current) {
         restoreThemeColor();
       }
     };
   }, [dominantColor]);
 
-  const handleNavigation = () => {
-    isNavigatingRef.current = true;
-    restoreThemeColor();
-    navigate(-1);
-  };
-
   return (
-    <div className="h-screen overflow-y-auto">
-      {/* Header */}
-      <RecipeHeader dominantColor={dominantColor}>
-        <>
-          <button onClick={handleNavigation}>
-            <HeaderButtonIcon
-              icon="xmark"
-              transparent={true}
-              iconColor="#f2f2f7"
-            />
-          </button>
+    <div className="no-scrollbar h-screen overflow-y-auto">
+      <RecipeHeader dominantColor={dominantColor} />
 
-          <HeaderButtonLink
-            to="#"
-            icon="ellipsis"
-            transparent={true}
-            iconColor="#f2f2f7"
-          />
-        </>
-      </RecipeHeader>
-
-      {/* Section 1 */}
-      <div className="flex flex-col">
-        <div
-          className="flex h-full flex-col items-center pt-20"
-          style={{ backgroundColor: dominantColor }}
-        >
-          {/* Image */}
-          <div className="px-9">
-            {recipe.image_url && (
-              <img
-                src={recipe.image_url}
-                alt={recipe.title + 'image'}
-                className="rounded-2xl shadow-xl"
-              />
-            )}
+      {/* Dominant Color */}
+      <div className="flex w-full flex-col gap-3 pt-16">
+        <div className="flex w-full items-center gap-3 px-2">
+          <div>
+            <Avatar src={recipe.owner.avatar_url} size={36} />
           </div>
 
-          {/* Title & Desc & Username & Info */}
-          <div className="flex flex-col items-center gap-1 px-7 py-5">
-            <h1 className="line-clamp-2 text-ellipsis text-center text-xl font-bold text-ios-gray6">
+          <div className="flex w-full justify-between">
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold text-ios-gray6">
+                {recipe.owner.username}
+              </span>
+              <span className="text-xs text-ios-gray5">
+                {formatCreatedAt(recipe.created_at)}
+              </span>
+            </div>
+
+            <div className="rounded-lg border border-ios-gray5/60 px-3 py-1">
+              <span className="text-sm font-medium text-ios-gray5">Follow</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          {recipe.image_url && (
+            <img src={recipe.image_url} alt={recipe.title + 'image'} />
+          )}
+        </div>
+
+        <div
+          className="flex h-full flex-col items-center"
+          style={{ backgroundColor: dominantColor }}
+        >
+          <div className="flex w-full flex-col items-center px-7">
+            <h1 className="line-clamp-2 text-ellipsis text-center text-2xl font-semibold text-ios-gray6">
               {recipe.title}
             </h1>
 
-            <h2 className="line-clamp-3 text-ellipsis text-center text-base text-ios-gray6">
+            <h2 className="line-clamp-2 text-ellipsis text-center text-base text-ios-gray6">
               {recipe.description}
             </h2>
 
-            {/* Skill, kcal, time */}
-            <div className="mt-3 flex items-center gap-1 text-[#e3e3e3]/90">
-              <span className="rounded-xl bg-white/10 px-2.5 py-1 text-sm">
+            <div className="my-3 w-full border-b border-[#e3e3e3]/10"></div>
+
+            <div className="flex items-center gap-1 text-[#e3e3e3]/90">
+              <span className="rounded-xl bg-white/10 px-2.5 py-1">
                 {recipe.difficulty}
               </span>
 
               <span className="text-xs">•</span>
 
               <div className="flex items-baseline rounded-xl bg-white/10 px-2.5 py-1">
-                <span className="text-sm">{recipe.calories}</span>
+                <span className="">{recipe.calories}</span>
                 <span className="pl-1 text-xs">kcal</span>
               </div>
 
               <span className="text-xs">•</span>
 
-              <span className="rounded-xl bg-white/10 px-2.5 py-1 text-sm">
+              <span className="rounded-xl bg-white/10 px-2.5 py-1">
                 {formatCookTime(recipe.cook_time)}
               </span>
             </div>
-          </div>
 
-          {/* Panel */}
-          <div className="mb-10 rounded-3xl bg-white/20 px-4 py-4 shadow-lg">
-            <div className="flex flex-col">
-              {/* Text */}
+            <div className="my-3 w-full border-b border-[#e3e3e3]/10"></div>
+
+            <div className="no-scrollbar flex w-full justify-center gap-1 overflow-x-auto px-2 text-[#e3e3e3]/90">
               {recipe.categories.length > 0 ? (
-                <div className="mb-3 flex gap-2 border-b border-[#e6e6e6]/30 pb-3 text-ios-gray6">
-                  {recipe.categories.map((c) => (
-                    <span className="rounded-xl border border-[#e6e6e6]/10 bg-white/10 px-2 py-1 backdrop-blur-md">
+                <>
+                  {recipe.categories.map((c, i) => (
+                    <span
+                      key={i}
+                      className="rounded-xl border border-[#e6e6e6]/10 bg-white/10 px-2 py-1 backdrop-blur-md"
+                    >
                       {c}
                     </span>
                   ))}
                   <span className="rounded-xl border border-dashed border-[#e6e6e6]/50 px-4 py-1">
                     +
                   </span>
-                </div>
+                </>
               ) : (
-                <div className="mb-3 flex border-b border-[#e6e6e6]/30 pb-3 text-ios-gray6">
+                <div className="flex text-ios-gray6">
                   <span className="rounded-xl border border-dashed border-[#e6e6e6]/50 px-4 py-1 text-sm uppercase">
                     Add category +
                   </span>
                 </div>
               )}
+            </div>
 
-              {/* Action buttons */}
-              <div className="flex justify-center gap-3">
-                <div className="flex items-center justify-center rounded-xl border border-[#e6e6e6]/20 bg-white/20 px-14 py-2 shadow-lg">
-                  <span className="font-semibold text-white">Edit</span>
-                </div>
-                <div className="flex items-center justify-center rounded-xl bg-ios-gray6 px-14 py-2 shadow-lg">
-                  <span className="font-semibold">Cook</span>
-                </div>
+            <div className="my-3 w-full border-b border-[#e3e3e3]/10"></div>
+
+            <div className="mb-3 flex justify-center gap-3">
+              <div className="flex items-center justify-center rounded-xl border border-[#e6e6e6]/20 bg-white/20 px-14 py-2 shadow-lg">
+                <span className="font-semibold text-white">Edit</span>
               </div>
+
+              <div className="flex items-center justify-center rounded-xl bg-ios-gray6 px-14 py-2 shadow-lg">
+                <span className="font-semibold">Cook</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full items-center justify-center gap-3 border bg-white py-2 pl-5 pr-5">
+            <div className="flex flex-col justify-center pb-2">
+              <HeartIcon className="h-9 w-9" />
+              <span className="text-[0.7rem]">0 likes</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Section 2 */}
-      <div className="bg-white px-7 py-6 pb-32 dark:bg-black">
+      <div className="bg-white p-6 px-7 pb-32 dark:bg-black">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Ingredients</h3>
         </div>
@@ -261,25 +262,6 @@ function Recipe() {
           </span>
           <QuantityStepper value={portions} onChange={handlePortionChange} />
         </BackSecondaryCard>
-
-        <div className="mb-5 mt-8 border-b border-[#e6e6e6]"></div>
-
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium">Author:</span>
-            {isLoadingAuthor ? (
-              <SpinnerBar />
-            ) : (
-              <span className="text-[#0094f6]">{recipeAuthor?.username}</span>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="font-medium">Created:</span>
-            <span className="text-[#5d5d5d]">
-              {formatCreatedAt(recipe.created_at)}
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );

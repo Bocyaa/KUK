@@ -15,7 +15,7 @@ type CaloryPickerProps = {
 };
 
 function CaloryPicker({ form, updateForm }: CaloryPickerProps) {
-  const [calory, setCalory] = useState(form.portion || 0);
+  const [calory, setCalory] = useState(form.calory || 0);
 
   useEffect(() => {
     if (form.calory !== calory) {

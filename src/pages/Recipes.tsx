@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import RecipeHeader from '@app/components/recipes/RecipeHeader';
+import Header from '@app/components/recipes/Header';
 import RecipeCardCarousel from '@app/components/recipes/RecipeCardCarousel';
 import RecipeCard from '@app/components/recipes/RecipeCard';
 import MyRecipes from '@app/components/recipes/MyRecipes';
@@ -12,6 +12,7 @@ import RecipeTypes from '@app/types/RecipeTypes';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/utility/recipeUtils';
+// import { useGetUserById } from '@app/hooks/useGetUserById';
 
 function Recipes() {
   const navigate = useNavigate();
@@ -28,12 +29,12 @@ function Recipes() {
 
   return (
     <div className="mb-12 h-screen bg-white dark:bg-black">
-      <RecipeHeader title="Recipes">
+      <Header title="Recipes">
         <div className="flex gap-2">
           <HeaderButtonLink to="my-recipes-list" icon="list" />
           <HeaderButtonLink to="create-recipe" icon="plus" />
         </div>
-      </RecipeHeader>
+      </Header>
 
       <div className="pt-20">
         <RecipeCardCarousel>
@@ -42,7 +43,7 @@ function Recipes() {
               {randomRecipes?.map((r, i) => (
                 <RecipeCard
                   key={i}
-                  username="fazi"
+                  username={r.owner.username}
                   title={r.title}
                   description={r.description}
                   img={r.image_url}
@@ -95,18 +96,16 @@ function LoadingRecipeBigCards() {
 function LoadingRecipeSmallCards() {
   return (
     <>
-      <div className="flex gap-3 rounded-lg border border-dashed">
-        <div className="flex h-16 w-20 flex-shrink-0 items-center rounded-lg border border-dashed shadow-sm">
-          <SpinnerBar />
-        </div>
+      <div className="flex h-16 items-center rounded-lg border-2 border-dashed">
+        <SpinnerBar />
       </div>
 
-      <div className="flex gap-3 rounded-lg border border-dashed">
-        <div className="flex h-16 w-20 flex-shrink-0 items-center rounded-lg border border-dashed shadow-sm"></div>
+      <div className="flex h-16 items-center rounded-lg border-2 border-dashed">
+        <SpinnerBar />
       </div>
 
-      <div className="flex gap-3 rounded-lg border border-dashed">
-        <div className="flex h-16 w-20 flex-shrink-0 items-center rounded-lg border border-dashed shadow-sm"></div>
+      <div className="flex h-16 items-center rounded-lg border-2 border-dashed">
+        <SpinnerBar />
       </div>
     </>
   );

@@ -6,7 +6,10 @@ import { supabase } from '@app/lib/supabaseClient';
 async function fetchRecipes(userId: string) {
   const { data, error } = await supabase
     .from('recipes')
-    .select('*')
+    .select(`
+      *,
+      owner:public_profiles!recipes_user_id_fkey(username, avatar_url)
+    `)
     .eq('user_id', userId); 
     
   if (error) throw error;
@@ -25,7 +28,7 @@ export function useGetRecipes() {
   });
 }
 
-/** Optional helper if you ever want to pre-fetch outside React components. */
+// Helper to pre-fetch outside React components.
 export function PrefetchRecipes(userId: string) {
   const qc = useQueryClient();
   return qc.prefetchQuery({

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import RecipeGrid from '@app/components/explore/RecipeGrid';
 import SearchBar from '@app/components/explore/SearchBar';
-import RecipeHeader from '@app/components/recipes/RecipeHeader';
+import Header from '@app/components/recipes/Header';
 
 import { useGetPublicRecipes } from '@app/hooks/recipes/useGetPublicRecipes';
 
@@ -13,9 +13,9 @@ function Explore() {
 
   return (
     <div className="mt-[3.7rem] h-screen">
-      <RecipeHeader>
+      <Header>
         <SearchBar isFocused={isFocused} setIsFocused={setIsFocused} />
-      </RecipeHeader>
+      </Header>
 
       <RecipeGrid recipes={recipes} />
     </div>

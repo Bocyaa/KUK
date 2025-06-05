@@ -51,7 +51,7 @@ const ThemedSelect = <Option,>(props: SelectProps<Option>) => {
           backgroundColor: theme === 'dark' ? '#212121' : '#ffffff',
           borderColor: state.isFocused
             ? theme === 'dark'
-              ? '#ffffff0'
+              ? '#ffffff'
               : '#3f6ef3'
             : theme === 'dark'
               ? '#424242'

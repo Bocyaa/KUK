@@ -1,4 +1,4 @@
-import { Ingredient } from '@app/types/IngredientTypes';
+import Ingredient from '@app/types/IngredientTypes';
 
 // Most accurate static values for average ingredient
 const GRAMS_PER_TSP = 4.92892159375;
@@ -42,7 +42,7 @@ export function calculateTotalPrice(ingredients: Ingredient[]): number {
       const l = ing.quantity * UNIT_TO_L[ing.unit];
       total += l * pricePerUnit;
     }
-    // else: ignore unknown units
+    
   }
 
   return Math.round(total * 100) / 100; // round to 2 decimals

@@ -18,6 +18,10 @@ type RecipeTypes = {
     quantity?: number;
     pricePerUnit?: number;
   }[];
+  owner: {
+    username: string;
+    avatar_url: string;
+  }
 };
 
 export default RecipeTypes;

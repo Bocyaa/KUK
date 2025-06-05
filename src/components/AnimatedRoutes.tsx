@@ -20,6 +20,7 @@ import RecipesLayout from './layout/RecipesLayout.tsx';
 import MyRecipesDetails from '../pages/MyRecipesDetails.tsx';
 
 import '@app/styles/page-transitions.css';
+import ExploreLayout from './layout/ExploreLayout.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -30,7 +31,10 @@ export default function AnimatedRoutes() {
         <Route element={<AppLayout />}>
           <Route index element={<Navigate replace to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="explore" element={<Explore />} />
+          <Route path="explore" element={<ExploreLayout />}>
+            <Route index element={<Explore />} />
+            <Route path=":recipeId" element={<Recipe />} />
+          </Route>
           <Route path="recipes" element={<RecipesLayout />}>
             <Route index element={<Recipes />} />
             <Route path="my-recipes-list" element={<MyRecipesDetails />} />
