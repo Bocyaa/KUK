@@ -19,9 +19,10 @@ export const updateThemeColor = (color: string) => {
   if (defaultThemeTag) {
     defaultThemeTag.setAttribute('content', color);
   }
-
-  // Update CSS custom properties instead of inline styles
+  
+  // Set CSS custom properties for gradient (remove body background setting)
   document.documentElement.style.setProperty('--theme-bg-color', color);
+  document.documentElement.style.setProperty('--theme-bg-gradient', `linear-gradient(to bottom, ${color}, color-mix(in srgb, ${color} 60%, black))`);
 };
 
 export const restoreThemeColor = () => {
@@ -44,7 +45,8 @@ export const restoreThemeColor = () => {
   if (defaultThemeTag) {
     defaultThemeTag.setAttribute('content', '#ffffff');
   }
-
-  // Remove the custom property to restore default behavior
+  
+  // Remove the custom properties
   document.documentElement.style.removeProperty('--theme-bg-color');
+  document.documentElement.style.removeProperty('--theme-bg-gradient');
 };

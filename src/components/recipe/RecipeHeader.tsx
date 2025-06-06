@@ -1,13 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-
-import {
-  ChevronLeftIcon,
-  EllipsisHorizontalIcon,
-} from '@heroicons/react/24/solid';
-
 import { getPreviousPageFromUrl } from '@app/utility/getPreviousPageFromUrl';
 import { restoreThemeColor } from '@app/utility/updateThemeColor';
-// import { ChevronLeft } from 'lucide-react';
 
 interface RecipeHeaderProps {
   dominantColor: string;
