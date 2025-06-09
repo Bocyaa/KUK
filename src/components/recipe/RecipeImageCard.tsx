@@ -1,74 +1,50 @@
+import { ReactNode, useEffect, useState } from 'react';
+
 import RecipeTypes from '@app/types/RecipeTypes';
-import { formatCookTime } from '@app/utility/formatCookTime';
 import Avatar from '../settings/Avatar';
+import RecipeImage from './RecipeImage';
+import RecipeHeader from './RecipeHeader';
+import RecipeDetails from './RecipeDetails';
+
 import { HeartIcon } from '../Icons/HeartIcon';
-import { BookmarkIcon } from '../Icons/BookmarkIcon';
-import { formatCreatedAt } from '@app/utility/formatCreatedAt';
+import { BookmarkIcon, BookmarkIconFilled } from '../Icons/BookmarkIcon';
 
 interface RecipeImageCardTypes {
   recipe: RecipeTypes;
+  isSaved?: boolean;
+  onBookmarkToggle?: () => void;
 }
 
-function RecipeImageCard({ recipe }: RecipeImageCardTypes) {
+function RecipeImageCard({
+  recipe,
+  isSaved = false,
+  onBookmarkToggle,
+}: RecipeImageCardTypes) {
+  const [optimisticSaved, setOptimisticSaved] = useState(isSaved);
+
+  // Sync with prop changes only when component mounts or prop actually changes
+  useEffect(() => {
+    setOptimisticSaved(isSaved);
+  }, [isSaved]);
+
+  const handleBookmarkClick = () => {
+    // 1. Update UI instantly (optimistic update)
+    setOptimisticSaved(!optimisticSaved);
+
+    // 2. Call backend in background
+    onBookmarkToggle?.();
+  };
+
   return (
     <div className="mx-3 flex flex-col">
-      {recipe.image_url && (
-        <img
-          src={recipe.image_url}
-          alt={recipe.title + 'image'}
-          className="z-1 w-full rounded-t-3xl"
-        />
-      )}
+      <RecipeImage recipe={recipe} />
 
-      <div className="relative rounded-b-3xl border-x border-b border-dashed border-[#e3e3e3]/20">
-        <div
-          className="flex flex-col gap-5 rounded-b-3xl px-2 py-2"
-          style={{
-            background: 'var(--theme-bg-gradient)',
-          }}
-        >
+      <RecipeCardContainer>
+        <RecipeContentPanel>
           <div>
-            {/* Title & Description & Price */}
-            <div className="flex flex-col">
-              <div className="flex items-center justify-between">
-                <h1 className="no-scrollbar overflow-x-auto whitespace-nowrap text-2xl font-bold text-ios-gray6">
-                  {recipe.title}
-                </h1>
-                {recipe.price > 0 && (
-                  <div className="ml-3 rounded-full bg-black/40 px-2 font-semibold text-ios-gray6 shadow-sm">
-                    €{recipe.price}
-                  </div>
-                )}
-              </div>
-              <h2 className="line-clamp-2 leading-5 text-ios-gray5/70">
-                {recipe.description}
-              </h2>
-            </div>
+            <RecipeHeader recipe={recipe} />
 
-            <div className="my-5 flex flex-col gap-2">
-              {/* Details Bar */}
-              <div className="flex items-center gap-1 text-white">
-                <span className="rounded-xl bg-neutral-200/20 px-2 py-1 text-sm font-medium">
-                  {recipe.difficulty}
-                </span>
-
-                <div className="flex items-baseline rounded-xl bg-neutral-200/20 px-2 py-1 text-sm">
-                  <span className="font-medium">{recipe.calories}</span>
-                  <span className="pl-1 text-xs">kcal</span>
-                </div>
-
-                <span className="rounded-xl bg-neutral-200/20 px-2 py-1 text-sm">
-                  {formatCookTime(recipe.cook_time)}
-                </span>
-              </div>
-
-              <span className="pl-1 text-xs text-ios-gray5/70">
-                Created{' '}
-                <span className="font-medium">
-                  {formatCreatedAt(recipe.created_at)}
-                </span>
-              </span>
-            </div>
+            <RecipeDetails recipe={recipe} />
           </div>
 
           {/* Action buttons */}
@@ -86,14 +62,48 @@ function RecipeImageCard({ recipe }: RecipeImageCardTypes) {
             <div className="flex items-center justify-center rounded-full bg-white/20 p-1 shadow-sm">
               <HeartIcon className="h-7 w-8 text-white" />
             </div>
-            <div className="flex-shrink-0 rounded-full bg-white/20 px-1 pt-1.5 shadow-sm">
-              <BookmarkIcon className="h-7 w-8 text-white" />
-            </div>
+
+            <button
+              type="button"
+              onClick={handleBookmarkClick}
+              className="flex-shrink-0 rounded-full bg-white/20 px-1 shadow-sm"
+            >
+              {optimisticSaved ? (
+                <BookmarkIconFilled className="h-7 w-8 text-white" />
+              ) : (
+                <BookmarkIcon className="h-7 w-8 text-white" />
+              )}
+            </button>
           </div>
-        </div>
-      </div>
+        </RecipeContentPanel>
+      </RecipeCardContainer>
     </div>
   );
 }
 
 export default RecipeImageCard;
+
+interface ChildrenProp {
+  children: ReactNode;
+}
+
+function RecipeCardContainer({ children }: ChildrenProp) {
+  return (
+    <div className="rounded-b-3xl border-x border-b border-dashed border-[#e3e3e3]/20 shadow-md">
+      {children}
+    </div>
+  );
+}
+
+function RecipeContentPanel({ children }: ChildrenProp) {
+  return (
+    <div
+      className="flex flex-col gap-5 rounded-b-3xl px-2 py-2"
+      style={{
+        background: 'var(--theme-bg-gradient)',
+      }}
+    >
+      {children}
+    </div>
+  );
+}

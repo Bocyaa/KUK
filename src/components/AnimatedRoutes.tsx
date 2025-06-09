@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import AppLayout from './layout/AppLayout.tsx';
-import Dashboard from '../pages/Dashboard.tsx';
+import Dashboard from '../pages/dashboard/Dashboard.tsx';
 import Recipe from '../pages/Recipe.tsx';
-import Profile from '../pages/Profile.tsx';
-import CreateRecipeFlow from '../pages/CreateRecipeFlow.tsx';
+import Profile from '../pages/profile/Profile.tsx';
+import CreateRecipeFlow from '../pages/recipes/CreateRecipeFlow.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
-import Search from '../pages/Search.tsx';
+import Search from '../pages/search/Search.tsx';
 import Register from '../pages/auth/Register.tsx';
 import Login from '../pages/auth/Login.tsx';
 import CompleteProfile from '../pages/auth/CompleteProfile.tsx';
@@ -14,10 +14,10 @@ import AuthCallbackRedirect from '../pages/auth/AuthCallbackRedirect.tsx';
 import ForgotPassword from '../pages/auth/ForgotPassword.tsx';
 import ResetPassword from '../pages/auth/ResetPassword.tsx';
 import ConfirmEmail from '../pages/auth/ConfirmEmail.tsx';
-import Recipes from '../pages/Recipes.tsx';
-import Explore from '../pages/Explore.tsx';
+import Recipes from '../pages/recipes/Recipes.tsx';
+import Explore from '../pages/explore/Explore.tsx';
 import RecipesLayout from './layout/RecipesLayout.tsx';
-import MyRecipesDetails from '../pages/MyRecipesDetails.tsx';
+import MyRecipesList from '../pages/recipes/MyRecipesList.tsx';
 
 import '@app/styles/page-transitions.css';
 import ExploreLayout from './layout/ExploreLayout.tsx';
@@ -37,7 +37,7 @@ export default function AnimatedRoutes() {
           </Route>
           <Route path="recipes" element={<RecipesLayout />}>
             <Route index element={<Recipes />} />
-            <Route path="my-recipes-list" element={<MyRecipesDetails />} />
+            <Route path="my-recipes-list" element={<MyRecipesList />} />
             <Route path="create-recipe" element={<CreateRecipeFlow />} />
             <Route path=":recipeId" element={<Recipe />} />
           </Route>

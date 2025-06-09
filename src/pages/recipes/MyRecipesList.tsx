@@ -1,13 +1,13 @@
 import BackLink from '@app/components/ui/BackLink';
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
-import Header from '@app/components/recipes/Header';
+import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import RecipeTypes from '@app/types/RecipeTypes';
 import { useNavigate } from 'react-router-dom';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 
-function MyRecipesDetails() {
+function MyRecipesList() {
   const { data } = useGetRecipes(); // isFetching
   const recipes = data as RecipeTypes[];
   const navigate = useNavigate();
@@ -41,4 +41,4 @@ function MyRecipesDetails() {
   );
 }
 
-export default MyRecipesDetails;
+export default MyRecipesList;

@@ -90,32 +90,30 @@ function BottomNav() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 flex justify-center">
-      <div className="flex w-full justify-center bg-gradient-to-t from-white/50 to-transparent px-4 pb-2 backdrop-blur-sm dark:from-black/90 standalone:pb-8">
-        <nav className="flex h-[70px] w-full max-w-[26rem] items-center justify-around rounded-full border border-[#e6e6e6] bg-white/90 shadow-md backdrop-blur-xl dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:h-[70px]">
-          {navItems.map((item) => {
-            const active = isActive(item.path);
-            const Icon = item.icon[active ? 'solid' : 'outline'];
+      <nav className="flex h-14 w-full max-w-[26rem] items-center justify-around rounded-t-3xl border-x border-t border-[#e6e6e6] bg-white/70 backdrop-blur-md dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:h-[5.2rem] standalone:pb-10">
+        {navItems.map((item) => {
+          const active = isActive(item.path);
+          const Icon = item.icon[active ? 'solid' : 'outline'];
 
-            return (
-              <button
-                key={item.key}
-                onClick={() => handleNavClick(item.path)}
-                className={`flex flex-col items-center gap-1 text-xs ${
-                  active
-                    ? 'text-gray-800 dark:text-[#f3f3f3]'
-                    : 'text-gray-400 dark:text-[#666666]'
-                }`}
-              >
-                {item.isCustom ? (
-                  <Icon className="h-6 w-6" />
-                ) : (
-                  <Icon className="h-6 w-6" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
+          return (
+            <button
+              key={item.key}
+              onClick={() => handleNavClick(item.path)}
+              className={`flex flex-col items-center gap-1 text-xs ${
+                active
+                  ? 'text-gray-800 dark:text-[#f3f3f3]'
+                  : 'text-gray-400 dark:text-[#666666]'
+              }`}
+            >
+              {item.isCustom ? (
+                <Icon className="h-6 w-6" />
+              ) : (
+                <Icon className="h-6 w-6" />
+              )}
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }

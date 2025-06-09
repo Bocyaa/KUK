@@ -1,19 +1,18 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
 
-/**
- * Carousel that pages **exactly one card per swipe**, Apple‑Music style.
- * ‑ React 18 + TypeScript, no external deps except Tailwind.
- */
 export interface RecipeCarouselProps {
-  /** Replace with your real recipe model. */
   children: ReactNode;
+  gap?: string;
 }
 
 const CARD_WIDTH = 320; // Tailwind w‑80 (20rem)
 const GAP_DEFAULT = 16; // Tailwind gap‑4  (1rem)
 const DRAG_THRESHOLD = 0.15; // 15 % swipe needed to turn page
 
-const RecipeCardCarousel: React.FC<RecipeCarouselProps> = ({ children }) => {
+const RecipeCardCarousel: React.FC<RecipeCarouselProps> = ({
+  children,
+  gap = 'gap-4',
+}) => {
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const RecipeCardCarousel: React.FC<RecipeCarouselProps> = ({ children }) => {
       <div
         ref={trackRef}
         // px-[max(calc((100vw-360px)/2),1rem)]
-        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth bg-transparent pb-2 first:pl-5 last:pr-5"
+        className={`no-scrollbar flex snap-x snap-mandatory ${gap} overflow-x-auto scroll-smooth bg-transparent pb-2 first:pl-5 last:pr-5`}
       >
         {children}
       </div>

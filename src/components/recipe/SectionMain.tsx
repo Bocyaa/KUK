@@ -7,7 +7,7 @@ interface SectionMainProps {
 function SectionMain({ children }: SectionMainProps) {
   return (
     <div
-      className="flex w-full flex-col gap-3 pb-5 pt-16"
+      className="flex w-full flex-col gap-3 pb-8 pt-16"
       style={{ background: 'var(--theme-bg-gradient)' }}
     >
       {children}

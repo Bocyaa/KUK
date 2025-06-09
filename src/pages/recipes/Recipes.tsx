@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '@app/components/recipes/Header';
+import Header from '@app/components/layout/Header';
 import RecipeCardCarousel from '@app/components/recipes/RecipeCardCarousel';
 import RecipeCard from '@app/components/recipes/RecipeCard';
 import MyRecipes from '@app/components/recipes/MyRecipes';
@@ -12,6 +12,7 @@ import RecipeTypes from '@app/types/RecipeTypes';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/utility/recipeUtils';
+import MyCollections from '@app/components/recipes/MyCollections';
 // import { useGetUserById } from '@app/hooks/useGetUserById';
 
 function Recipes() {
@@ -26,9 +27,9 @@ function Recipes() {
   const handleRecipeClick = (recipeId: string) => {
     navigate(`/recipes/${recipeId}`);
   };
-
+  // standalone:mb-28
   return (
-    <div className="mb-12 h-screen bg-white dark:bg-black">
+    <div className="h-screen bg-white dark:bg-black">
       <Header title="Recipes">
         <div className="flex gap-2">
           <HeaderButtonLink to="my-recipes-list" icon="list" />
@@ -56,22 +57,39 @@ function Recipes() {
             <LoadingRecipeBigCards />
           )}
         </RecipeCardCarousel>
+      </div>
 
-        {!isLoadingRecipes ? (
-          <MyRecipes>
-            {sortedRecipes?.map((r, i) => (
-              <RecipeListCard
-                key={i}
-                recipe={r}
-                onClick={() => handleRecipeClick(r.id)}
-              />
-            ))}
-          </MyRecipes>
-        ) : (
-          <MyRecipes>
-            <LoadingRecipeSmallCards />
-          </MyRecipes>
-        )}
+      {!isLoadingRecipes ? (
+        <MyRecipes>
+          {sortedRecipes?.map((r, i) => (
+            <RecipeListCard
+              key={i}
+              recipe={r}
+              onClick={() => handleRecipeClick(r.id)}
+            />
+          ))}
+        </MyRecipes>
+      ) : (
+        <MyRecipes>
+          <LoadingRecipeSmallCards />
+        </MyRecipes>
+      )}
+
+      <div className="pb-40 standalone:pb-24">
+        <MyCollections>
+          <div className="flex w-44 flex-shrink-0 snap-center">
+            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
+          </div>
+          <div className="flex w-44 flex-shrink-0 snap-center">
+            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
+          </div>
+          <div className="flex w-44 flex-shrink-0 snap-center">
+            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
+          </div>
+          <div className="flex w-44 flex-shrink-0 snap-center">
+            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
+          </div>
+        </MyCollections>
       </div>
     </div>
   );

@@ -1,20 +1,23 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
+
 import {
-  restoreThemeColor,
   updateThemeColor,
+  restoreThemeColor,
 } from '@app/utility/updateThemeColor';
 
-import { useRecipeColor } from '@app/hooks/useRecipeColor';
 import BackSecondaryCard from '@app/components/ui/BackSecondaryCard';
 import FrontPrimaryCard from '@app/components/ui/FrontPrimaryCard';
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
-import { useGetRecipe } from '@app/hooks/recipes/useGetRecipe';
 import RecipeTypes from '@app/types/RecipeTypes';
-import { useGetPublicRecipe } from '@app/hooks/recipes/useGetPublicRecipe';
-import RecipeHeader from '@app/components/recipe/RecipeHeader';
+import RecipeTopNav from '@app/components/recipe/RecipeTopNav';
 import RecipeImageCard from '@app/components/recipe/RecipeImageCard';
 import SectionMain from '@app/components/recipe/SectionMain';
+
+import { useGetRecipe } from '@app/hooks/recipes/useGetRecipe';
+import { useGetPublicRecipe } from '@app/hooks/recipes/useGetPublicRecipe';
+import { useRecipeColor } from '@app/hooks/useRecipeColor';
+import { useSaveRecipe } from '@app/hooks/recipes/useSaveRecipe';
 
 function Recipe() {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -71,6 +74,9 @@ function Recipe() {
     recipe?.image_url,
   );
 
+  // Get status of the recipe if it is already saved by the user
+  const { isSaved, toggleSave } = useSaveRecipe(recipe?.id);
+
   // Set dominant color
   useEffect(() => {
     updateThemeColor(dominantColor);
@@ -85,10 +91,14 @@ function Recipe() {
 
   return (
     <div className="no-scrollbar h-screen overflow-y-auto">
-      <RecipeHeader dominantColor={dominantColor} />
+      <RecipeTopNav dominantColor={dominantColor} />
 
       <SectionMain>
-        <RecipeImageCard recipe={recipe} />
+        <RecipeImageCard
+          recipe={recipe}
+          isSaved={isSaved}
+          onBookmarkToggle={toggleSave}
+        />
       </SectionMain>
 
       {/* Section 2 */}
@@ -111,6 +121,13 @@ function Recipe() {
               </div>
             )}
           </FrontPrimaryCard>
+        </BackSecondaryCard>
+
+        <BackSecondaryCard className="mb-3">
+          <span className="flex px-2 py-1 text-[#5d5d5d]">
+            Number of portions:
+          </span>
+          <QuantityStepper value={portions} onChange={handlePortionChange} />
         </BackSecondaryCard>
 
         <BackSecondaryCard height="full">
@@ -146,13 +163,6 @@ function Recipe() {
               <span className="text-sm uppercase">Add Ingredient +</span>
             </div>
           )}
-        </BackSecondaryCard>
-
-        <BackSecondaryCard className="mt-3">
-          <span className="flex px-2 py-1 text-[#5d5d5d]">
-            Number of portions:
-          </span>
-          <QuantityStepper value={portions} onChange={handlePortionChange} />
         </BackSecondaryCard>
       </div>
     </div>

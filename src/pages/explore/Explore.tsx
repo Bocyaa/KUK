@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import RecipeGrid from '@app/components/explore/RecipeGrid';
 import SearchBar from '@app/components/explore/SearchBar';
-import Header from '@app/components/recipes/Header';
+import Header from '@app/components/layout/Header';
 
 import { useGetPublicRecipes } from '@app/hooks/recipes/useGetPublicRecipes';
 
