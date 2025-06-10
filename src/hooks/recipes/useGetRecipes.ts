@@ -6,23 +6,25 @@ import { supabase } from '@app/lib/supabaseClient';
 async function fetchRecipes(userId: string) {
   const { data, error } = await supabase
     .from('recipes')
-    .select(`
+    .select(
+      `
       *,
       owner:public_profiles!recipes_user_id_fkey(username, avatar_url)
-    `)
-    .eq('user_id', userId); 
-    
+    `,
+    )
+    .eq('user_id', userId);
+
   if (error) throw error;
   return data;
 }
 
-/** Returns the current user’s recipes and keeps them fresh for a day. */
+// Returns the current user’s recipes and keeps them fresh for a day.
 export function useGetRecipes() {
   const userId = useAuth().session?.user?.id;
 
   return useQuery({
     queryKey: ['recipes', userId],
-    queryFn: () => fetchRecipes(userId!), 
+    queryFn: () => fetchRecipes(userId!),
     enabled: !!userId, // wait for auth
     staleTime: 1000 * 60 * 60 * 24, // 24 h
   });
@@ -40,8 +42,8 @@ export function PrefetchRecipes(userId: string) {
 
 // Helper to invalidate recipes cache
 export function useInvalidateRecipes() {
-  const queryClient = useQueryClient();
+  const qc = useQueryClient();
   return () => {
-    queryClient.invalidateQueries({ queryKey: ['recipes'] });
+    qc.invalidateQueries({ queryKey: ['recipes'] });
   };
 }
