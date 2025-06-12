@@ -13,13 +13,18 @@ import RecipeTypes from '@app/types/RecipeTypes';
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/utility/recipeUtils';
 import MyCollections from '@app/components/recipes/MyCollections';
-// import { useGetUserById } from '@app/hooks/useGetUserById';
+import { useGetCollectionsPreview } from '@app/hooks/recipes/useGetCollectionsPreview';
+import CollectionCard from '@app/components/recipes/CollectionCard';
 
 function Recipes() {
   const navigate = useNavigate();
 
-  const { data, isFetching: isLoadingRecipes } = useGetRecipes();
-  const recipes = data as RecipeTypes[];
+  const { data: recipesData, isFetching: isLoadingRecipes } = useGetRecipes();
+  const { data: collectionsData, isFetching: isLoadingCollections } =
+    useGetCollectionsPreview();
+
+  const recipes = recipesData as RecipeTypes[];
+  const collections = collectionsData || [];
 
   const randomRecipes = useMemo(() => getRandomRecipes(recipes), [recipes]);
   const sortedRecipes = useMemo(() => getSortedRecipes(recipes), [recipes]);
@@ -27,7 +32,11 @@ function Recipes() {
   const handleRecipeClick = (recipeId: string) => {
     navigate(`/recipes/${recipeId}`);
   };
-  // standalone:mb-28
+
+  const handleCollectionClick = (collectionId: string) => {
+    navigate(`/recipes/collection/${collectionId}`);
+  };
+
   return (
     <div className="h-screen bg-white dark:bg-black">
       <Header title="Recipes">
@@ -77,18 +86,13 @@ function Recipes() {
 
       <div className="pb-40 standalone:pb-24">
         <MyCollections>
-          <div className="flex w-44 flex-shrink-0 snap-center">
-            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
-          </div>
-          <div className="flex w-44 flex-shrink-0 snap-center">
-            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
-          </div>
-          <div className="flex w-44 flex-shrink-0 snap-center">
-            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
-          </div>
-          <div className="flex w-44 flex-shrink-0 snap-center">
-            <div className="h-36 w-44 rounded-lg bg-neutral-200"></div>
-          </div>
+          {collections?.map((item, i) => (
+            <CollectionCard
+              key={i}
+              collection={item}
+              onClick={() => handleCollectionClick(item.id)}
+            />
+          ))}
         </MyCollections>
       </div>
     </div>

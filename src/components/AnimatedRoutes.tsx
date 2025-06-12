@@ -21,6 +21,7 @@ import MyRecipesList from '../pages/recipes/MyRecipesList.tsx';
 
 import '@app/styles/page-transitions.css';
 import ExploreLayout from './layout/ExploreLayout.tsx';
+import Collection from '@app/pages/recipes/Collection.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -40,6 +41,7 @@ export default function AnimatedRoutes() {
             <Route path="my-recipes-list" element={<MyRecipesList />} />
             <Route path="create-recipe" element={<CreateRecipeFlow />} />
             <Route path=":recipeId" element={<Recipe />} />
+            <Route path="collection/:collectionId" element={<Collection />} />
           </Route>
           <Route path="search" element={<Search />} />
           <Route path="profile" element={<Profile />} />
