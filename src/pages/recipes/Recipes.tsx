@@ -20,8 +20,7 @@ function Recipes() {
   const navigate = useNavigate();
 
   const { data: recipesData, isFetching: isLoadingRecipes } = useGetRecipes();
-  const { data: collectionsData, isFetching: isLoadingCollections } =
-    useGetCollectionsPreview();
+  const { data: collectionsData } = useGetCollectionsPreview(); // isFetching: isLoadingCollections
 
   const recipes = recipesData as RecipeTypes[];
   const collections = collectionsData || [];
