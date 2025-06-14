@@ -13,7 +13,7 @@ import RecipeTypes from '@app/types/RecipeTypes';
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/utility/recipeUtils';
 import MyCollections from '@app/components/recipes/MyCollections';
-import { useGetCollectionsPreview } from '@app/hooks/recipes/useGetCollectionsPreview';
+import { useGetCollectionsPreview } from '@app/hooks/recipes/collections/useGetCollectionsPreview';
 import CollectionCard from '@app/components/recipes/CollectionCard';
 
 function Recipes() {

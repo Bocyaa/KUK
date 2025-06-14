@@ -24,7 +24,7 @@ function MyRecipesList() {
   };
 
   return (
-    <div className="pt-20">
+    <div className="pb-24 pt-20">
       <Header
         title="My Recipes"
         back={<BackLink to="/recipes" label="Back to recipes" />}
