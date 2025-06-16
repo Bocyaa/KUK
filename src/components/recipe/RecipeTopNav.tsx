@@ -41,10 +41,6 @@ function RecipeTopNav({ dominantColor }: RecipeHeaderProps) {
         </div>
       </button>
 
-      <span className="text-lg font-semibold capitalize text-[#e3e3e3]">
-        {previousPage?.name}
-      </span>
-
       <button type="button">
         <div className="flex items-center justify-center rounded-full bg-white/20 p-1">
           <EllipsisHorizontal />
