@@ -2,11 +2,16 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@app/lib/supabaseClient';
 import { useAuth } from '@app/contexts/hooks/useAuth';
 import toast from 'react-hot-toast';
+import { useInvalidateCollectionsPreview } from './collections/useGetCollectionsPreview';
+import { useInvalidateCollectionRecipes } from './collections/useGetCollectionRecipes';
 
 export function useSaveRecipe(recipeId?: string) {
   const userId = useAuth().session?.user?.id;
   const [isSaved, setIsSaved] = useState(false);
   const [isPending, setIsPending] = useState(false);
+
+  const invalidateCollectionRecipes = useInvalidateCollectionRecipes();
+  const invalidateCollectionsPreview = useInvalidateCollectionsPreview();
 
   useEffect(() => {
     if (!userId || !recipeId) return;
@@ -92,6 +97,10 @@ export function useSaveRecipe(recipeId?: string) {
       if (insertError) toast.error('Failed to save recipe.');
       else setIsSaved(true);
     }
+
+    // Pass the specific collection ID and force a refetch
+    invalidateCollectionRecipes(finalCollection.id, true);
+    invalidateCollectionsPreview();
 
     setIsPending(false);
   };

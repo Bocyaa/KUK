@@ -72,7 +72,12 @@ export function PrefetchCollections(userId: string) {
 // Helper to invalidate collections cache
 export function useInvalidateCollectionsPreview() {
   const qc = useQueryClient();
+  const userId = useAuth().session?.user?.id;
+
   return () => {
-    qc.invalidateQueries({ queryKey: ['collections'] });
+    qc.invalidateQueries({
+      queryKey: ['collections', userId],
+      refetchType: 'all',
+    });
   };
 }

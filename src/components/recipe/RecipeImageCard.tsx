@@ -12,7 +12,7 @@ import { BookmarkIcon, BookmarkIconFilled } from '../Icons/BookmarkIcon';
 interface RecipeImageCardTypes {
   recipe: RecipeTypes;
   isSaved?: boolean;
-  onBookmarkToggle?: () => void;
+  onBookmarkToggle?: () => Promise<void>;
 }
 
 function RecipeImageCard({
@@ -27,12 +27,18 @@ function RecipeImageCard({
     setOptimisticSaved(isSaved);
   }, [isSaved]);
 
-  const handleBookmarkClick = () => {
+  const handleBookmarkClick = async () => {
     // 1. Update UI instantly (optimistic update)
     setOptimisticSaved(!optimisticSaved);
 
-    // 2. Call backend in background
-    onBookmarkToggle?.();
+    try {
+      // 2. Wait for backend operation to complete
+      await onBookmarkToggle?.();
+    } catch (error) {
+      // 3. Revert optimistic update if backend fails
+      console.error('Bookmark toggle failed:', error);
+      setOptimisticSaved(!optimisticSaved);
+    }
   };
 
   return (

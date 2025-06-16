@@ -90,28 +90,21 @@ export function useGetCollectionRecipes(collectionId: string | undefined) {
 // Helper to invalidate collection recipes cache
 export function useInvalidateCollectionRecipes() {
   const queryClient = useQueryClient();
+  const userId = useAuth().session?.user?.id;
 
-  return (collectionId?: string) => {
+  return (collectionId?: string, forceRefetch = false) => {
     if (collectionId) {
       // Invalidate specific collection
       queryClient.invalidateQueries({
-        queryKey: ['collectionRecipes', collectionId],
+        queryKey: ['collectionRecipes', collectionId, userId],
+        refetchType: forceRefetch ? 'all' : 'inactive',
       });
     } else {
       // Invalidate all collection recipes
       queryClient.invalidateQueries({
         queryKey: ['collectionRecipes'],
+        refetchType: forceRefetch ? 'all' : 'inactive',
       });
     }
   };
 }
-
-/**
- * Fetches recipe IDs first from the recipe_collections junction table.
- * Then fetches all recipe details using the collected IDs with .in('id', recipeIds).
- * Works with mixed collections containing both user-owned and public recipes.
- * Properly types the response to match your RecipeTypes interface exactly.
- * Handles empty collections by returning an empty array.
- * Maintains infinite caching as requested.
- * Provides proper null safety for optional fields like image_url, categories, ingredients, and owner data.
- */

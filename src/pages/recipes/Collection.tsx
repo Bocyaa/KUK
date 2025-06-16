@@ -17,7 +17,7 @@ function Collection() {
   );
 
   const handleRecipeClick = (recipeId: string) => {
-    navigate(`/recipes/${recipeId}`);
+    navigate(`/recipes/collection/${collectionId}/${recipeId}`);
   };
 
   if (isLoading) {

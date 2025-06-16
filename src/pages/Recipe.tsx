@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   updateThemeColor,
@@ -30,7 +30,6 @@ function Recipe() {
     recipe = publicData as RecipeTypes;
   }
 
-  const isNavigatingRef = useRef(false); // Track if component is being unmounted due to navigation
   const [portions, setPortions] = useState(recipe?.portions || 1);
 
   // Store original ingredient amounts
@@ -77,93 +76,95 @@ function Recipe() {
   // Get status of the recipe if it is already saved by the user
   const { isSaved, toggleSave } = useSaveRecipe(recipe?.id);
 
-  // Set dominant color
+  // Set/Reset dominant color
   useEffect(() => {
-    updateThemeColor(dominantColor);
+    updateThemeColor(dominantColor); // on mount & when colour finishes loading
 
     return () => {
-      // Only restore theme color if we're actually navigating away, not during transition animations
-      if (isNavigatingRef.current) {
-        restoreThemeColor();
-      }
+      restoreThemeColor(); // on unmount
     };
   }, [dominantColor]);
 
   return (
-    <div className="no-scrollbar h-screen overflow-y-auto">
-      <RecipeTopNav dominantColor={dominantColor} />
+    <div
+      className="h-screen"
+      style={{ backgroundColor: 'var(--theme-bg-color)' }}
+    >
+      <div className="no-scrollbar h-screen overflow-y-auto">
+        <RecipeTopNav dominantColor={dominantColor} />
 
-      <SectionMain>
-        <RecipeImageCard
-          recipe={recipe}
-          isSaved={isSaved}
-          onBookmarkToggle={toggleSave}
-        />
-      </SectionMain>
+        <SectionMain>
+          <RecipeImageCard
+            recipe={recipe}
+            isSaved={isSaved}
+            onBookmarkToggle={toggleSave}
+          />
+        </SectionMain>
 
-      {/* Section 2 */}
-      <div className="bg-white p-6 px-7 pb-32 dark:bg-black">
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Ingredients</h3>
-        </div>
+        {/* Section 2 */}
+        <div className="bg-white p-6 px-7 pb-32 dark:bg-black">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-semibold">Ingredients</h3>
+          </div>
 
-        <BackSecondaryCard className="mb-3">
-          <span className="flex px-2 py-1 text-[#5d5d5d]">
-            Total price of ingredients:
-          </span>
-          <FrontPrimaryCard>
-            {totalAdjustedPrice > 0 && (
-              <div className="flex gap-1 px-2 py-1">
-                <span className="font-medium">
-                  {totalAdjustedPrice.toFixed(2)}
-                </span>
-                <span className="font-light">€</span>
+          <BackSecondaryCard className="mb-3">
+            <span className="flex px-2 py-1 text-[#5d5d5d]">
+              Total price of ingredients:
+            </span>
+            <FrontPrimaryCard>
+              {totalAdjustedPrice > 0 && (
+                <div className="flex gap-1 px-2 py-1">
+                  <span className="font-medium">
+                    {totalAdjustedPrice.toFixed(2)}
+                  </span>
+                  <span className="font-light">€</span>
+                </div>
+              )}
+            </FrontPrimaryCard>
+          </BackSecondaryCard>
+
+          <BackSecondaryCard className="mb-3">
+            <span className="flex px-2 py-1 text-[#5d5d5d]">
+              Number of portions:
+            </span>
+            <QuantityStepper value={portions} onChange={handlePortionChange} />
+          </BackSecondaryCard>
+
+          <BackSecondaryCard height="full">
+            {adjustedIngredients.length > 0 ? (
+              <div className="flex w-full flex-col gap-1">
+                {adjustedIngredients.map((ing, i) => (
+                  <div
+                    key={i}
+                    className="no-scrollbar flex w-full items-center justify-between overflow-x-auto border-b border-[#f1f1f1] pb-1 last:border-none last:pb-0 dark:border-transparent"
+                  >
+                    <div className="py-1">
+                      <span className="px-3 font-light text-[#5d5d5d]">
+                        {i + 1}
+                      </span>
+
+                      <span className="px-3 capitalize">{ing.name}</span>
+                    </div>
+
+                    <div className="mx-3 flex gap-3">
+                      <span className="w-7 text-right">
+                        {String(ing.quantity).replace('.', ',')}
+                      </span>
+
+                      <span className="w-7 text-left font-light text-[#5d5d5d]">
+                        {ing.unit}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="m-1 flex rounded-lg border border-dashed border-[#5d5d5d] px-2 py-2 text-[#5d5d5d]">
+                <span className="text-sm uppercase">Add Ingredient +</span>
               </div>
             )}
-          </FrontPrimaryCard>
-        </BackSecondaryCard>
-
-        <BackSecondaryCard className="mb-3">
-          <span className="flex px-2 py-1 text-[#5d5d5d]">
-            Number of portions:
-          </span>
-          <QuantityStepper value={portions} onChange={handlePortionChange} />
-        </BackSecondaryCard>
-
-        <BackSecondaryCard height="full">
-          {adjustedIngredients.length > 0 ? (
-            <div className="flex w-full flex-col gap-1">
-              {adjustedIngredients.map((ing, i) => (
-                <div
-                  key={i}
-                  className="no-scrollbar flex w-full items-center justify-between overflow-x-auto border-b border-[#f1f1f1] pb-1 last:border-none last:pb-0 dark:border-transparent"
-                >
-                  <div className="py-1">
-                    <span className="px-3 font-light text-[#5d5d5d]">
-                      {i + 1}
-                    </span>
-
-                    <span className="px-3 capitalize">{ing.name}</span>
-                  </div>
-
-                  <div className="mx-3 flex gap-3">
-                    <span className="w-7 text-right">
-                      {String(ing.quantity).replace('.', ',')}
-                    </span>
-
-                    <span className="w-7 text-left font-light text-[#5d5d5d]">
-                      {ing.unit}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="m-1 flex rounded-lg border border-dashed border-[#5d5d5d] px-2 py-2 text-[#5d5d5d]">
-              <span className="text-sm uppercase">Add Ingredient +</span>
-            </div>
-          )}
-        </BackSecondaryCard>
+          </BackSecondaryCard>
+        </div>
       </div>
     </div>
   );

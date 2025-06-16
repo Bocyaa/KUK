@@ -1,52 +1,52 @@
-export const updateThemeColor = (color: string) => {
-  // Update both light and dark theme color meta tags
-  const lightThemeTag = document.querySelector(
+// A single global stack is enough
+declare global {
+  interface Window {
+    __themeColorStack?: string[];
+  }
+}
+
+const stack = ((): string[] => {
+  window.__themeColorStack ??= [];
+  return window.__themeColorStack;
+})();
+
+const apply = (c: string | undefined) => {
+  const light = document.querySelector<HTMLMetaElement>(
     'meta[name="theme-color"][media="(prefers-color-scheme: light)"]',
   );
-  const darkThemeTag = document.querySelector(
+  const dark = document.querySelector<HTMLMetaElement>(
     'meta[name="theme-color"][media="(prefers-color-scheme: dark)"]',
   );
-  const defaultThemeTag = document.querySelector(
+  const def = document.querySelector<HTMLMetaElement>(
     'meta[name="theme-color"]:not([media])',
   );
 
-  if (lightThemeTag) {
-    lightThemeTag.setAttribute('content', color);
+  // fall back to system colours when `c` is undefined
+  const lightCol = c ?? '#ffffff';
+  const darkCol = c ?? '#000000';
+
+  light?.setAttribute('content', lightCol);
+  dark?.setAttribute('content', darkCol);
+  def?.setAttribute('content', lightCol);
+
+  if (c) {
+    document.documentElement.style.setProperty('--theme-bg-color', c);
+    document.documentElement.style.setProperty(
+      '--theme-bg-gradient',
+      `linear-gradient(to bottom, ${c}, color-mix(in srgb, ${c} 60%, black))`,
+    );
+  } else {
+    document.documentElement.style.removeProperty('--theme-bg-color');
+    document.documentElement.style.removeProperty('--theme-bg-gradient');
   }
-  if (darkThemeTag) {
-    darkThemeTag.setAttribute('content', color);
-  }
-  if (defaultThemeTag) {
-    defaultThemeTag.setAttribute('content', color);
-  }
-  
-  // Set CSS custom properties for gradient (remove body background setting)
-  document.documentElement.style.setProperty('--theme-bg-color', color);
-  document.documentElement.style.setProperty('--theme-bg-gradient', `linear-gradient(to bottom, ${color}, color-mix(in srgb, ${color} 60%, black))`);
+};
+
+export const updateThemeColor = (colour: string) => {
+  stack.push(colour);
+  apply(colour); // top of stack
 };
 
 export const restoreThemeColor = () => {
-  const lightThemeTag = document.querySelector(
-    'meta[name="theme-color"][media="(prefers-color-scheme: light)"]',
-  );
-  const darkThemeTag = document.querySelector(
-    'meta[name="theme-color"][media="(prefers-color-scheme: dark)"]',
-  );
-  const defaultThemeTag = document.querySelector(
-    'meta[name="theme-color"]:not([media])',
-  );
-
-  if (lightThemeTag) {
-    lightThemeTag.setAttribute('content', '#ffffff');
-  }
-  if (darkThemeTag) {
-    darkThemeTag.setAttribute('content', '#000000');
-  }
-  if (defaultThemeTag) {
-    defaultThemeTag.setAttribute('content', '#ffffff');
-  }
-  
-  // Remove the custom properties
-  document.documentElement.style.removeProperty('--theme-bg-color');
-  document.documentElement.style.removeProperty('--theme-bg-gradient');
+  stack.pop(); // drop the colour for the page that unmounted
+  apply(stack.at(-1)); // apply next colour or defaults
 };
