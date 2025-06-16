@@ -42,6 +42,10 @@ export default function AnimatedRoutes() {
             <Route path="create-recipe" element={<CreateRecipeFlow />} />
             <Route path=":recipeId" element={<Recipe />} />
             <Route path="collection/:collectionId" element={<Collection />} />
+            <Route
+              path="collection/:collectionId/:recipeId"
+              element={<Recipe />}
+            />
           </Route>
           <Route path="search" element={<Search />} />
           <Route path="profile" element={<Profile />} />
