@@ -2,18 +2,17 @@ import type { SVGProps, FC } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
-  HomeIcon as HomeOutline,
   UserIcon as UserOutline,
   SquaresPlusIcon as SquaresPlusOutline,
+  Squares2X2Icon as SquaresIconOutline,
 } from '@heroicons/react/24/outline';
 
 import {
-  HomeIcon as HomeSolid,
   UserIcon as UserSolid,
   SquaresPlusIcon as SquaresPlusSolid,
+  Squares2X2Icon as SquaresIconSolid,
 } from '@heroicons/react/24/solid';
 
-import CustomMagnifyingGlass from '../ui/CustomMagnifyingGlass';
 import { Telescope } from 'lucide-react';
 import { restoreThemeColor } from '@app/utility/updateThemeColor';
 
@@ -37,10 +36,11 @@ function BottomNav() {
 
   const navItems: NavItem[] = [
     {
-      key: 'dashboard',
-      label: 'Home',
-      path: '/dashboard',
-      icon: { outline: HomeOutline, solid: HomeSolid },
+      key: 'recipes',
+      label: 'Recipes',
+      path: '/recipes',
+      icon: { outline: SquaresIconOutline, solid: SquaresIconSolid },
+      isCustom: true,
     },
     {
       key: 'explore',
@@ -49,17 +49,10 @@ function BottomNav() {
       icon: { outline: Telescope, solid: Telescope },
     },
     {
-      key: 'recipes',
-      label: 'Recipes',
-      path: '/recipes',
+      key: 'create-recipe',
+      label: 'Create',
+      path: '/create-recipe',
       icon: { outline: SquaresPlusOutline, solid: SquaresPlusSolid },
-      isCustom: true,
-    },
-    {
-      key: 'search',
-      label: 'Search',
-      path: '/search',
-      icon: { outline: CustomMagnifyingGlass, solid: CustomMagnifyingGlass },
     },
     {
       key: 'profile',
@@ -86,11 +79,9 @@ function BottomNav() {
     return false;
   };
 
-  // TODO: Reimplement this nav bar in other way and make the middle button usable for other cases as well, for example for cancelling recipe creation.
-
   return (
     <div className="fixed inset-x-0 bottom-0 flex justify-center">
-      <nav className="flex h-14 w-full max-w-[26rem] items-center justify-around rounded-t-3xl border-x border-t border-[#e6e6e6] bg-white/70 backdrop-blur-md dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:h-[5.2rem] standalone:pb-10">
+      <nav className="flex h-14 w-full items-center justify-around rounded-t-3xl border-x border-t border-[#e6e6e6] bg-white/70 backdrop-blur-md dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:h-[5.2rem] standalone:pb-8">
         {navItems.map((item) => {
           const active = isActive(item.path);
           const Icon = item.icon[active ? 'solid' : 'outline'];
@@ -105,11 +96,7 @@ function BottomNav() {
                   : 'text-gray-400 dark:text-[#666666]'
               }`}
             >
-              {item.isCustom ? (
-                <Icon className="h-6 w-6" />
-              ) : (
-                <Icon className="h-6 w-6" />
-              )}
+              <Icon className="h-7 w-7" />
             </button>
           );
         })}
