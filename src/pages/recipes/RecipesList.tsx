@@ -3,25 +3,24 @@ import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import RecipeTypes from '@app/types/RecipeTypes';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
+import { PlusIcon } from '@app/components/Icons/PlusIcon';
+import { getSortedRecipes } from '@app/utility/recipeUtils';
 
-function MyRecipesList() {
-  const { data } = useGetRecipes(); // isFetching
+function RecipesList() {
+  const { data, isFetching } = useGetRecipes();
   const recipes = data as RecipeTypes[];
-  const navigate = useNavigate();
+  const sortedRecipes = getSortedRecipes(recipes);
 
-  const sortedRecipes = recipes
-    ?.slice()
-    .sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-    ) || [''];
+  const navigate = useNavigate();
 
   const handleRecipeClick = (recipeId: string) => {
     navigate(`/recipes/${recipeId}`);
   };
+
+  if (isFetching) return 'Fetching ...';
 
   return (
     <div className="pb-24 pt-20">
@@ -36,9 +35,22 @@ function MyRecipesList() {
         {sortedRecipes?.map((r) => (
           <RecipeListCard recipe={r} onClick={() => handleRecipeClick(r.id)} />
         ))}
+        <PlaceholderCardButton to="/create-recipe" />
       </div>
     </div>
   );
 }
 
-export default MyRecipesList;
+export default RecipesList;
+
+function PlaceholderCardButton({ to }: { to: string }) {
+  return (
+    <NavLink to={to}>
+      <div className="flex gap-3">
+        <div className="flex h-16 w-20 items-center justify-center rounded-lg border-2 border-dashed shadow-sm">
+          <PlusIcon />
+        </div>
+      </div>
+    </NavLink>
+  );
+}

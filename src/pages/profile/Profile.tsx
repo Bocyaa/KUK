@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 function Profile() {
   const { data: profile, isLoading } = useGetUserProfile();
 
+  if (isLoading) return 'Loading ...';
+
   return (
     <div className="mt-20 h-screen">
       <Header title={profile.username}>

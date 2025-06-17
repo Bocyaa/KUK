@@ -18,7 +18,7 @@ function CollectionCard({ collection, onClick }: CollectionCardProps) {
   return (
     <div className="w-44 flex-shrink-0 snap-center" onClick={onClick}>
       <div
-        className={`grid h-36 w-full gap-1 overflow-hidden rounded-lg p-1 dark:bg-[#212121] ${getGridClasses()}`}
+        className={`grid h-36 w-full gap-1 overflow-hidden rounded-lg bg-[#f9f9f9] p-1 dark:bg-[#212121] ${getGridClasses()}`}
       >
         {collection.recipe_collections.map((item, i) => (
           <img
@@ -30,11 +30,11 @@ function CollectionCard({ collection, onClick }: CollectionCardProps) {
         ))}
       </div>
 
-      <div className="mt-1">
-        <h3 className="text-sm">{collection.name}</h3>
-        <span className="line-clamp-1 text-xs dark:text-[#afafaf]">
+      <div className="ml-2">
+        <h3 className="font-semibold capitalize">{collection.name}</h3>
+        <h4 className="line-clamp-1 text-xs font-medium capitalize leading-3 text-[#5d5d5d] dark:text-[#afafaf]">
           {collection.description}
-        </span>
+        </h4>
       </div>
     </div>
   );

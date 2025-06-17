@@ -1,12 +1,10 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import AppLayout from './layout/AppLayout.tsx';
-import Dashboard from '../pages/dashboard/Dashboard.tsx';
-import Recipe from '../pages/Recipe.tsx';
+import Recipe from '../pages/recipes/Recipe.tsx';
 import Profile from '../pages/profile/Profile.tsx';
 import CreateRecipeFlow from '../pages/recipes/CreateRecipeFlow.tsx';
 import PageNotFound from '../pages/PageNotFound.tsx';
-import Search from '../pages/search/Search.tsx';
 import Register from '../pages/auth/Register.tsx';
 import Login from '../pages/auth/Login.tsx';
 import CompleteProfile from '../pages/auth/CompleteProfile.tsx';
@@ -17,11 +15,12 @@ import ConfirmEmail from '../pages/auth/ConfirmEmail.tsx';
 import Recipes from '../pages/recipes/Recipes.tsx';
 import Explore from '../pages/explore/Explore.tsx';
 import RecipesLayout from './layout/RecipesLayout.tsx';
-import MyRecipesList from '../pages/recipes/MyRecipesList.tsx';
+import RecipesList from '../pages/recipes/RecipesList.tsx';
 
 import '@app/styles/page-transitions.css';
 import ExploreLayout from './layout/ExploreLayout.tsx';
 import Collection from '@app/pages/recipes/Collection.tsx';
+import CollectionsList from '@app/pages/recipes/CollectionsList.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -30,24 +29,23 @@ export default function AnimatedRoutes() {
     <div className="page-container">
       <Routes location={location}>
         <Route element={<AppLayout />}>
-          <Route index element={<Navigate replace to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="explore" element={<ExploreLayout />}>
-            <Route index element={<Explore />} />
-            <Route path=":recipeId" element={<Recipe />} />
-          </Route>
+          <Route index element={<Navigate replace to={'recipes'} />} />
           <Route path="recipes" element={<RecipesLayout />}>
             <Route index element={<Recipes />} />
-            <Route path="my-recipes-list" element={<MyRecipesList />} />
-            <Route path="create-recipe" element={<CreateRecipeFlow />} />
+            <Route path="recipes-list" element={<RecipesList />} />
             <Route path=":recipeId" element={<Recipe />} />
+            <Route path="collections-list" element={<CollectionsList />} />
             <Route path="collection/:collectionId" element={<Collection />} />
             <Route
               path="collection/:collectionId/:recipeId"
               element={<Recipe />}
             />
           </Route>
-          <Route path="search" element={<Search />} />
+          <Route path="explore" element={<ExploreLayout />}>
+            <Route index element={<Explore />} />
+            <Route path=":recipeId" element={<Recipe />} />
+          </Route>
+          <Route path="create-recipe" element={<CreateRecipeFlow />} />
           <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="auth/callback" element={<AuthCallbackRedirect />} />

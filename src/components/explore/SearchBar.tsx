@@ -15,7 +15,7 @@ function SearchBar({ isFocused, setIsFocused }: SearchBarTypes) {
         ref={inputRef}
         type="text"
         placeholder="Search"
-        className={`rounded-xl border border-[#e6e6e6] bg-[#f9f9f9] py-1 pl-7 pr-2 outline-none transition-all duration-200 ease-in-out ${
+        className={`rounded-xl border border-[#e6e6e6] bg-[#f9f9f9] py-1 pl-7 pr-2 outline-none transition-all ease-in-out dark:border-transparent dark:bg-[#212121] ${
           isFocused ? 'w-[calc(100%-65px)]' : 'w-full'
         }`}
         onFocus={() => setIsFocused(true)}

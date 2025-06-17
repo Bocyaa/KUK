@@ -7,7 +7,6 @@ import RecipeCard from '@app/components/recipes/RecipeCard';
 import MyRecipes from '@app/components/recipes/MyRecipes';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
-import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import RecipeTypes from '@app/types/RecipeTypes';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
@@ -36,64 +35,45 @@ function Recipes() {
     navigate(`/recipes/collection/${collectionId}`);
   };
 
+  if (isLoadingRecipes) return <Loading />;
+
   return (
-    <div className="h-screen bg-white dark:bg-black">
-      <Header title="Recipes">
-        <div className="flex gap-2">
-          <HeaderButtonLink to="my-recipes-list" icon="list" />
-          <HeaderButtonLink to="create-recipe" icon="plus" />
-        </div>
-      </Header>
+    <div className="py-20 standalone:pb-24">
+      <Header title="Recipes" />
 
-      <div className="pt-20">
-        <RecipeCardCarousel>
-          {!isLoadingRecipes ? (
-            <>
-              {randomRecipes?.map((r, i) => (
-                <RecipeCard
-                  key={i}
-                  username={r.owner.username}
-                  title={r.title}
-                  description={r.description}
-                  img={r.image_url}
-                  price={r.price}
-                  onClick={() => handleRecipeClick(r.id)}
-                />
-              ))}
-            </>
-          ) : (
-            <LoadingRecipeBigCards />
-          )}
-        </RecipeCardCarousel>
-      </div>
+      <RecipeCardCarousel>
+        {randomRecipes?.map((r, i) => (
+          <RecipeCard
+            key={i}
+            username={r.owner.username}
+            title={r.title}
+            description={r.description}
+            img={r.image_url}
+            price={r.price}
+            onClick={() => handleRecipeClick(r.id)}
+          />
+        ))}
+      </RecipeCardCarousel>
 
-      {!isLoadingRecipes ? (
-        <MyRecipes>
-          {sortedRecipes?.map((r, i) => (
-            <RecipeListCard
-              key={i}
-              recipe={r}
-              onClick={() => handleRecipeClick(r.id)}
-            />
-          ))}
-        </MyRecipes>
-      ) : (
-        <MyRecipes>
-          <LoadingRecipeSmallCards />
-        </MyRecipes>
-      )}
+      <MyRecipes>
+        {sortedRecipes?.map((r, i) => (
+          <RecipeListCard
+            key={i}
+            recipe={r}
+            onClick={() => handleRecipeClick(r.id)}
+          />
+        ))}
+      </MyRecipes>
 
-      <div className="pb-40 standalone:pb-24">
-        <MyCollections>
-          {collections?.map((item, i) => (
-            <CollectionCard
-              key={i}
-              collection={item}
-              onClick={() => handleCollectionClick(item.id)}
-            />
-          ))}
-        </MyCollections>
-      </div>
+      <MyCollections>
+        {collections?.map((item, i) => (
+          <CollectionCard
+            key={i}
+            collection={item}
+            onClick={() => handleCollectionClick(item.id)}
+          />
+        ))}
+      </MyCollections>
     </div>
   );
 }
@@ -129,5 +109,23 @@ function LoadingRecipeSmallCards() {
         <SpinnerBar />
       </div>
     </>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="h-screen bg-white dark:bg-black">
+      <Header title="Recipes" />
+
+      <div className="pt-20">
+        <RecipeCardCarousel>
+          <LoadingRecipeBigCards />
+        </RecipeCardCarousel>
+      </div>
+
+      <MyRecipes>
+        <LoadingRecipeSmallCards />
+      </MyRecipes>
+    </div>
   );
 }

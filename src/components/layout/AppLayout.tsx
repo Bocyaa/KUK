@@ -19,7 +19,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="no-scrollbar relative mx-auto flex h-screen max-w-[26rem] flex-col overflow-y-auto">
+    <div>
       <TransitionGroup>
         <CSSTransition
           key={location.pathname}
@@ -27,7 +27,7 @@ function AppLayout() {
           timeout={300}
           unmountOnExit
         >
-          <main>
+          <main className="no-scrollbar relative h-screen overflow-y-auto">
             <Outlet />
           </main>
         </CSSTransition>
