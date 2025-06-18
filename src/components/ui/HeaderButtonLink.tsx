@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import HeaderButtonIcon from './HeaderButtonIcon';
 
 interface HeaderButtonLinkProps {
@@ -14,8 +14,10 @@ function HeaderButtonLink({
   iconColor,
   transparent,
 }: HeaderButtonLinkProps) {
+  const location = useLocation();
+
   return (
-    <NavLink to={to}>
+    <NavLink to={to} state={{ from: location.pathname }}>
       <HeaderButtonIcon
         icon={icon}
         iconColor={iconColor}

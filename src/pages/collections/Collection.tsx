@@ -1,8 +1,9 @@
 import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import BackLink from '@app/components/ui/BackLink';
-import { useGetCollectionRecipes } from '@app/hooks/recipes/collections/useGetCollectionRecipes';
-import { useGetCollectionsPreview } from '@app/hooks/recipes/collections/useGetCollectionsPreview';
+import { useGetCollectionRecipes } from '@app/hooks/collections/useGetCollectionRecipes';
+import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
+import { useBackNavigation } from '@app/hooks/useBackNavigation';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Collection() {
@@ -20,12 +21,23 @@ function Collection() {
     navigate(`/recipes/collection/${collectionId}/${recipeId}`);
   };
 
+  const backLinkData = useBackNavigation({
+    defaultTo: '/recipes/collections-list',
+    defaultLabel: 'Back to Collections',
+    routes: {
+      '/recipes': {
+        to: '/recipes',
+        label: 'Back to Recipes',
+      },
+    },
+  });
+
   if (isLoading) {
     return (
       <div className="h-screen bg-white dark:bg-black">
         <Header
           title="Loading..."
-          back={<BackLink to="/recipes" label="Back to recipes" />}
+          back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
         />
       </div>
     );
@@ -35,7 +47,7 @@ function Collection() {
     <div className="h-screen bg-white dark:bg-black">
       <Header
         title={currentCollection?.name || 'Collection'}
-        back={<BackLink to="/recipes" label="Back to recipes" />}
+        back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
       />
 
       <div className="flex flex-col gap-1 px-5 pb-24 pt-20">

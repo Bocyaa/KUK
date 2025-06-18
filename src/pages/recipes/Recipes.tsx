@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Header from '@app/components/layout/Header';
 import RecipeCardCarousel from '@app/components/recipes/RecipeCardCarousel';
@@ -8,15 +8,16 @@ import MyRecipes from '@app/components/recipes/MyRecipes';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
 import RecipeTypes from '@app/types/RecipeTypes';
+import MyCollections from '@app/components/recipes/MyCollections';
+import CollectionCard from '@app/components/recipes/CollectionCard';
 
 import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/utility/recipeUtils';
-import MyCollections from '@app/components/recipes/MyCollections';
-import { useGetCollectionsPreview } from '@app/hooks/recipes/collections/useGetCollectionsPreview';
-import CollectionCard from '@app/components/recipes/CollectionCard';
+import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
 
 function Recipes() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { data: recipesData, isFetching: isLoadingRecipes } = useGetRecipes();
   const { data: collectionsData } = useGetCollectionsPreview(); // isFetching: isLoadingCollections
@@ -32,7 +33,9 @@ function Recipes() {
   };
 
   const handleCollectionClick = (collectionId: string) => {
-    navigate(`/recipes/collection/${collectionId}`);
+    navigate(`/recipes/collection/${collectionId}`, {
+      state: { from: location.pathname },
+    });
   };
 
   if (isLoadingRecipes) return <Loading />;

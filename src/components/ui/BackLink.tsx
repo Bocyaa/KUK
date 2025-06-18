@@ -11,7 +11,9 @@ function BackLink({ to, label }: BackLinkProps) {
     <NavLink to={to}>
       <div className="flex items-center gap-1">
         <ChevronLeftIcon className="h-3 w-3" />
-        <span className="text-xs text-[#0094f6]">{label}</span>
+        <span className="text-xs text-[#5d5d5d] dark:text-[#afafaf]">
+          {label}
+        </span>
       </div>
     </NavLink>
   );

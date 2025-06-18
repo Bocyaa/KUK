@@ -40,7 +40,7 @@ function Header({
       className={`${customClasses ? customClasses : mainStyle + (dominantColor ? '' : light + ' ' + dark)}`}
       style={dynamicStyle}
     >
-      {title && <h1 className="text-4xl font-bold">{title}</h1>}
+      {title && <h1 className="line-clamp-1 text-4xl font-bold">{title}</h1>}
       {children && children}
       <div className="absolute left-1 top-1 standalone:top-0">
         {back && back}

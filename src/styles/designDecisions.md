@@ -12,5 +12,5 @@
 | Text II        | `#5d5d5d`             | `#afafaf`                            |
 | Text III       | `#808080`             | `#9b999d` - `#7c7c7c`                |
 | Icon color     | `#5d5d5d`             | `#f3f3f3`                            |
-| Hover / Active | `#c1c1c1`             | `#424242`                            |
+| Hover / Active | `#e0e0e0`             | `#2c2c2e`                            |
 | Action         | `#0094f6`             | `#`                                  |

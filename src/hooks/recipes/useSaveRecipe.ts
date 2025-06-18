@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@app/lib/supabaseClient';
 import { useAuth } from '@app/contexts/hooks/useAuth';
 import toast from 'react-hot-toast';
-import { useInvalidateCollectionsPreview } from './collections/useGetCollectionsPreview';
-import { useInvalidateCollectionRecipes } from './collections/useGetCollectionRecipes';
+import { useInvalidateCollectionsPreview } from '../collections/useGetCollectionsPreview';
+import { useInvalidateCollectionRecipes } from '../collections/useGetCollectionRecipes';
 
 export function useSaveRecipe(recipeId?: string) {
   const userId = useAuth().session?.user?.id;

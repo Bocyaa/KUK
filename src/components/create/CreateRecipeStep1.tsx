@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import DifficultyPicker from '@app/components/create/DifficultyPicker';
 import ImagePicker from '@app/components/create/ImagePicker';
 import FormSection from '@app/components/form/FormSection';
-import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import Input from '../ui/Input';
 import HelperText from './HelperText';
 
@@ -20,8 +19,6 @@ type Props = {
 };
 
 function CreateRecipeStep1({ form, updateForm, onFileSelect }: Props) {
-  const { setIsDirty } = useFormConfirm();
-
   const titlePlaceholders = [
     'Give your recipe a catchy title...',
     'What’s the name of your masterpiece?',
@@ -52,14 +49,6 @@ function CreateRecipeStep1({ form, updateForm, onFileSelect }: Props) {
       ],
     );
   }, []);
-
-  useEffect(() => {
-    if (form.title) {
-      setIsDirty(true);
-    } else {
-      setIsDirty(false);
-    }
-  }, [form]);
 
   return (
     <div className="mb-12 mt-16 flex w-full flex-col gap-4">

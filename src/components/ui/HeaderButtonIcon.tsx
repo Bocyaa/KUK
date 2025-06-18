@@ -18,9 +18,9 @@ function HeaderButtonIcon({
   const header_buttons_Base =
     'flex h-8 w-8 items-center justify-center rounded-full border';
 
-  const header_buttons_Light = `${transparent ? 'bg-[#f9f9f9]/10 border-[#ebebeb]/10' : 'bg-[#f9f9f9] border-[#ebebeb]'} hover:bg-[#e0e0e0] active:bg-[#e0e0e0]`;
+  const header_buttons_Light = `${transparent ? 'bg-[#f9f9f9]/10 border-[#ebebeb]/10' : 'bg-[#f9f9f9] border-[#ebebeb]'} md:hover:bg-[#e0e0e0] active:bg-[#e0e0e0]`;
 
-  const header_buttons_Dark = `dark:border-[#171418] dark:bg-[#212121] hover:bg-[#424242] active:bg-[#424242]`;
+  const header_buttons_Dark = `dark:border-[#171418] dark:bg-[#212121] md:dark:hover:bg-[#2c2c2c] dark:active:bg-[#2c2c2c]`;
 
   // Use inline styles for dynamic colors instead of Tailwind classes
   const iconStyle = {
