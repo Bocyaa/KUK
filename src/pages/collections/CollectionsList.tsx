@@ -58,12 +58,13 @@ function PlaceholderCardButton() {
   const location = useLocation();
 
   return (
-    <NavLink
-      to="/recipes/create-collection"
-      state={{ from: location.pathname }}
-    >
+    <NavLink to="/recipes/create-collection" state={{ from: location.pathname }}>
       <div className="flex h-36 w-44 items-center justify-center rounded-lg border-2 border-dashed bg-[#f9f9f9] active:bg-[#e0e0e0] dark:border-transparent dark:bg-[#212121] dark:active:bg-[#2c2c2e]">
         <PlusIcon />
+      </div>
+
+      <div className="ml-2">
+        <h3 className="font-semibold">New Collection</h3>
       </div>
     </NavLink>
   );

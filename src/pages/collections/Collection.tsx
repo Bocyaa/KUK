@@ -1,6 +1,7 @@
 import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import BackLink from '@app/components/ui/BackLink';
+import HeaderButtonIcon from '@app/components/ui/HeaderButtonIcon';
 import { useGetCollectionRecipes } from '@app/hooks/collections/useGetCollectionRecipes';
 import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
 import { useBackNavigation } from '@app/hooks/useBackNavigation';
@@ -48,7 +49,9 @@ function Collection() {
       <Header
         title={currentCollection?.name || 'Collection'}
         back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
-      />
+      >
+        <HeaderButtonIcon icon="ellipsis" />
+      </Header>
 
       <div className="flex flex-col gap-1 px-5 pb-24 pt-20">
         {recipes?.map((recipe) => (

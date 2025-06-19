@@ -32,9 +32,6 @@ function CollectionCard({ collection, onClick }: CollectionCardProps) {
 
       <div className="ml-2">
         <h3 className="font-semibold capitalize">{collection.name}</h3>
-        <h4 className="line-clamp-1 text-xs font-medium capitalize leading-3 text-[#5d5d5d] dark:text-[#afafaf]">
-          {collection.description}
-        </h4>
       </div>
     </div>
   );

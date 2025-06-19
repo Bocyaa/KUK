@@ -3,6 +3,7 @@ function GradientShadow({
   bottom = '0 0 0 0',
   topOpacity = 20,
   bottomOpacity = 60,
+  rounded = 'rounded-lg',
 }) {
   // Parse the position values (top, right, bottom, left)
   const parsePosition = (position: string) => {
@@ -35,7 +36,7 @@ function GradientShadow({
     <>
       {/* Top gradient */}
       <div
-        className="absolute rounded-lg"
+        className={`absolute ${rounded ? rounded : 'rounded-lg'}`}
         style={{
           ...topStyle,
           background: `linear-gradient(to bottom, rgba(33, 33, 33, ${topOpacity / 100}), transparent)`,
@@ -43,7 +44,7 @@ function GradientShadow({
       />
       {/* Bottom gradient */}
       <div
-        className="absolute rounded-lg"
+        className={`absolute ${rounded ? rounded : 'rounded-lg'}`}
         style={{
           ...bottomStyle,
           background: `linear-gradient(to top, rgba(33, 33, 33, ${bottomOpacity / 100}), transparent)`,
