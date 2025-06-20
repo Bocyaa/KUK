@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 
 import { AuthProvider } from './contexts/providers/AuthProvider.tsx';
-import { ConfirmProvider } from './contexts/providers/ConfirmProvider.tsx';
 import AnimatedRoutes from './components/AnimatedRoutes.tsx';
 import { ColorInitializer } from './components/ColorInitializer.tsx';
 
@@ -27,10 +26,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <ConfirmProvider>
-            <ColorInitializer />
-            <AnimatedRoutes />
-          </ConfirmProvider>
+          <ColorInitializer />
+          <AnimatedRoutes />
         </AuthProvider>
       </BrowserRouter>
 

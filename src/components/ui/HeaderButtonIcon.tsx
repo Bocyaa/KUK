@@ -1,4 +1,8 @@
-import { EllipsisHorizontalIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  EllipsisHorizontalIcon,
+  TrashIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { ListBulletIcon, PencilIcon } from '@heroicons/react/24/solid';
 import { PlusIcon } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -26,14 +30,14 @@ function HeaderButtonIcon({
   const iconStyle = {
     width: '1.25rem',
     height: '1.25rem',
-    strokeWidth: '3',
+    strokeWidth: '2',
     color: iconColor,
   };
 
   const pencilIconStyle = {
     width: '1rem',
     height: '1rem',
-    strokeWidth: '3',
+    strokeWidth: '2',
     color: iconColor,
   };
 
@@ -43,6 +47,7 @@ function HeaderButtonIcon({
     xmark: <XMarkIcon style={iconStyle} />,
     ellipsis: <EllipsisHorizontalIcon style={iconStyle} />,
     pencil: <PencilIcon style={pencilIconStyle} />,
+    trash: <TrashIcon style={iconStyle} />,
   };
 
   return (
