@@ -1,9 +1,10 @@
 import { ReactNode } from 'react';
+import BackLink from '../ui/BackLink';
 
 interface HeaderProps {
   children?: ReactNode;
   title?: string;
-  back?: ReactNode;
+  back?: string;
   customClasses?: string;
   dominantColor?: string;
 }
@@ -43,7 +44,7 @@ function Header({
       {title && <h1 className="line-clamp-1 text-4xl font-bold">{title}</h1>}
       {children && children}
       <div className="absolute left-1 top-1 standalone:top-0">
-        {back && back}
+        {back && <BackLink label={back} />}
       </div>
     </div>
   );

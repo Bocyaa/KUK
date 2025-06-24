@@ -1,4 +1,3 @@
-import BackLink from '@app/components/ui/BackLink';
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
@@ -24,10 +23,7 @@ function RecipesList() {
 
   return (
     <div className="pb-24 pt-20">
-      <Header
-        title="My Recipes"
-        back={<BackLink to="/recipes" label="Back to recipes" />}
-      >
+      <Header title="My Recipes" back="Recipes">
         <HeaderButtonLink to="/create-recipe" icon="plus" />
       </Header>
 

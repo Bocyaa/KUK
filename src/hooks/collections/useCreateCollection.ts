@@ -48,6 +48,8 @@ export function useCreateCollection() {
 
       if (createError) throw createError;
 
+      invalColPrev();
+
       setIsLoading(false);
       return newCollection;
     } catch (error) {
@@ -82,9 +84,11 @@ export function useCreateCollection() {
       if (error) throw error;
 
       invalColPrev();
+
       queryClient.invalidateQueries({
         queryKey: ['collectionRecipes', collectionId, session?.user?.id],
       });
+
       navigate(`/recipes/collection/${collectionId}`);
     } catch (error) {
       console.log(error);

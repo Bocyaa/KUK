@@ -8,12 +8,8 @@ function AuthCallbackRedirect() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
-  // const [hasHandled, setHasHandled] = useState(false);
 
   useEffect(() => {
-    // if (hasHandled) return;
-    // setHasHandled(true);
-
     async function handleCallback() {
       const {
         data: { session },
@@ -37,7 +33,7 @@ function AuthCallbackRedirect() {
 
       if (type === 'login') {
         if (profile?.username && profile?.birthdate && profile?.country) {
-          navigate('/dashboard');
+          navigate('/recipes');
           return;
         } else {
           navigate('/complete-profile');
@@ -52,7 +48,7 @@ function AuthCallbackRedirect() {
           // });
 
           if (profile?.username && profile?.birthdate && profile?.country) {
-            navigate('/dashboard');
+            navigate('/recipes');
             return;
           } else {
             navigate('/complete-profile');
@@ -65,14 +61,14 @@ function AuthCallbackRedirect() {
       }
 
       if (profile?.username && profile?.birthdate && profile?.country) {
-        navigate('/dashboard');
+        navigate('/recipes');
       } else {
         navigate('/complete-profile');
       }
     }
 
     handleCallback();
-  }, [navigate, type]); // hasHandled,
+  }, [navigate, type]);
 
   return <div className="p-4 text-center">Redirecting...</div>;
 }

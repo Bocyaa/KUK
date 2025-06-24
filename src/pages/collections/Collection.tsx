@@ -1,20 +1,22 @@
-import { BookmarkIcon } from '@app/components/Icons/BookmarkIcon';
-import Header from '@app/components/layout/Header';
-import RecipeListCard from '@app/components/recipes/RecipeListCard';
-import ActionOptions from '@app/components/ui/ActionOptions';
-import BackLink from '@app/components/ui/BackLink';
-import SpinnerBar from '@app/components/ui/SpinnerBar';
-import { useGetCollectionRecipes } from '@app/hooks/collections/useGetCollectionRecipes';
-import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
-import { useUpdateCollection } from '@app/hooks/collections/useUpdateCollection';
-import { useGetAllUserRecipes } from '@app/hooks/recipes/useGetAllUserRecipes';
-import { useBackNavigation } from '@app/hooks/useBackNavigation';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import {
   CheckCircleIcon,
   SquaresPlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import { useNavigate, useParams } from 'react-router-dom';
+
+import PageContainer from '@app/components/ui/PageContainer';
+import Header from '@app/components/layout/Header';
+import RecipeListCard from '@app/components/recipes/RecipeListCard';
+import ActionOptions from '@app/components/ui/ActionOptions';
+import SpinnerBar from '@app/components/ui/SpinnerBar';
+import { BookmarkIcon } from '@app/components/Icons/BookmarkIcon';
+
+import { useGetCollectionRecipes } from '@app/hooks/collections/useGetCollectionRecipes';
+import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
+import { useUpdateCollection } from '@app/hooks/collections/useUpdateCollection';
+import { useGetAllUserRecipes } from '@app/hooks/recipes/useGetAllUserRecipes';
 
 function Collection() {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -48,17 +50,6 @@ function Collection() {
     }
   };
 
-  const backLinkData = useBackNavigation({
-    defaultTo: '/recipes/collections-list',
-    defaultLabel: 'Back to Collections',
-    routes: {
-      '/recipes': {
-        to: '/recipes',
-        label: 'Back to Recipes',
-      },
-    },
-  });
-
   /// Actions ///////////////////////////////////////////////////////////////////////////
   const actions = [
     {
@@ -66,29 +57,33 @@ function Collection() {
       icon: <SquaresPlusIcon className="h-5 w-5" />,
       onClick: () => {},
     },
-    {
-      label: 'Delete Collection',
-      icon: <TrashIcon className="h-5 w-5" />,
-      onClick: handleDeleteCollection,
-    },
+    ...(recipes && recipes.length > 0
+      ? [
+          {
+            label: 'Select Recipes',
+            icon: <CheckCircleIcon className="h-5 w-5" />,
+            onClick: () => {},
+          },
+        ]
+      : []),
+    ...(currentCollection?.name !== 'Saved'
+      ? [
+          {
+            label: 'Delete Collection',
+            icon: <TrashIcon className="h-5 w-5" />,
+            onClick: handleDeleteCollection,
+          },
+        ]
+      : []),
   ];
-
-  if (recipes && recipes.length > 1) {
-    actions.splice(actions.length - 1, 0, {
-      label: 'Select Recipes',
-      icon: <CheckCircleIcon className="h-5 w-5" />,
-      onClick: () => {},
-    });
-  }
   //////////////////////////////////////////////////////////////////////////////////////
+
+  const title = currentCollection?.name || 'Collection';
 
   if (isLoading) {
     return (
       <div className="h-screen bg-white dark:bg-black">
-        <Header
-          title="&nbsp;"
-          back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
-        >
+        <Header title="&nbsp;" back="Collections">
           <SpinnerBar />
         </Header>
       </div>
@@ -96,11 +91,8 @@ function Collection() {
   }
 
   return (
-    <div className="h-screen bg-white dark:bg-black">
-      <Header
-        title={currentCollection?.name || 'Collection'}
-        back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
-      >
+    <PageContainer>
+      <Header title={title} back="Collections">
         <ActionOptions actions={actions} />
       </Header>
 
@@ -122,7 +114,7 @@ function Collection() {
           </div>
         )}
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

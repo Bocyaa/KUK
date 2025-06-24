@@ -39,18 +39,21 @@ function ActionOptions({ actions }: ActionOptionsProps) {
           <div>
             {actions.map((action) => (
               <MenuItem key={action.label}>
-                {({ active }) => (
-                  <button
-                    onClick={action.onClick}
-                    className={`${
-                      active &&
-                      'bg-[#e0e0e0] first:rounded-t-lg last:rounded-b-lg dark:bg-[#2c2c2c]'
-                    } group flex w-full items-center justify-between gap-3 border-b px-5 py-3 text-[#0d0d0d] last:border-none last:text-[#dc2626] dark:border-[#424242] dark:text-[#ffffff]`}
-                  >
-                    <span>{action.label}</span>
-                    <span>{action.icon}</span>
-                  </button>
-                )}
+                {() => {
+                  const isDangerBtn = action.label === 'Delete Collection';
+
+                  return (
+                    <button
+                      onClick={() => {
+                        action.onClick();
+                      }}
+                      className={`group flex w-full items-center justify-between gap-3 border-b px-5 py-3 last:border-none ${isDangerBtn ? 'text-[#dc2626]' : 'text-[#0d0d0d] dark:text-[#ffffff]'} first:rounded-t-lg last:rounded-b-lg hover:bg-[#e0e0e0] dark:border-[#424242] dark:hover:bg-[#2c2c2c]`}
+                    >
+                      <span>{action.label}</span>
+                      <span>{action.icon}</span>
+                    </button>
+                  );
+                }}
               </MenuItem>
             ))}
           </div>

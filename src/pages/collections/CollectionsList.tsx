@@ -1,10 +1,8 @@
 import { PlusIcon } from '@app/components/Icons/PlusIcon';
 import Header from '@app/components/layout/Header';
 import CollectionCard from '@app/components/recipes/CollectionCard';
-import BackLink from '@app/components/ui/BackLink';
 import HeaderButtonLink from '@app/components/ui/HeaderButtonLink';
 import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
-import { useBackNavigation } from '@app/hooks/useBackNavigation';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 function CollectionsList() {
@@ -20,19 +18,11 @@ function CollectionsList() {
     });
   };
 
-  const backLinkData = useBackNavigation({
-    defaultTo: '/recipes',
-    defaultLabel: 'Back to Recipes',
-  });
-
   if (isFetching) return 'Fetching ...';
 
   return (
     <div className="pb-24 pt-20">
-      <Header
-        title="Collections"
-        back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
-      >
+      <Header title="Collections" back="Recipes">
         {collections.length > 5 && (
           <HeaderButtonLink to="/recipes/create-collection" icon="plus" />
         )}

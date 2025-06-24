@@ -1,11 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 
 import Header from '@app/components/layout/Header';
-import BackLink from '@app/components/ui/BackLink';
 import Input from '@app/components/ui/Input';
 import FormSection from '@app/components/form/FormSection';
 
-import { useBackNavigation } from '@app/hooks/useBackNavigation';
 import { useCreateCollection } from '@app/hooks/collections/useCreateCollection';
 import { useGetAllUserRecipes } from '@app/hooks/recipes/useGetAllUserRecipes';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
@@ -62,23 +60,9 @@ function CreateCollection() {
     addRecipesToCollection(createdCollection.id, selectedRecipes);
   };
 
-  const backLinkData = useBackNavigation({
-    defaultTo: '/recipes/collections-list',
-    defaultLabel: 'Back to Collections',
-    routes: {
-      '/recipes$': {
-        to: '/recipes',
-        label: 'Back to Recipes',
-      },
-    },
-  });
-
   return (
     <div className="mx-4 pb-24 pt-20">
-      <Header
-        title={name ? name : 'New Collection'}
-        back={<BackLink to={backLinkData.to} label={backLinkData.label} />}
-      />
+      <Header title={name ? name : 'New Collection'} back="Collections" />
 
       {step === 'form' ? (
         <div className="flex flex-col">
