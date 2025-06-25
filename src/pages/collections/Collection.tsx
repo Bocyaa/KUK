@@ -2,6 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   CheckCircleIcon,
+  FolderIcon,
   SquaresPlusIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -17,6 +18,9 @@ import { useGetCollectionRecipes } from '@app/hooks/collections/useGetCollection
 import { useGetCollectionsPreview } from '@app/hooks/collections/useGetCollectionsPreview';
 import { useUpdateCollection } from '@app/hooks/collections/useUpdateCollection';
 import { useGetAllUserRecipes } from '@app/hooks/recipes/useGetAllUserRecipes';
+import { useState } from 'react';
+import SelectRecipeCardRect from '@app/components/collections/SelectRecipeCardRect';
+import { SendIcon } from 'lucide-react';
 
 function Collection() {
   const { collectionId } = useParams<{ collectionId: string }>();
@@ -24,8 +28,12 @@ function Collection() {
   const { data: collections } = useGetCollectionsPreview();
   const navigate = useNavigate();
 
+  const [isSelectMode, setIsSelectMode] = useState(false);
+  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
+
   const { updateCollectionRecipes, deleteCollection, isUpdating } =
     useUpdateCollection();
+
   const { data: allUserRecipes, isLoading: isLoadingAllRecipes } =
     useGetAllUserRecipes();
 
@@ -50,7 +58,41 @@ function Collection() {
     }
   };
 
-  /// Actions ///////////////////////////////////////////////////////////////////////////
+  const handleUpdateCollection = async () => {
+    if (!collectionId) return;
+    await updateCollectionRecipes(collectionId, selectedRecipes);
+    setIsSelectMode(false);
+  };
+
+  const handleRecipeToggle = (recipeId: string) => {
+    setSelectedRecipes((prev) =>
+      prev.includes(recipeId)
+        ? prev.filter((id) => id !== recipeId)
+        : [...prev, recipeId],
+    );
+  };
+
+  const handleDeleteSelectedRecipes = async () => {
+    if (!collectionId || selectedRecipes.length === 0) return;
+
+    const isConfirmed = window.confirm(
+      `Are you sure you want to remove ${selectedRecipes.length} recipes from "${currentCollection?.name}" This action cannot be undone?`,
+    );
+
+    if (!isConfirmed) return;
+
+    // Remove selected recipes from the collection
+    const remainingRecipeIds =
+      recipes
+        ?.filter((recipes) => !selectedRecipes.includes(recipes.id))
+        .map((recipes) => recipes.id) || [];
+
+    await updateCollectionRecipes(collectionId, remainingRecipeIds);
+
+    setSelectedRecipes([]);
+    setIsSelectMode(false);
+  };
+
   const actions = [
     {
       label: 'Add Recipes',
@@ -62,7 +104,10 @@ function Collection() {
           {
             label: 'Select Recipes',
             icon: <CheckCircleIcon className="h-5 w-5" />,
-            onClick: () => {},
+            onClick: () => {
+              setIsSelectMode(true);
+              setSelectedRecipes([]);
+            },
           },
         ]
       : []),
@@ -76,7 +121,6 @@ function Collection() {
         ]
       : []),
   ];
-  //////////////////////////////////////////////////////////////////////////////////////
 
   const title = currentCollection?.name || 'Collection';
 
@@ -93,17 +137,40 @@ function Collection() {
   return (
     <PageContainer>
       <Header title={title} back="Collections">
-        <ActionOptions actions={actions} />
+        {isSelectMode ? (
+          <button
+            className="text-lg font-semibold text-[#0094f6] active:text-[#005994]"
+            onClick={() => setIsSelectMode(!isSelectMode)}
+          >
+            Done
+          </button>
+        ) : (
+          <ActionOptions actions={actions} />
+        )}
       </Header>
 
-      <div className="flex flex-col gap-1 px-5 pb-24 pt-20">
-        {recipes?.map((recipe) => (
-          <RecipeListCard
-            key={recipe.id}
-            recipe={recipe}
-            onClick={() => handleRecipeClick(recipe.id)}
-          />
-        ))}
+      <div className="flex flex-col justify-between gap-1 px-5 pb-24 pt-20">
+        {isSelectMode ? (
+          <>
+            {recipes?.map((recipe) => (
+              <SelectRecipeCardRect
+                recipe={recipe}
+                selectedRecipes={selectedRecipes}
+                handleRecipeToggle={handleRecipeToggle}
+              />
+            ))}
+          </>
+        ) : (
+          <>
+            {recipes?.map((recipe) => (
+              <RecipeListCard
+                key={recipe.id}
+                recipe={recipe}
+                onClick={() => handleRecipeClick(recipe.id)}
+              />
+            ))}
+          </>
+        )}
 
         {recipes?.length === 0 && (
           <div className="flex h-screen flex-col items-center justify-center pb-40">
@@ -114,6 +181,27 @@ function Collection() {
           </div>
         )}
       </div>
+
+      {isSelectMode && (
+        <div className="fixed inset-x-0 bottom-0 z-10 flex h-24 w-full items-center justify-evenly border-t bg-white pb-6 dark:border-[#39333c] dark:bg-black">
+          {selectedRecipes.length > 0 ? (
+            <>
+              <FolderIcon className="h-7 w-7 text-[#0094f6] active:text-[#005994]" />
+              <SendIcon className="h-7 w-7 text-[#0094f6] active:text-[#005994]" />
+              <TrashIcon
+                className="h-7 w-7 text-red-600"
+                onClick={handleDeleteSelectedRecipes}
+              />
+            </>
+          ) : (
+            <>
+              <FolderIcon className="h-7 w-7 text-[#5d5d5d] dark:text-[#5d5d5d]" />
+              <SendIcon className="h-7 w-7 text-[#5d5d5d] dark:text-[#5d5d5d]" />
+              <TrashIcon className="h-7 w-7 text-[#5d5d5d] dark:text-[#5d5d5d]" />
+            </>
+          )}
+        </div>
+      )}
     </PageContainer>
   );
 }

@@ -47,7 +47,7 @@ export function useUpdateCollection() {
         if (insertError) throw insertError;
       }
 
-      toast.success('Collection updated successfully!');
+      // toast.success('Collection updated successfully!');
 
       // 3. Invalidate caches to refetch data
       invalidateCollectionsPreview();
