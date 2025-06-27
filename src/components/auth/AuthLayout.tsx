@@ -12,7 +12,12 @@ function AuthLayout({ children }: AuthLayoutProps) {
       </main>
 
       <footer className="flex w-full items-center justify-center border-t bg-white pb-4 pt-4 text-sm text-[#17182399] dark:border-[#424242] dark:bg-[#212121] standalone:pb-6">
-        <a href="#" className="hover:underline dark:text-[#929299]">
+        <a
+          href="https://github.com/Bocyaa"
+          className="hover:underline dark:text-[#929299]"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Made with ♥ by BobHab
         </a>
       </footer>

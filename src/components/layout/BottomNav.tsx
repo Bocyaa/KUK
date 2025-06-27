@@ -80,7 +80,7 @@ function BottomNav() {
   };
 
   return (
-    <div className="fixed inset-x-0 bottom-0 flex justify-center">
+    <div className="fixed inset-x-0 bottom-0 z-20 flex justify-center">
       <nav className="flex h-14 w-full items-center justify-around rounded-t-3xl border-x border-t border-[#e6e6e6] bg-white/70 backdrop-blur-md dark:border-[#424242] dark:bg-[#1e1e1e]/75 standalone:h-[5.2rem] standalone:pb-8">
         {navItems.map((item) => {
           const active = isActive(item.path);

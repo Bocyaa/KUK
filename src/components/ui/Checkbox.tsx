@@ -8,7 +8,7 @@ function Checkbox({ id, ...props }: CheckboxProps) {
       <input id={id} type="checkbox" className="peer sr-only" {...props} />
       <label
         htmlFor={id}
-        className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white bg-transparent peer-checked:border-[#ffffff] peer-checked:bg-[#0094f6] peer-focus:ring-2 peer-focus:ring-[#0094f6] peer-focus:ring-opacity-50 peer-checked:[&>svg]:opacity-100"
+        className="ring-checkbox flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-transparent peer-checked:border-none peer-checked:bg-[#0094f6] peer-focus:ring-2 peer-focus:ring-[#0094f6] peer-focus:ring-opacity-50 peer-checked:[&>svg]:opacity-100"
       >
         <svg
           className="h-4 w-4 text-white opacity-0"
@@ -25,6 +25,23 @@ function Checkbox({ id, ...props }: CheckboxProps) {
       <style jsx>{`
         input:checked + label svg {
           opacity: 1;
+        }
+
+        .ring-checkbox {
+          background-color: transparent;
+          position: relative;
+        }
+
+        .ring-checkbox::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 50%;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+          z-index: -1;
         }
       `}</style>
     </div>

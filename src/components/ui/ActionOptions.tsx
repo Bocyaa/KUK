@@ -22,7 +22,7 @@ function ActionOptions({ actions }: ActionOptionsProps) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="relative flex items-center justify-center bg-white p-1.5 text-left focus:outline-none dark:border-transparent dark:bg-transparent">
+        <MenuButton className="relative flex items-center justify-center bg-transparent p-1.5 text-left focus:outline-none dark:border-transparent dark:bg-transparent">
           <EllipsisHorizontalCircleIcon className="h-7 w-7 text-[#0094f6] dark:active:text-[#005994]" />
         </MenuButton>
       </div>

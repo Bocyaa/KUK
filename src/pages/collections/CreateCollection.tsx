@@ -62,7 +62,24 @@ function CreateCollection() {
 
   return (
     <div className="mx-4 pb-24 pt-20">
-      <Header title={name ? name : 'New Collection'} back="Collections" />
+      <Header title={name ? name : 'New Collection'} back="Collections">
+        <button
+          onClick={handleDone}
+          disabled={isProcessing || selectedRecipes.length < 1}
+          className="text-lg font-semibold text-[#0094f6] active:text-[#005994]"
+        >
+          {isProcessing ? (
+            <div className="relative mr-6">
+              &nbsp;
+              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <SpinnerBar height={2} />
+              </span>
+            </div>
+          ) : (
+            'Save'
+          )}
+        </button>
+      </Header>
 
       {step === 'form' ? (
         <div className="flex flex-col">
@@ -80,12 +97,12 @@ function CreateCollection() {
 
             <button
               onClick={handleCreateCollection}
+              disabled={name.length < 2 || isProcessing}
               className={`w-full rounded-lg py-1 text-center font-semibold transition-all ${
                 name.length > 1 && !isProcessing
                   ? 'border border-transparent bg-[#1a1a1a] text-[#ffffff] active:bg-[#b4b4b4] dark:bg-[#e3e3e3] dark:text-[#0d0d0d]'
                   : 'border text-[#808080] dark:border-[#424242] dark:bg-transparent dark:text-[#7c7c7c]'
               }`}
-              disabled={name.length < 2 || isProcessing}
             >
               {isProcessing ? (
                 <div className="relative">
@@ -117,7 +134,7 @@ function CreateCollection() {
                   />
                 ))}
 
-                <div className="fixed bottom-0 left-0 right-0 z-10 border-t border-gray-200 bg-white px-8 pb-9 pt-3 dark:border-gray-800 dark:bg-black">
+                {/* <div className="fixed bottom-0 left-0 right-0 z-10 border-t border-gray-200 bg-white px-8 pb-9 pt-3 dark:border-gray-800 dark:bg-black">
                   <button
                     onClick={handleDone}
                     disabled={isProcessing || selectedRecipes.length < 1}
@@ -134,7 +151,7 @@ function CreateCollection() {
                       'Save'
                     )}
                   </button>
-                </div>
+                </div> */}
               </>
             </GridCol2>
           )}
