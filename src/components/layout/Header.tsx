@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 const mainStyleBase =
-  'fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-[26rem] items-center justify-between px-5 pb-2 pt-4 dark:border-b dark:border-[#424242] border-x border-b border-[#e6e6e6] rounded-b-3xl ';
+  'fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-[26rem] items-center justify-between px-5 pb-2 pt-4 dark:border-b dark:border-[#39333c] border-b border-[#e6e6e6] rounded-b-3xl ';
 
 const light = 'bg-gradient-to-b from-white to-white/70 backdrop-blur-sm';
 const dark =

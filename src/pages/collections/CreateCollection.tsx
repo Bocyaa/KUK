@@ -133,25 +133,6 @@ function CreateCollection() {
                     selectedRecipes={selectedRecipes}
                   />
                 ))}
-
-                {/* <div className="fixed bottom-0 left-0 right-0 z-10 border-t border-gray-200 bg-white px-8 pb-9 pt-3 dark:border-gray-800 dark:bg-black">
-                  <button
-                    onClick={handleDone}
-                    disabled={isProcessing || selectedRecipes.length < 1}
-                    className={`w-full rounded-lg py-1 text-center font-semibold transition-all ${isProcessing || selectedRecipes.length < 1 ? 'border text-[#808080] dark:border-[#424242] dark:bg-transparent dark:text-[#7c7c7c]' : 'border border-transparent bg-[#1a1a1a] text-[#ffffff] active:bg-[#b4b4b4] dark:bg-[#e3e3e3] dark:text-[#0d0d0d]'}`}
-                  >
-                    {isProcessing ? (
-                      <div className="relative">
-                        &nbsp;
-                        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                          <SpinnerBar height={1} />
-                        </span>
-                      </div>
-                    ) : (
-                      'Save'
-                    )}
-                  </button>
-                </div> */}
               </>
             </GridCol2>
           )}
