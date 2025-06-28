@@ -20,7 +20,7 @@ const AnimatedMessage: React.FC<AnimatedMessageProps> = ({
         transition={{ duration: 0.3 }}
       >
         <span
-          className={`ml-2 text-sm ${isSuccess ? 'text-green-600' : 'text-red-600'} ${className}`}
+          className={`ml-2 text-sm ${isSuccess ? 'text-green-600' : 'text-red-500'} ${className}`}
         >
           {message}
         </span>

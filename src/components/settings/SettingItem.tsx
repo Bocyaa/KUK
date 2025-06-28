@@ -125,14 +125,16 @@ function SettingItem({ settingKey }: SettingItemProps) {
               onClick={item.handleClick}
               className="flex items-center justify-between bg-white py-[0.65rem] pl-4 pr-2 hover:bg-[#d2d1d7] active:bg-[##d2d1d7] dark:bg-[#1c1c1e] dark:hover:bg-[#3a3a3c] dark:active:bg-[#3a3a3c]"
             >
-              <div className={`flex items-center gap-5 text-[#0b0b0b] dark:text-[#f9f9f9]`}>
+              <div
+                className={`flex items-center gap-5 text-[#0b0b0b] dark:text-[#f9f9f9]`}
+              >
                 <span
-                  className={`h-5 w-5 ${dangerZones.includes(item.key) && 'text-red-600 dark:text-red-600'}`}
+                  className={`h-5 w-5 ${dangerZones.includes(item.key) && 'text-red-500 dark:text-red-500'}`}
                 >
                   {item.icon}
                 </span>
                 <span
-                  className={`${dangerZones.includes(item.key) && 'text-red-600 dark:text-red-600'}`}
+                  className={`${dangerZones.includes(item.key) && 'text-red-500 dark:text-red-500'}`}
                 >
                   {item.label}
                 </span>

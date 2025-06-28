@@ -10,9 +10,7 @@ interface HeaderProps {
 }
 
 const mainStyleBase =
-  'fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-[26rem] items-center justify-between px-5 pb-2 pt-4 dark:border-b dark:border-transparent ';
-
-const mainStyleWithShadow = mainStyleBase + 'shadow-sm ';
+  'fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-[26rem] items-center justify-between px-5 pb-2 pt-4 dark:border-b dark:border-[#424242] border-x border-b border-[#e6e6e6] rounded-b-3xl ';
 
 const light = 'bg-gradient-to-b from-white to-white/70 backdrop-blur-sm';
 const dark =
@@ -34,11 +32,11 @@ function Header({
     : undefined;
 
   // Use shadow only when there's no dominantColor
-  const mainStyle = dominantColor ? mainStyleBase : mainStyleWithShadow;
+  const mainStyle = mainStyleBase;
 
   return (
     <div
-      className={`${customClasses ? customClasses : mainStyle + (dominantColor ? '' : light + ' ' + dark)}`}
+      className={`${customClasses ? customClasses : mainStyle + (dominantColor ? '' : light + ' ' + dark)} `}
       style={dynamicStyle}
     >
       {title && <h1 className="line-clamp-1 text-4xl font-bold">{title}</h1>}

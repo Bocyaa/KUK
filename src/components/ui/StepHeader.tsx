@@ -71,7 +71,7 @@ export default function StepHeader({
           className={`relative z-10 flex cursor-pointer items-center justify-center rounded-xl border px-2 py-2 shadow-sm ${disableNext ? 'border-transparent bg-transparent opacity-50' : 'border-[#e6e6e6] bg-white active:bg-[#c1c1c1] dark:border-[#424242] dark:bg-[#2c2c2c] dark:active:bg-[#1a1a1a]'}`}
         >
           <TrashIcon
-            className={`h-6 w-6 text-red-600 ${form.title === '' ? 'opacity-50' : ''}`}
+            className={`h-6 w-6 text-red-500 ${form.title === '' ? 'opacity-50' : ''}`}
           />
         </button>
 

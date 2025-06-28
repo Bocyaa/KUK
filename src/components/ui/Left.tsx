@@ -8,7 +8,7 @@ type Props = {
 function Left({ label, className }: Props) {
   if (label === 'Reset') {
     return (
-      <div className="flex items-center gap-1 text-red-600 active:text-[#043566] dark:text-red-600">
+      <div className="flex items-center gap-1 text-red-500 active:text-[#043566] dark:text-red-500">
         <span className={`ml-5 ${className}`}>{label}</span>
       </div>
     );

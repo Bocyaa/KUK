@@ -118,7 +118,7 @@ function ImagePicker({
         />
         {form.image && (
           <button
-            className="absolute bottom-0 right-0 m-2 rounded-lg border border-transparent bg-white p-1.5 text-red-600 shadow-sm dark:border-[#424242] dark:bg-[#212121]"
+            className="absolute bottom-0 right-0 m-2 rounded-lg border border-transparent bg-white p-1.5 text-red-500 shadow-sm dark:border-[#424242] dark:bg-[#212121]"
             onClick={() => {
               setLocalImage(null);
               updateForm({ image: '' });

@@ -1,22 +1,30 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CheckCircleIcon, SquaresPlusIcon } from '@heroicons/react/24/outline';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  CheckCircleIcon,
+  MagnifyingGlassIcon,
+  SquaresPlusIcon,
+} from '@heroicons/react/24/outline';
 
 import Header from '@app/components/layout/Header';
 import RecipeListCard from '@app/components/recipes/RecipeListCard';
 import PlaceholderCardAddLink from '@app/components/ui/PlaceholderCardAddLink';
 import ActionOptions from '@app/components/ui/ActionOptions';
-
-import RecipeTypes from '@app/types/RecipeTypes';
-import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
-import { getSortedRecipes } from '@app/utility/recipeUtils';
 import DoneBtn from '@app/components/ui/DoneBtn';
 import MainContent from '@app/components/ui/MainContent';
 import PageContainer from '@app/components/ui/PageContainer';
 import SelectRecipeCardRect from '@app/components/collections/SelectRecipeCardRect';
+import BottomActionPanel from '@app/components/ui/BottomActionPanel';
+
+import RecipeTypes from '@app/types/RecipeTypes';
+import { getSortedRecipes } from '@app/utility/recipeUtils';
+import { useGetRecipes } from '@app/hooks/recipes/useGetRecipes';
+import { useDeleteRecipe } from '@app/hooks/recipes/useDeleteRecipe';
 
 function RecipesList() {
   const { data, isFetching } = useGetRecipes();
+  const { deleteRecipes, isDeleting } = useDeleteRecipe();
+
   const recipes = data as RecipeTypes[];
   const sortedRecipes = getSortedRecipes(recipes);
 
@@ -24,9 +32,10 @@ function RecipesList() {
   const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleRecipeClick = (recipeId: string) => {
-    navigate(`/recipes/${recipeId}`);
+    navigate(`${location.pathname}/${recipeId}`);
   };
 
   const handleCreateClick = () => {
@@ -43,6 +52,7 @@ function RecipesList() {
     if (!isConfirmed) return;
 
     // Delete selected recipes
+    await deleteRecipes(selectedRecipes);
 
     setSelectedRecipes([]);
     setIsSelectMode(false);
@@ -92,16 +102,19 @@ function RecipesList() {
     <PageContainer>
       <Header title="My Recipes" back="Recipes">
         {isSelectMode ? (
-          <DoneBtn onClick={handleDoneButton} isLoading={false} />
+          <DoneBtn onClick={handleDoneButton} isLoading={isDeleting} />
         ) : (
-          <ActionOptions actions={actions} />
+          <div className="flex items-center gap-2">
+            <MagnifyingGlassIcon className="h-7 w-7 text-[#0094f6]" />
+            <ActionOptions actions={actions} />
+          </div>
         )}
       </Header>
 
       <MainContent>
         {isSelectMode ? (
           <>
-            {recipes?.map((recipe) => (
+            {sortedRecipes?.map((recipe) => (
               <SelectRecipeCardRect
                 key={recipe.id}
                 recipe={recipe}
@@ -112,6 +125,7 @@ function RecipesList() {
           </>
         ) : (
           <>
+            {/* TODO: Search Bar */}
             {sortedRecipes?.map((r) => (
               <RecipeListCard recipe={r} onClick={() => handleRecipeClick(r.id)} />
             ))}
@@ -119,6 +133,13 @@ function RecipesList() {
           </>
         )}
       </MainContent>
+
+      {isSelectMode && (
+        <BottomActionPanel
+          actions={actionsBottomPanel}
+          selectedRecipes={selectedRecipes}
+        />
+      )}
     </PageContainer>
   );
 }

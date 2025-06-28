@@ -227,7 +227,12 @@ function Collection() {
         )}
       </MainContent>
 
-      {isSelectMode && <BottomActionPanel actions={actionsBottomPanel} />}
+      {isSelectMode && (
+        <BottomActionPanel
+          actions={actionsBottomPanel}
+          selectedRecipes={selectedRecipes}
+        />
+      )}
     </PageContainer>
   );
 }

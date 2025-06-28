@@ -33,15 +33,13 @@ export default function AnimatedRoutes() {
           <Route index element={<Navigate replace to={'recipes'} />} />
           <Route path="recipes" element={<RecipesLayout />}>
             <Route index element={<Recipes />} />
-            <Route path="recipes-list" element={<RecipesList />} />
             <Route path=":recipeId" element={<Recipe />} />
+            <Route path="recipes-list" element={<RecipesList />} />
+            <Route path="recipes-list/:recipeId" element={<Recipe />} />
             <Route path="collections-list" element={<CollectionsList />} />
             <Route path="create-collection" element={<CreateCollection />} />
             <Route path="collection/:collectionId" element={<Collection />} />
-            <Route
-              path="collection/:collectionId/:recipeId"
-              element={<Recipe />}
-            />
+            <Route path="collection/:collectionId/:recipeId" element={<Recipe />} />
           </Route>
           <Route path="explore" element={<ExploreLayout />}>
             <Route index element={<Explore />} />

@@ -40,12 +40,11 @@ export default function CompleteProfile() {
   const [existingUsernames, setExistingUsernames] = useState<string[]>([]);
   const countries = countryList().getData();
 
-  const [usernameValidation, setUsernameValidation] =
-    useState<UsernameValidation>({
-      isValid: false,
-      message: '',
-      isChecking: false,
-    });
+  const [usernameValidation, setUsernameValidation] = useState<UsernameValidation>({
+    isValid: false,
+    message: '',
+    isChecking: false,
+  });
 
   const [form, setForm] = useState<FormState>({
     first_name: '',
@@ -114,13 +113,7 @@ export default function CompleteProfile() {
       form.birthdate.trim().length > 0 && // non‐empty
       form.country.trim().length > 0 // non‐empty
     );
-  }, [
-    form.first_name,
-    form.last_name,
-    form.username,
-    form.birthdate,
-    form.country,
-  ]);
+  }, [form.first_name, form.last_name, form.username, form.birthdate, form.country]);
 
   // Pre-Populate inputs on mount
   useEffect(() => {
@@ -260,9 +253,7 @@ export default function CompleteProfile() {
                 {form.username && (
                   <div
                     className={`mt-1 pl-2 text-xs ${
-                      usernameValidation.isValid
-                        ? 'text-green-600'
-                        : 'text-red-600'
+                      usernameValidation.isValid ? 'text-green-600' : 'text-red-500'
                     }`}
                   >
                     {usernameValidation.isChecking
@@ -293,9 +284,7 @@ export default function CompleteProfile() {
                   id="country"
                   name="country"
                   options={countries}
-                  value={countries.find(
-                    (option) => option.value === form.country,
-                  )}
+                  value={countries.find((option) => option.value === form.country)}
                   onChange={(option) =>
                     setForm((prev) => ({
                       ...prev,
