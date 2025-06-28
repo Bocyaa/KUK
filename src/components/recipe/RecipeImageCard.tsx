@@ -8,6 +8,8 @@ import RecipeDetails from './RecipeDetails';
 
 import { HeartIcon } from '../Icons/HeartIcon';
 import { BookmarkIcon, BookmarkIconFilled } from '../Icons/BookmarkIcon';
+import { useAuth } from '@app/contexts/hooks/useAuth';
+import { Pencil } from 'lucide-react';
 
 interface RecipeImageCardTypes {
   recipe: RecipeTypes;
@@ -20,6 +22,7 @@ function RecipeImageCard({
   isSaved = false,
   onBookmarkToggle,
 }: RecipeImageCardTypes) {
+  const userId = useAuth()?.session?.user.id;
   const [optimisticSaved, setOptimisticSaved] = useState(isSaved);
 
   // Sync with prop changes only when component mounts or prop actually changes
@@ -39,6 +42,10 @@ function RecipeImageCard({
       console.error('Bookmark toggle failed:', error);
       setOptimisticSaved(!optimisticSaved);
     }
+  };
+
+  const handlePencilClick = () => {
+    //
   };
 
   return (
@@ -62,24 +69,22 @@ function RecipeImageCard({
               </div>
             </div>
 
-            <div className="flex flex-1 items-center justify-center rounded-2xl bg-white py-2 shadow-sm">
+            <div className="flex flex-1 items-center justify-center rounded-2xl bg-white py-2 shadow-sm dark:text-[#0d0d0d]">
               <span className="font-semibold">Cook</span>
             </div>
+
             <div className="flex items-center justify-center rounded-full bg-white/20 p-1 shadow-sm">
               <HeartIcon className="h-7 w-8 text-white" />
             </div>
 
-            <button
-              type="button"
-              onClick={handleBookmarkClick}
-              className="flex-shrink-0 rounded-full bg-white/20 px-1 shadow-sm"
-            >
-              {optimisticSaved ? (
-                <BookmarkIconFilled className="h-7 w-8 text-white" />
-              ) : (
-                <BookmarkIcon className="h-7 w-8 text-white" />
-              )}
-            </button>
+            {recipe.user_id === userId ? (
+              <PencilButton onClick={handlePencilClick} />
+            ) : (
+              <BookmarkButton
+                onClick={handleBookmarkClick}
+                optSaved={optimisticSaved}
+              />
+            )}
           </div>
         </RecipeContentPanel>
       </RecipeCardContainer>
@@ -111,5 +116,39 @@ function RecipeContentPanel({ children }: ChildrenProp) {
     >
       {children}
     </div>
+  );
+}
+
+function BookmarkButton({
+  onClick,
+  optSaved,
+}: {
+  onClick: () => void;
+  optSaved: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex-shrink-0 rounded-full bg-white/20 px-1 shadow-sm"
+    >
+      {optSaved ? (
+        <BookmarkIconFilled className="h-7 w-8 text-white" />
+      ) : (
+        <BookmarkIcon className="h-7 w-8 text-white" />
+      )}
+    </button>
+  );
+}
+
+function PencilButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex-shrink-0 rounded-full bg-white/20 px-1 shadow-sm"
+    >
+      <Pencil className="h-8 w-8 p-1 text-white" />
+    </button>
   );
 }

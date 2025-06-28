@@ -40,7 +40,7 @@ function RecipeTopNav({ dominantColor }: RecipeHeaderProps) {
 
   return (
     <div
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-3 pb-2 pt-2"
+      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between pb-2 pl-3 pr-4 pt-2"
       style={dynamicStyle}
     >
       <button type="button" onClick={handleNavigation}>

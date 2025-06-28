@@ -1,10 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 
-import {
-  updateThemeColor,
-  restoreThemeColor,
-} from '@app/utility/updateThemeColor';
+import { updateThemeColor, restoreThemeColor } from '@app/utility/updateThemeColor';
 
 import BackSecondaryCard from '@app/components/ui/BackSecondaryCard';
 import FrontPrimaryCard from '@app/components/ui/FrontPrimaryCard';
@@ -68,10 +65,7 @@ function Recipe() {
   }
 
   // Get dominant color
-  const { color: dominantColor } = useRecipeColor(
-    recipe?.id,
-    recipe?.image_url,
-  );
+  const { color: dominantColor } = useRecipeColor(recipe?.id, recipe?.image_url);
 
   // Get status of the recipe if it is already saved by the user
   const { isSaved, toggleSave } = useSaveRecipe(recipe?.id);
@@ -87,8 +81,11 @@ function Recipe() {
 
   return (
     <div
-      className="h-screen"
-      style={{ backgroundColor: 'var(--theme-bg-color)' }}
+      className="min-h-screen"
+      style={{
+        background:
+          'linear-gradient(to top, var(--theme-base-color), var(--theme-bg-gradient))',
+      }}
     >
       <div className="no-scrollbar h-screen overflow-y-auto">
         <RecipeTopNav dominantColor={dominantColor} />
@@ -102,7 +99,7 @@ function Recipe() {
         </SectionMain>
 
         {/* Section 2 */}
-        <div className="bg-white p-6 px-7 pb-32 dark:bg-black">
+        <div className="-translate-y-5 rounded-t-3xl bg-[#f4f2ee] p-6 px-7 pb-32 dark:bg-black">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-semibold">Ingredients</h3>
           </div>
@@ -139,9 +136,7 @@ function Recipe() {
                     className="no-scrollbar flex w-full items-center justify-between overflow-x-auto border-b border-[#f1f1f1] pb-1 last:border-none last:pb-0 dark:border-transparent"
                   >
                     <div className="py-1">
-                      <span className="px-3 font-light text-[#5d5d5d]">
-                        {i + 1}
-                      </span>
+                      <span className="px-3 font-light text-[#5d5d5d]">{i + 1}</span>
 
                       <span className="px-3 capitalize">{ing.name}</span>
                     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface AvatarProps {
   src?: string;
@@ -7,22 +7,17 @@ interface AvatarProps {
   accent?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({
-  src,
-  alt = "User avatar",
-  size = 96,
-  accent = "bg-white dark:bg-[#1c1c1e]",
-}) => (
+const Avatar: React.FC<AvatarProps> = ({ src, size = 96 }) => (
   <div
-    className={`flex items-center justify-center overflow-hidden rounded-full ${accent} shadow-sm transition-all hover:ring-2 hover:ring-blue-400 dark:border dark:border-[#1c1c1c]`}
+    className={`flex items-center justify-center rounded-full transition-all hover:ring-2 hover:ring-blue-400`}
     style={{ width: size, height: size }}
   >
     {src ? (
       <img
         src={src}
-        alt={alt}
-        className="h-full w-full object-cover"
         draggable={false}
+        alt="User avatar"
+        className="h-full w-full rounded-full object-cover"
       />
     ) : (
       <svg
