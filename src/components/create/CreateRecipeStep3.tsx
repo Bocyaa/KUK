@@ -1,5 +1,5 @@
 import CategoryPicker from './CategoryPicker';
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import PricePicker from './PricePicker';
 import RecipeVisibilityToggle from './RecipeVisibilityToggle';
 

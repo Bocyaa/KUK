@@ -1,4 +1,4 @@
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import { Button } from './Button';
 import {
   ChatBubbleBottomCenterIcon,
@@ -18,12 +18,7 @@ interface Props {
   onUpdateComment: (index: number, comment: string) => void;
 }
 
-function IngredientRow({
-  ingredient,
-  index,
-  onRemove,
-  onUpdateComment,
-}: Props) {
+function IngredientRow({ ingredient, index, onRemove, onUpdateComment }: Props) {
   const { name, quantity, unit, comment } = ingredient;
   const [showComment, setShowComment] = useState(false);
   const [commentValue, setCommentValue] = useState(ingredient.comment || '');

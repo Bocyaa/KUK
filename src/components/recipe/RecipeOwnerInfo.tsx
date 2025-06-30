@@ -1,5 +1,5 @@
 import Avatar from '@app/components/settings/Avatar';
-import { formatCreatedAt } from '@app/utility/formatCreatedAt';
+import { formatCreatedAt } from '@app/shared/utility/formatCreatedAt';
 
 interface RecipeOwnerInfoProps {
   owner: {

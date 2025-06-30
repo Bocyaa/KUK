@@ -16,9 +16,9 @@ import {
 } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import type { ReactElement } from 'react';
-import { supabase } from '@app/lib/supabaseClient';
+import { supabase } from '@app/shared/lib/supabaseClient';
 import { UserMinusIcon } from '@heroicons/react/24/solid';
-import { useInvalidateUserPofile } from '@app/hooks/useGetUserProfile';
+import { useInvalidateUserPofile } from '@app/shared/hooks/useGetUserProfile';
 
 type SettingItemProps = {
   settingKey: string;

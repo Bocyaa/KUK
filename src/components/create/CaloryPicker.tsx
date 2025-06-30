@@ -1,5 +1,5 @@
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import { useEffect, useState } from 'react';
 import BackSecondaryCard from '../ui/BackSecondaryCard';
 import HelperText from './HelperText';

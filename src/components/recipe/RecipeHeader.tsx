@@ -1,4 +1,4 @@
-import RecipeTypes from '@app/types/RecipeTypes';
+import RecipeTypes from '@app/shared/types/RecipeTypes';
 
 interface RecipeHeaderProps {
   recipe: RecipeTypes;

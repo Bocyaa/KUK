@@ -1,6 +1,6 @@
-import RecipeTypes from '@app/types/RecipeTypes';
-import { formatCookTime } from '@app/utility/formatCookTime';
-import { formatCreatedAt } from '@app/utility/formatCreatedAt';
+import RecipeTypes from '@app/shared/types/RecipeTypes';
+import { formatCookTime } from '@app/shared/utility/formatCookTime';
+import { formatCreatedAt } from '@app/shared/utility/formatCreatedAt';
 
 interface RecipeDetailsProps {
   recipe: RecipeTypes;
@@ -26,9 +26,7 @@ function RecipeDetails({ recipe }: RecipeDetailsProps) {
 
       <span className="pl-1 text-xs text-ios-gray5/70">
         Created{' '}
-        <span className="font-medium">
-          {formatCreatedAt(recipe.created_at)}
-        </span>
+        <span className="font-medium">{formatCreatedAt(recipe.created_at)}</span>
       </span>
     </div>
   );

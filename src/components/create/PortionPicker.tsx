@@ -1,5 +1,5 @@
 import QuantityStepper from '@app/components/ingredients/QuantityStepper';
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import { useEffect, useState } from 'react';
 import BackSecondaryCard from '../ui/BackSecondaryCard';
 import HelperText from './HelperText';
@@ -31,9 +31,7 @@ function PortionPicker({ form, updateForm }: PortionPickerProps) {
   return (
     <>
       <BackSecondaryCard>
-        <span className="pl-1 text-[#0d0d0d] dark:text-[#e3e3e3]">
-          Portions
-        </span>
+        <span className="pl-1 text-[#0d0d0d] dark:text-[#e3e3e3]">Portions</span>
         <QuantityStepper value={portion} onChange={handlePortionChange} />
       </BackSecondaryCard>
       <HelperText

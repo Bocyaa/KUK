@@ -1,4 +1,4 @@
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import { Minus, Plus } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import BackSecondaryCard from '../ui/BackSecondaryCard';

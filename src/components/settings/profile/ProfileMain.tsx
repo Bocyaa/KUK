@@ -5,8 +5,8 @@ import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import {
   useInvalidateUserPofile,
   useGetUserProfile,
-} from '@app/hooks/useGetUserProfile';
-import { supabase } from '@app/lib/supabaseClient';
+} from '@app/shared/hooks/useGetUserProfile';
+import { supabase } from '@app/shared/lib/supabaseClient';
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
@@ -53,8 +53,7 @@ function ProfileMain() {
         // No processing needed
       } else {
         // Dynamically import browser-image-compression
-        const imageCompression = (await import('browser-image-compression'))
-          .default;
+        const imageCompression = (await import('browser-image-compression')).default;
 
         // Crop to center square 640x640
         const canvas = document.createElement('canvas');
@@ -197,10 +196,7 @@ function ProfileMain() {
             tabIndex={0}
           >
             {uploading ? (
-              <svg
-                className="mr-2 inline h-5 w-5 animate-spin"
-                viewBox="0 0 24 24"
-              >
+              <svg className="mr-2 inline h-5 w-5 animate-spin" viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
                   cx="12"

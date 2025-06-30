@@ -5,7 +5,7 @@ import QuantityStepper from './QuantityStepper';
 
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import Input from '../ui/Input';
 
 type IngredientPickerProps = {
@@ -41,10 +41,7 @@ function IngredientPicker({ form, updateForm }: IngredientPickerProps) {
     const trimmedName = name.trim();
     if (!trimmedName) return;
 
-    const newIngredients = [
-      ...ingredients,
-      { name: trimmedName, quantity, unit },
-    ];
+    const newIngredients = [...ingredients, { name: trimmedName, quantity, unit }];
 
     setIngredients(newIngredients);
     updateForm({ ingredients: newIngredients });

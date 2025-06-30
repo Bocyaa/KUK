@@ -1,27 +1,27 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import AppLayout from './layout/AppLayout.tsx';
-import Recipe from '../pages/recipes/Recipe.tsx';
-import Profile from '../pages/profile/Profile.tsx';
-import CreateRecipeFlow from '../pages/recipes/CreateRecipeFlow.tsx';
-import PageNotFound from '../pages/PageNotFound.tsx';
-import Register from '../pages/auth/Register.tsx';
-import Login from '../pages/auth/Login.tsx';
-import CompleteProfile from '../pages/auth/CompleteProfile.tsx';
-import AuthCallbackRedirect from '../pages/auth/AuthCallbackRedirect.tsx';
-import ForgotPassword from '../pages/auth/ForgotPassword.tsx';
-import ResetPassword from '../pages/auth/ResetPassword.tsx';
-import ConfirmEmail from '../pages/auth/ConfirmEmail.tsx';
-import Recipes from '../pages/recipes/Recipes.tsx';
-import Explore from '../pages/explore/Explore.tsx';
+import Recipe from '../features/recipes/pages/Recipe.tsx';
+import Profile from '../features/profile/pages/Profile.tsx';
+import CreateRecipeFlow from '../features/recipes/pages/CreateRecipeFlow.tsx';
+import PageNotFound from '../shared/pages/PageNotFound.tsx';
+import Register from '../features/auth/pages/Register.tsx';
+import Login from '../features/auth/pages/Login.tsx';
+import CompleteProfile from '../features/auth/pages/CompleteProfile.tsx';
+import AuthCallbackRedirect from '../features/auth/pages/AuthCallbackRedirect.tsx';
+import ForgotPassword from '../features/auth/pages/ForgotPassword.tsx';
+import ResetPassword from '../features/auth/pages/ResetPassword.tsx';
+import ConfirmEmail from '../features/auth/pages/ConfirmEmail.tsx';
+import Recipes from '../features/recipes/pages/Recipes.tsx';
+import Explore from '../features/explore/pages/Explore.tsx';
 import RecipesLayout from './layout/RecipesLayout.tsx';
-import RecipesList from '../pages/recipes/RecipesList.tsx';
+import RecipesList from '../features/recipes/pages/RecipesList.tsx';
 
-import '@app/styles/page-transitions.css';
+import '@app/shared/styles/page-transitions.css';
 import ExploreLayout from './layout/ExploreLayout.tsx';
-import Collection from '@app/pages/collections/Collection.tsx';
-import CollectionsList from '@app/pages/collections/CollectionsList.tsx';
-import CreateCollection from '@app/pages/collections/CreateCollection.tsx';
+import Collection from '@app/features/collections/pages/Collection.tsx';
+import CollectionsList from '@app/features/collections/pages/CollectionsList.tsx';
+import CreateCollection from '@app/features/collections/pages/CreateCollection.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();

@@ -14,7 +14,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 import { Telescope } from 'lucide-react';
-import { restoreThemeColor } from '@app/utility/updateThemeColor';
+import { restoreThemeColor } from '@app/shared/utility/updateThemeColor';
 
 type StandardIcon = FC<{ className?: string }>;
 type CustomIcon = FC<SVGProps<SVGSVGElement> & { bold?: boolean }>;

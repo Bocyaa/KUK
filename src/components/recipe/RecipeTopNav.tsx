@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getPreviousPageFromUrl } from '@app/utility/getPreviousPageFromUrl';
-import { restoreThemeColor } from '@app/utility/updateThemeColor';
+import { getPreviousPageFromUrl } from '@app/shared/utility/getPreviousPageFromUrl';
+import { restoreThemeColor } from '@app/shared/utility/updateThemeColor';
 
 interface RecipeHeaderProps {
   dominantColor: string;

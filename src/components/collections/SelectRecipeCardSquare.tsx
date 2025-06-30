@@ -1,6 +1,6 @@
-import { truncateText } from '@app/utility/truncateDescription';
+import { truncateText } from '@app/shared/utility/truncateDescription';
 import Checkbox from '../ui/Checkbox';
-import RecipeTypes from '@app/types/RecipeTypes';
+import RecipeTypes from '@app/shared/types/RecipeTypes';
 
 interface SelectRecipeCardProps {
   recipe: RecipeTypes;

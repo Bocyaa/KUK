@@ -1,4 +1,4 @@
-import type Ingredient from '@app/types/IngredientTypes';
+import type Ingredient from '@app/shared/types/IngredientTypes';
 import IngredientRow from './IngredientRow';
 import BackSecondaryCard from '../ui/BackSecondaryCard';
 

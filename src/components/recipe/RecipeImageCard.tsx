@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 
-import RecipeTypes from '@app/types/RecipeTypes';
+import RecipeTypes from '@app/shared/types/RecipeTypes';
 import Avatar from '../settings/Avatar';
 import RecipeImage from './RecipeImage';
 import RecipeHeader from './RecipeHeader';
@@ -8,7 +8,7 @@ import RecipeDetails from './RecipeDetails';
 
 import { HeartIcon } from '../Icons/HeartIcon';
 import { BookmarkIcon, BookmarkIconFilled } from '../Icons/BookmarkIcon';
-import { useAuth } from '@app/contexts/hooks/useAuth';
+import { useAuth } from '@app/shared/contexts/hooks/useAuth';
 import { Pencil } from 'lucide-react';
 
 interface RecipeImageCardTypes {

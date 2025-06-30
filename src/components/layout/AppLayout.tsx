@@ -2,8 +2,8 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import BottomNav from './BottomNav';
 
-import { useAuth } from '@app/contexts/hooks/useAuth';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useAuth } from '@app/shared/contexts/hooks/useAuth';
 
 function AppLayout() {
   const { session, loading } = useAuth();

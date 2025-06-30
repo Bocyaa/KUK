@@ -1,4 +1,4 @@
-import { CollectionPreview } from '@app/types/CollectionTypes';
+import { CollectionPreview } from '@app/shared/types/CollectionTypes';
 
 interface CollectionCardProps {
   collection: CollectionPreview;

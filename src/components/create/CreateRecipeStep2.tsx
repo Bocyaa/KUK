@@ -1,4 +1,4 @@
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 
 import IngredientPicker from '@app/components/ingredients/IngredientPicker';
 import PortionPicker from './PortionPicker';

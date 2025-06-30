@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import RecipeCardCarousel from './RecipeCardCarousel';
-import chunkArray from '@app/utility/chunkArray';
+import chunkArray from '@app/shared/utility/chunkArray';
 import { NavLink } from 'react-router-dom';
 import { PlusIcon } from '../Icons/PlusIcon';
 import { ChevronRight } from '../Icons/ChevronRight';

@@ -4,7 +4,7 @@ import {
   CheckCircleIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
-import IngredientType from '@app/types/IngredientTypes';
+import IngredientType from '@app/shared/types/IngredientTypes';
 
 const STEPS_CONFIG = [
   { id: 1, label: 'Step 1' },

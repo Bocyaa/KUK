@@ -1,11 +1,11 @@
-import Ingredient from '@app/types/IngredientTypes';
+import Ingredient from '@app/shared/types/IngredientTypes';
 import BackSecondaryCard from '../ui/BackSecondaryCard';
 import FrontPrimaryCard from '../ui/FrontPrimaryCard';
 import FormSection from '../form/FormSection';
 import { useEffect, useMemo, useState } from 'react';
 import LabelPlaceholder from './LabelPlaceholder';
 import PriceStepper from '@app/components/ingredients/PriceStepper';
-import { UNIT_TO_KG, UNIT_TO_L } from '@app/utility/calculateTotalPrice';
+import { UNIT_TO_KG, UNIT_TO_L } from '@app/shared/utility/calculateTotalPrice';
 import HelperText from './HelperText';
 
 type PricePickerProps = {
@@ -51,9 +51,7 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
   function handlePriceChange(ing: string, val: number) {
     // Update the local ingredients state with new price
     const updatedIngredients = ingredients.map((ingredient) =>
-      ingredient.name === ing
-        ? { ...ingredient, pricePerUnit: val }
-        : ingredient,
+      ingredient.name === ing ? { ...ingredient, pricePerUnit: val } : ingredient,
     );
 
     setIngredients(updatedIngredients);
@@ -130,9 +128,7 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
             <span className="text-xs font-semibold text-[#5d5d5d] dark:text-[#afafaf]">
               {totalPrice}
             </span>
-            <span className="text-xs text-[#5d5d5d] dark:text-[#afafaf]">
-              €
-            </span>
+            <span className="text-xs text-[#5d5d5d] dark:text-[#afafaf]">€</span>
           </div>
           <div className="mx-1 mb-4 mt-2 border-b dark:border-[#424242]"></div>
         </>
@@ -152,9 +148,7 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
                           <span className="text-sm font-light text-[#5d5d5d] dark:text-[#afafaf]">
                             of{' '}
                           </span>
-                          <span className="font-medium capitalize">
-                            {ing.name}
-                          </span>
+                          <span className="font-medium capitalize">{ing.name}</span>
                         </span>
                       </FrontPrimaryCard>
                     </div>

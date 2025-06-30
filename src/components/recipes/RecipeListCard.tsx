@@ -1,7 +1,7 @@
 import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import GradientShadow from '../ui/GradientShadow';
-import { truncateText } from '@app/utility/truncateDescription';
-import RecipeTypes from '@app/types/RecipeTypes';
+import { truncateText } from '@app/shared/utility/truncateDescription';
+import RecipeTypes from '@app/shared/types/RecipeTypes';
 
 interface RecipeListCardProps {
   recipe: RecipeTypes;

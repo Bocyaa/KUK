@@ -1,12 +1,12 @@
 import {
   useGetUserProfile,
   useInvalidateUserPofile,
-} from '@app/hooks/useGetUserProfile';
+} from '@app/shared/hooks/useGetUserProfile';
 import FormInput from '../../form/FormInput';
 import FormSection from '../../form/FormSection';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import React, { useEffect, useState } from 'react';
-import { useUpdateUserProfile } from '@app/hooks/useUpdateUserProfile';
+import { useUpdateUserProfile } from '@app/shared/hooks/useUpdateUserProfile';
 import AnimatedMessage from '../../ui/AnimatedMessage';
 
 interface FormState {
