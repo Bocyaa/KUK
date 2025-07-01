@@ -2,20 +2,30 @@ import ReactSelect, { Props as SelectProps } from 'react-select';
 import { useEffect, useState } from 'react';
 
 const ThemedSelect = <Option,>(props: SelectProps<Option>) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  // Initialize theme based on current state instead of defaulting to 'light'
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    // Check for manual theme toggle first
+    if (document.documentElement.classList.contains('dark')) {
+      return 'dark';
+    }
+    // Then check system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  });
 
   // Detect the theme on mount and when it changes
   useEffect(() => {
     // Initial detection
-    const isDarkMode = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches;
-    setTheme(isDarkMode ? 'dark' : 'light');
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const hasManualDarkClass = document.documentElement.classList.contains('dark');
+    setTheme(hasManualDarkClass || isDarkMode ? 'dark' : 'light');
 
     // Listen for changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {
-      setTheme(e.matches ? 'dark' : 'light');
+      const hasManualDarkClass = document.documentElement.classList.contains('dark');
+      setTheme(hasManualDarkClass || e.matches ? 'dark' : 'light');
     };
 
     mediaQuery.addEventListener('change', handleChange);
@@ -26,7 +36,8 @@ const ThemedSelect = <Option,>(props: SelectProps<Option>) => {
   useEffect(() => {
     const checkTheme = () => {
       const isDark = document.documentElement.classList.contains('dark');
-      setTheme(isDark ? 'dark' : 'light');
+      const isSystemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(isDark || isSystemDark ? 'dark' : 'light');
     };
 
     // Initial check
@@ -49,6 +60,8 @@ const ThemedSelect = <Option,>(props: SelectProps<Option>) => {
         control: (baseStyles, state) => ({
           ...baseStyles,
           backgroundColor: theme === 'dark' ? '#212121' : '#ffffff',
+          borderRadius: '0.75rem',
+          padding: '0.1rem 0 0.1rem 0',
           borderColor: state.isFocused
             ? theme === 'dark'
               ? '#ffffff'
@@ -82,7 +95,7 @@ const ThemedSelect = <Option,>(props: SelectProps<Option>) => {
             : state.isFocused
               ? theme === 'dark'
                 ? '#2c2c2e'
-                : '#f9fafb'
+                : '#e0e0e0'
               : theme === 'dark'
                 ? '#212121'
                 : '#ffffff',

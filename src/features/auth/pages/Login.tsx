@@ -12,11 +12,11 @@ import { validateForm } from '@app/features/auth/hooks/validateAuthForm';
 import { useLogin } from '@app/features/auth/hooks/useLogin';
 import { useGoogleAuth } from '@app/features/auth/hooks/useGoogleAuth';
 import { useAppleAuth } from '@app/features/auth/hooks/useAppleAuth';
-import AuthLayout from '@app/components/auth/AuthLayout';
-import AuthHeader from '@app/components/auth/AuthHeader';
-import AuthCard from '@app/components/auth/AuthCard';
-import AuthCardHeader from '@app/components/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/auth/AuthCardBody';
+import AuthLayout from '@app/features/auth/components/AuthLayout';
+import AuthHeader from '@app/features/auth/components/AuthHeader';
+import AuthCard from '@app/features/auth/components/AuthCard';
+import AuthCardHeader from '@app/features/auth/components/AuthCardHeader';
+import AuthCardBody from '@app/features/auth/components/AuthCardBody';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -75,8 +75,8 @@ function Login() {
                 type="email"
                 autoComplete="email"
                 placeholder="hello@example.com"
-                disabled={isPending}
                 required
+                disabled={isPending}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -88,10 +88,10 @@ function Login() {
                 type="password"
                 autoComplete="current-password"
                 required
+                eye={true}
                 disabled={isPending}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                eye={true}
               />
 
               <div>

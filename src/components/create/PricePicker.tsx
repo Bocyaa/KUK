@@ -118,7 +118,6 @@ function PricePicker({ form, updateForm }: PricePickerProps) {
 
   return (
     <FormSection>
-      {/* <InputLabel className="mb-3">Price Picker</InputLabel> */}
       {form.ingredients.length > 0 && (
         <>
           <div className="flex items-end gap-2 pl-1">

@@ -306,6 +306,130 @@ input:-webkit-autofill:active {
   animation-play-state: paused !important;
 }
 
+/* Base calendar styling */
+.dark-calendar .react-datepicker,
+.dark .react-datepicker {
+  background: #232323;
+  border-color: #424242;
+  color: #e3e3e3;
+}
+
+.dark-calendar .react-datepicker__header,
+.dark .react-datepicker__header {
+  background: #232323;
+  border-bottom: 1px solid #424242;
+}
+
+.dark-calendar .react-datepicker__current-month,
+.dark-calendar .react-datepicker__day-name,
+.dark-calendar .react-datepicker__day,
+.dark-calendar .react-datepicker__time-name,
+.dark .react-datepicker__current-month,
+.dark .react-datepicker__day-name,
+.dark .react-datepicker__day,
+.dark .react-datepicker__time-name {
+  color: #e3e3e3;
+}
+
+.dark-calendar .react-datepicker__day--selected,
+.dark .react-datepicker__day--selected {
+  background: #0094f6;
+  color: #fff;
+}
+
+/* Month and Year select dropdowns */
+.dark-calendar .react-datepicker__month-select,
+.dark-calendar .react-datepicker__year-select,
+.dark .react-datepicker__month-select,
+.dark .react-datepicker__year-select {
+  background: #232323;
+  color: #e3e3e3;
+  border-color: #424242;
+}
+
+/* Month & year grid cells */
+.dark-calendar .react-datepicker__month-text,
+.dark-calendar .react-datepicker__year-text,
+.dark .react-datepicker__month-text,
+.dark .react-datepicker__year-text {
+  background: #232323;
+  color: #e3e3e3;
+}
+
+/* Hover states for month/year cells */
+.dark-calendar .react-datepicker__month-text:hover,
+.dark-calendar .react-datepicker__year-text:hover,
+.dark .react-datepicker__month-text:hover,
+.dark .react-datepicker__year-text:hover {
+  background: #424242;
+  color: #fff;
+}
+
+/* Selected / in-range month/year cells */
+.dark-calendar .react-datepicker__month-text--selected,
+.dark-calendar .react-datepicker__year-text--selected,
+.dark-calendar .react-datepicker__month-text--in-range,
+.dark-calendar .react-datepicker__year-text--in-range,
+.dark-calendar .react-datepicker__month-text--in-selecting-range,
+.dark-calendar .react-datepicker__year-text--in-selecting-range,
+.dark .react-datepicker__month-text--selected,
+.dark .react-datepicker__year-text--selected,
+.dark .react-datepicker__month-text--in-range,
+.dark .react-datepicker__year-text--in-range,
+.dark .react-datepicker__month-text--in-selecting-range,
+.dark .react-datepicker__year-text--in-selecting-range {
+  background: #0094f6;
+  color: #fff;
+}
+
+/* Keyboard selected month/year cells */
+.dark-calendar .react-datepicker__month-text--keyboard-selected,
+.dark-calendar .react-datepicker__year-text--keyboard-selected,
+.dark .react-datepicker__month-text--keyboard-selected,
+.dark .react-datepicker__year-text--keyboard-selected {
+  background: #424242;
+  color: #fff;
+}
+
+/* Today's date styling */
+.dark-calendar .react-datepicker__day--today,
+.dark .react-datepicker__day--today {
+  background: #424242;
+  color: #e3e3e3;
+  font-weight: bold;
+}
+
+/* First day of month highlight fix */
+.dark-calendar .react-datepicker__day--keyboard-selected,
+.dark .react-datepicker__day--keyboard-selected {
+  background: #424242;
+  color: #e3e3e3;
+}
+
+/* Navigation arrows */
+.dark-calendar .react-datepicker__navigation,
+.dark .react-datepicker__navigation {
+  border-color: #e3e3e3;
+}
+
+.dark-calendar .react-datepicker__navigation:hover,
+.dark .react-datepicker__navigation:hover {
+  border-color: #ffffff;
+}
+
+/* Hover states for days */
+.dark-calendar .react-datepicker__day:hover,
+.dark .react-datepicker__day:hover {
+  background: #424242;
+  color: #e3e3e3;
+}
+
+/* Disabled days */
+.dark-calendar .react-datepicker__day--disabled,
+.dark .react-datepicker__day--disabled {
+  color: #666666;
+}
+
 /* Google Icon */
 .gsi-material-button {
   -moz-user-select: none;

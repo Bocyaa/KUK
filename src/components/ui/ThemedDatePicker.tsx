@@ -8,11 +8,13 @@ interface ThemedDatePickerProps {
   name?: string;
   value: string;
   onChange: (date: string) => void;
+  label?: string;
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
   minAge?: number;
   maxAge?: number;
+  addClass?: string;
 }
 
 const ThemedDatePicker = ({
@@ -20,98 +22,94 @@ const ThemedDatePicker = ({
   name = id,
   value,
   onChange,
+  label = '',
   placeholder = 'Select date...',
   disabled = false,
   required = false,
   minAge = 13,
   maxAge = 120,
+  addClass = '',
 }: ThemedDatePickerProps) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [dateValue, setDateValue] = useState<Date | null>(() => {
-    return value ? new Date(value) : null;
-  });
+  const [dateValue, setDateValue] = useState<Date | null>(() =>
+    value ? new Date(value) : null,
+  );
 
-  // Theme detection effect
+  // Theme detection
   useEffect(() => {
-    const isDarkMode = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches;
-    setTheme(isDarkMode ? 'dark' : 'light');
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      setTheme(e.matches ? 'dark' : 'light');
-    };
-
-    mediaQuery.addEventListener('change', handleChange);
-
-    // Also check for manual theme toggles
     const checkTheme = () => {
-      const isDark = document.documentElement.classList.contains('dark');
+      const isDark =
+        document.documentElement.classList.contains('dark') ||
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(isDark ? 'dark' : 'light');
     };
-
     checkTheme();
-
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', checkTheme);
     const observer = new MutationObserver(checkTheme);
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['class'],
     });
-
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      mq.removeEventListener('change', checkTheme);
       observer.disconnect();
     };
   }, []);
 
-  // Calculate min and max dates based on age requirements
+  // Min/max date logic
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() - minAge);
-
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - maxAge);
 
   const handleDateChange = (date: Date | null) => {
     setDateValue(date);
     if (date) {
-      const formattedDate = date.toISOString().split('T')[0];
-      onChange(formattedDate);
+      onChange(date.toISOString().split('T')[0]);
     } else {
       onChange('');
     }
   };
 
-  // Custom input for the datepicker
+  // Custom input styled like your other inputs
   const CustomInput = forwardRef<
     HTMLDivElement,
     { value?: string; onClick?: () => void }
   >(({ value, onClick }, ref) => (
     <div
       ref={ref}
-      className={`flex w-full cursor-pointer items-center border ${
+      tabIndex={0}
+      className={`relative flex w-full items-center rounded-xl border px-3 py-2 outline-none transition-all ${
         theme === 'dark'
-          ? 'border-[#424242] bg-transparent text-white'
-          : 'border-gray-300 bg-white text-gray-900'
-      } relative px-3 py-[0.375rem] outline-none`}
-      onClick={onClick}
+          ? 'border-[#424242] bg-transparent text-[#e3e3e3] placeholder-[#b4b4b4] focus:border-[#ffffff]'
+          : 'border-[#e6e6e6] bg-white text-[#0d0d0d] placeholder:text-gray-400 focus:border-[#0094f6]'
+      } ${disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'} ${addClass} `}
+      onClick={disabled ? undefined : onClick}
+      aria-disabled={disabled}
     >
       <span
-        className={
-          !value ? (theme === 'dark' ? 'text-[#b4b4b4]' : 'text-gray-400') : ''
-        }
+        className={`truncate ${!value ? (theme === 'dark' ? 'text-[#b4b4b4]' : 'text-gray-400') : ''}`}
       >
         {value || placeholder}
       </span>
       <Calendar
         size={18}
-        className={`ml-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}
+        className={`ml-auto ${theme === 'dark' ? 'text-[#b4b4b4]' : 'text-gray-400'}`}
       />
     </div>
   ));
 
   return (
-    <div className={theme === 'dark' ? 'dark-theme-datepicker' : ''}>
+    <div className="flex w-full flex-col gap-1">
+      {label && (
+        <label
+          htmlFor={id}
+          className={`font-regular mb-1 text-xs uppercase tracking-wider transition-colors ${disabled ? 'dark:text-[#afafaf]' : 'label-focus-within:text-custom'}`}
+        >
+          {label}
+        </label>
+      )}
       <DatePicker
         id={id}
         name={name}
@@ -127,9 +125,10 @@ const ThemedDatePicker = ({
         yearDropdownItemNumber={100}
         dropdownMode="select"
         showMonthDropdown
-        className={`w-full ${theme === 'dark' ? 'dark-calendar' : ''}`}
+        className="w-full"
         calendarClassName={theme === 'dark' ? 'dark-calendar' : ''}
         wrapperClassName="w-full"
+        popperClassName={theme === 'dark' ? 'dark-calendar' : ''}
       />
     </div>
   );

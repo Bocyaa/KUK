@@ -6,11 +6,11 @@ import toast from 'react-hot-toast';
 import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { supabase } from '@app/shared/lib/supabaseClient';
-import AuthLayout from '@app/components/auth/AuthLayout';
-import AuthHeader from '@app/components/auth/AuthHeader';
-import AuthCard from '@app/components/auth/AuthCard';
-import AuthCardHeader from '@app/components/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/auth/AuthCardBody';
+import AuthLayout from '@app/features/auth/components/AuthLayout';
+import AuthHeader from '@app/features/auth/components/AuthHeader';
+import AuthCard from '@app/features/auth/components/AuthCard';
+import AuthCardHeader from '@app/features/auth/components/AuthCardHeader';
+import AuthCardBody from '@app/features/auth/components/AuthCardBody';
 import { useAuth } from '@app/shared/contexts/hooks/useAuth';
 
 function ConfirmEmail() {

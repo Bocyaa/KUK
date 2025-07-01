@@ -9,10 +9,10 @@ import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { supabase } from '@app/shared/lib/supabaseClient';
-import AuthLayout from '@app/components/auth/AuthLayout';
-import AuthCard from '@app/components/auth/AuthCard';
-import AuthCardHeader from '@app/components/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/auth/AuthCardBody';
+import AuthLayout from '@app/features/auth/components/AuthLayout';
+import AuthCard from '@app/features/auth/components/AuthCard';
+import AuthCardHeader from '@app/features/auth/components/AuthCardHeader';
+import AuthCardBody from '@app/features/auth/components/AuthCardBody';
 import ThemedSelect from '@app/components/ui/ThemedSelect';
 import ThemedDatePicker from '@app/components/ui/ThemedDatePicker';
 
@@ -95,7 +95,7 @@ export default function CompleteProfile() {
 
       if (!error && data) {
         const usernames = data.map((item: { username: string }) => {
-          item.username.toLowerCase();
+          return item.username.toLowerCase();
         });
 
         setExistingUsernames(usernames);
@@ -109,11 +109,21 @@ export default function CompleteProfile() {
     return (
       form.first_name.trim().length >= 3 &&
       form.last_name.trim().length >= 3 &&
-      form.username.trim().length >= 3 && // you already require length >= 3
-      form.birthdate.trim().length > 0 && // non‐empty
-      form.country.trim().length > 0 // non‐empty
+      form.username.trim().length >= 3 &&
+      usernameValidation.isValid && // Added: Username must be valid and available
+      !usernameValidation.isChecking && // Added: Username validation must not be in progress
+      form.birthdate.trim().length > 0 &&
+      form.country.trim().length > 0
     );
-  }, [form.first_name, form.last_name, form.username, form.birthdate, form.country]);
+  }, [
+    form.first_name,
+    form.last_name,
+    form.username,
+    form.birthdate,
+    form.country,
+    usernameValidation.isValid,
+    usernameValidation.isChecking,
+  ]);
 
   // Pre-Populate inputs on mount
   useEffect(() => {
@@ -204,7 +214,7 @@ export default function CompleteProfile() {
     });
 
     if (!error) {
-      navigate('/dashboard');
+      navigate('/recipes');
     } else {
       toast.error('Failed to save profile: ' + error.message);
     }
@@ -222,6 +232,7 @@ export default function CompleteProfile() {
               <Input
                 label="First Name"
                 id="first_name"
+                name="first_name"
                 value={form.first_name}
                 onChange={handleChange}
                 disabled={disabledFields.includes('first_name')}
@@ -230,6 +241,7 @@ export default function CompleteProfile() {
               <Input
                 label="Last Name"
                 id="last_name"
+                name="last_name"
                 value={form.last_name}
                 onChange={handleChange}
                 disabled={disabledFields.includes('last_name')}
@@ -239,6 +251,7 @@ export default function CompleteProfile() {
                 <Input
                   label="Username"
                   id="username"
+                  name="username"
                   value={form.username}
                   onChange={handleChange}
                   disabled={disabledFields.includes('username')}

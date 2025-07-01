@@ -11,11 +11,11 @@ import { useGoogleAuth } from '@app/features/auth/hooks/useGoogleAuth';
 import { validateForm } from '@app/features/auth/hooks/validateAuthForm';
 import { handleSignup } from '@app/features/auth/hooks/useSignup';
 import { useAppleAuth } from '@app/features/auth/hooks/useAppleAuth';
-import AuthLayout from '@app/components/auth/AuthLayout';
-import AuthHeader from '@app/components/auth/AuthHeader';
-import AuthCardHeader from '@app/components/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/auth/AuthCardBody';
-import AuthCard from '@app/components/auth/AuthCard';
+import AuthLayout from '@app/features/auth/components/AuthLayout';
+import AuthHeader from '@app/features/auth/components/AuthHeader';
+import AuthCardHeader from '@app/features/auth/components/AuthCardHeader';
+import AuthCardBody from '@app/features/auth/components/AuthCardBody';
+import AuthCard from '@app/features/auth/components/AuthCard';
 
 function Register() {
   // Controlled input states

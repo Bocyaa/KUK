@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import InputLabel from '@app/components/ui/InputLabel';
 import Input from '@app/components/ui/Input';
 import SubmitButton from '@app/components/ui/SubmitButton';
 
 import { useForgotPassword } from '@app/features/auth/hooks/useForgotPassword';
-import AuthHeader from '@app/components/auth/AuthHeader';
-import AuthLayout from '@app/components/auth/AuthLayout';
-import AuthCard from '@app/components/auth/AuthCard';
-import AuthCardHeader from '@app/components/auth/AuthCardHeader';
-import AuthCardBody from '@app/components/auth/AuthCardBody';
+import AuthHeader from '@app/features/auth/components/AuthHeader';
+import AuthLayout from '@app/features/auth/components/AuthLayout';
+import AuthCard from '@app/features/auth/components/AuthCard';
+import AuthCardHeader from '@app/features/auth/components/AuthCardHeader';
+import AuthCardBody from '@app/features/auth/components/AuthCardBody';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -35,21 +34,17 @@ function ForgotPassword() {
         <AuthCardBody>
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
-              <div>
-                <InputLabel>Email</InputLabel>
-                <div className="mt-1">
-                  <Input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="example@gmail.com"
-                    disabled={isPending}
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
+              <Input
+                label="Email"
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="example@gmail.com"
+                disabled={isPending}
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
               <div className="flex w-full border-b dark:border-[#3b3f4e]"></div>
 

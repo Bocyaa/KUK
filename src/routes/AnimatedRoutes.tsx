@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-import AppLayout from './layout/AppLayout.tsx';
 import Recipe from '../features/recipes/pages/Recipe.tsx';
 import Profile from '../features/profile/pages/Profile.tsx';
 import CreateRecipeFlow from '../features/recipes/pages/CreateRecipeFlow.tsx';
@@ -14,14 +13,15 @@ import ResetPassword from '../features/auth/pages/ResetPassword.tsx';
 import ConfirmEmail from '../features/auth/pages/ConfirmEmail.tsx';
 import Recipes from '../features/recipes/pages/Recipes.tsx';
 import Explore from '../features/explore/pages/Explore.tsx';
-import RecipesLayout from './layout/RecipesLayout.tsx';
 import RecipesList from '../features/recipes/pages/RecipesList.tsx';
 
 import '@app/shared/styles/page-transitions.css';
-import ExploreLayout from './layout/ExploreLayout.tsx';
 import Collection from '@app/features/collections/pages/Collection.tsx';
 import CollectionsList from '@app/features/collections/pages/CollectionsList.tsx';
 import CreateCollection from '@app/features/collections/pages/CreateCollection.tsx';
+import AppLayout from '@app/components/layout/AppLayout.tsx';
+import RecipesLayout from '@app/components/layout/RecipesLayout.tsx';
+import ExploreLayout from '@app/components/layout/ExploreLayout.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();

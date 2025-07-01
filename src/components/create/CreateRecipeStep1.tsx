@@ -70,6 +70,7 @@ function CreateRecipeStep1({ form, updateForm, onFileSelect }: Props) {
           placeholder={titlePlaceholder}
           className="mb-5"
         />
+
         <Input
           label="Short Description"
           id="description"
