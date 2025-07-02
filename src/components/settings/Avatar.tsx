@@ -9,7 +9,7 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ src, size = 96 }) => (
   <div
-    className={`flex items-center justify-center rounded-full transition-all hover:ring-2 hover:ring-blue-400`}
+    className={`flex items-center justify-center rounded-full border border-[#e6e6e6] bg-[#f9f9f9] transition-all dark:border-transparent dark:bg-[#212121] md:hover:ring-2 md:hover:ring-blue-400`}
     style={{ width: size, height: size }}
   >
     {src ? (

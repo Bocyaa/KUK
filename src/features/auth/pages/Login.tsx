@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
 
-import Input from '@app/components/ui/Input';
-import SubmitButton from '@app/components/ui/SubmitButton';
+import Input from '@app/shared/components/Input';
+import SubmitButton from '@app/shared/components/SubmitButton';
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
 import AuthDivider from '@app/components/ui/AuthDivider';
 

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getPreviousPageFromUrl } from '@app/shared/utility/getPreviousPageFromUrl';
 import { restoreThemeColor } from '@app/shared/utility/updateThemeColor';
+import ChevronLeft from '@app/shared/components/icons/ChevronLeft';
 
 interface RecipeHeaderProps {
   dominantColor: string;
@@ -60,24 +61,6 @@ function RecipeTopNav({ dominantColor }: RecipeHeaderProps) {
 }
 
 export default RecipeTopNav;
-
-function ChevronLeft() {
-  return (
-    <svg
-      className="h-5 w-5 text-white"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={3}
-        d="M15 19l-7-7 7-7"
-      />
-    </svg>
-  );
-}
 
 function EllipsisHorizontal() {
   return (

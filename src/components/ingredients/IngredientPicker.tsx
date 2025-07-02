@@ -6,7 +6,7 @@ import QuantityStepper from './QuantityStepper';
 import AddItemButton from './AddItemButton';
 import IngredientList from './IngredientList';
 import Ingredient from '@app/shared/types/IngredientTypes';
-import Input from '../ui/Input';
+import Input from '../../shared/components/Input';
 
 type IngredientPickerProps = {
   form: {

@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 
 import Logo from '@app/components/ui/Logo';
 import AuthTitle from '@app/components/ui/AuthTitle';
-import InputLabel from '@app/components/ui/InputLabel';
-import Input from '@app/components/ui/Input';
-import SubmitButton from '@app/components/ui/SubmitButton';
+import InputLabel from '@app/shared/components/InputLabel';
+import Input from '@app/shared/components/Input';
+import SubmitButton from '@app/shared/components/SubmitButton';
 import { useResetPassword } from '../hooks/useResetPassword';
 
 function ResetPassword() {

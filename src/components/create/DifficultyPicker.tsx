@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import InputLabel from '../ui/InputLabel';
+import InputLabel from '../../shared/components/InputLabel';
 
 const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
 
@@ -11,9 +11,7 @@ type Props = {
 };
 
 function DifficultyPicker({ form, updateForm }: Props) {
-  const [selected, setSelected] = useState(
-    difficulties.indexOf(form.difficulty),
-  );
+  const [selected, setSelected] = useState(difficulties.indexOf(form.difficulty));
 
   // refs for container + each button
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);

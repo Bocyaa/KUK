@@ -22,6 +22,8 @@ import CreateCollection from '@app/features/collections/pages/CreateCollection.t
 import AppLayout from '@app/components/layout/AppLayout.tsx';
 import RecipesLayout from '@app/components/layout/RecipesLayout.tsx';
 import ExploreLayout from '@app/components/layout/ExploreLayout.tsx';
+import ProfileLayout from '@app/features/profile/components/ProfileLayout.tsx';
+import Settings from '@app/features/profile/pages/Settings.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -46,7 +48,10 @@ export default function AnimatedRoutes() {
             <Route path=":recipeId" element={<Recipe />} />
           </Route>
           <Route path="create-recipe" element={<CreateRecipeFlow />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<ProfileLayout />}>
+            <Route index element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
         </Route>
         <Route path="auth/callback" element={<AuthCallbackRedirect />} />
         <Route path="forgot-password" element={<ForgotPassword />} />

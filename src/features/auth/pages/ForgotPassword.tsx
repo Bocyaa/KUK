@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import Input from '@app/components/ui/Input';
-import SubmitButton from '@app/components/ui/SubmitButton';
+import Input from '@app/shared/components/Input';
+import SubmitButton from '@app/shared/components/SubmitButton';
 
 import { useForgotPassword } from '@app/features/auth/hooks/useForgotPassword';
 import AuthHeader from '@app/features/auth/components/AuthHeader';

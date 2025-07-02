@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import toast from 'react-hot-toast';
 
-import SubmitButton from '@app/components/ui/SubmitButton';
+import SubmitButton from '@app/shared/components/SubmitButton';
 
 import { supabase } from '@app/shared/lib/supabaseClient';
 import AuthLayout from '@app/features/auth/components/AuthLayout';

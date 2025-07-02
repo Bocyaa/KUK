@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
 import Header from '@app/components/layout/Header';
-import Input from '@app/components/ui/Input';
+import Input from '@app/shared/components/Input';
 import FormSection from '@app/components/form/FormSection';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
 import RecipeTypes from '@app/shared/types/RecipeTypes';

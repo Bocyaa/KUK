@@ -19,7 +19,7 @@ async function fetchRecipes(userId: string) {
 }
 
 // Returns the current user’s recipes and keeps them fresh for a day.
-export function useGetRecipes() {
+export function useGetUserRecipes() {
   const userId = useAuth().session?.user?.id;
 
   return useQuery({

@@ -1,17 +1,28 @@
+import { PlusIcon } from '@app/components/Icons/PlusIcon';
+import Header from '@app/components/layout/Header';
 import Avatar from '@app/components/settings/Avatar';
 import SectionBg from '@app/components/settings/SectionBg';
 import SettingItem from '@app/components/settings/SettingItem';
-import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
+import SpinnerBar from '@app/components/ui/SpinnerBar';
+import { useDeleteAvatar } from '@app/features/settings/hooks/useDeleteAvatar';
 import {
   useInvalidateUserPofile,
   useGetUserProfile,
 } from '@app/shared/hooks/useGetUserProfile';
 import { supabase } from '@app/shared/lib/supabaseClient';
-import React, { useEffect, useRef, useState } from 'react';
+import {
+  FingerPrintIcon,
+  UserIcon,
+  UserMinusIcon,
+} from '@heroicons/react/24/outline';
+import { XIcon } from 'lucide-react';
+import React, { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
+import LogoutButton from '../components/LogoutButton';
+import MainContent from '@app/components/ui/MainContent';
 
-function ProfileMain() {
+function Settings() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
@@ -162,85 +173,104 @@ function ProfileMain() {
     fileInputRef.current?.click();
   }
 
-  // ---------- Header Control ----------
-  const { setLabelLeft } = useFormConfirm();
-
-  useEffect(() => {
-    setLabelLeft('Settings');
-  }, []);
-  // ------------------------------------
+  // Delete user avatar and invalidate user profile cache
+  const { deleteAvatar, isDeleting } = useDeleteAvatar();
 
   if (isPending) return <div>Loading...</div>;
   if (!profile) return <div>No profile found.</div>;
 
   return (
-    <div className="mt-16 flex w-full flex-col gap-5">
-      <div className="flex flex-col items-center justify-center gap-5">
-        <Avatar src={profile.avatar_url} size={120} />
-        <div className="relative">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/jpeg,image/png,image/heic"
-            className="absolute left-0 top-0 h-0 w-0 opacity-0"
-            aria-label="Choose a profile photo"
-            tabIndex={-1}
-            onChange={handleFileChange}
-          />
-          <button
-            type="button"
-            className="text-sm font-semibold text-[#0094f6]"
-            aria-label="Change profile photo"
-            onClick={openFilePicker}
-            disabled={uploading}
-            tabIndex={0}
-          >
-            {uploading ? (
-              <svg className="mr-2 inline h-5 w-5 animate-spin" viewBox="0 0 24 24">
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                  fill="none"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8v8z"
-                />
-              </svg>
-            ) : (
-              <span>Change photo</span>
-            )}
-          </button>
+    <div>
+      <Header title="Settings" back="Profile">
+        <LogoutButton />
+      </Header>
+
+      <MainContent className="space-y-5 pt-24">
+        <div className="flex flex-col items-center justify-center gap-5">
+          <div className="relative">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/heic"
+              className="absolute left-0 top-0 h-0 w-0 opacity-0"
+              aria-label="Choose a profile photo"
+              tabIndex={-1}
+              onChange={handleFileChange}
+            />
+            <button
+              type="button"
+              className="text-sm font-semibold text-[#0094f6]"
+              aria-label="Change profile photo"
+              onClick={openFilePicker}
+              disabled={uploading}
+              tabIndex={0}
+            >
+              {uploading ? (
+                <SpinnerBar height={3} width={80} />
+              ) : (
+                <>
+                  <Avatar src={profile.avatar_url} size={96} />
+                  {profile.avatar_url ? (
+                    <button
+                      className="absolute right-0 top-0 rounded-full border bg-white p-1 shadow-sm dark:border-transparent"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteAvatar();
+                      }}
+                      disabled={isDeleting}
+                    >
+                      <XIcon className="h-4 w-4 stroke-[3] text-red-500" />
+                    </button>
+                  ) : (
+                    <button className="absolute right-0 top-0 rounded-full border bg-white p-1">
+                      <PlusIcon className="h-4 w-4 text-[#0094f6]" />
+                    </button>
+                  )}
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="mb-2 flex flex-col items-center gap-2">
+            <h1 className="text-xl font-semibold">
+              {profile.first_name} {profile.last_name}
+            </h1>
+            <span className="text-sm text-gray-600 dark:text-[#a0a0a0]">
+              {profile.email} • @{profile.username}
+            </span>
+          </div>
         </div>
-        <div className="mb-2 flex flex-col items-center gap-2">
-          <h1 className="text-xl font-semibold">
-            {profile.first_name} {profile.last_name}
-          </h1>
-          <span className="text-sm text-gray-600 dark:text-[#a0a0a0]">
-            {profile.email} • @{profile.username}
-          </span>
-        </div>
-      </div>
-      <SectionBg>
-        <NavLink to="personalInfo">
-          <SettingItem settingKey="personalInfo" />
-        </NavLink>
-        <NavLink to="passwordUpdate">
-          <SettingItem settingKey="passwordUpdate" />
-        </NavLink>
-      </SectionBg>
-      <SectionBg>
-        <NavLink to="deleteAccount">
-          <SettingItem settingKey="deleteAccount" />
-        </NavLink>
-      </SectionBg>
+
+        <SectionBg>
+          <NavLink to="personalInfo">
+            <SettingItem
+              label="Personal Data"
+              icon={<UserIcon />}
+              handleClick={() => {}}
+            />
+          </NavLink>
+          <NavLink to="passwordUpdate">
+            <SettingItem
+              label="Update Password"
+              icon={<FingerPrintIcon />}
+              handleClick={() => {}}
+            />
+          </NavLink>
+        </SectionBg>
+
+        <SectionBg>
+          <NavLink to="deleteAccount">
+            <SettingItem
+              label="Delete Account"
+              icon={<UserMinusIcon />}
+              handleClick={() => {}}
+              isDanger={true}
+            />
+          </NavLink>
+        </SectionBg>
+      </MainContent>
     </div>
   );
 }
 
-export default ProfileMain;
+export default Settings;

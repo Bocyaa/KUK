@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useGetRecipes } from '@app/features/recipes/hooks/useGetRecipes';
+import { useGetUserRecipes } from '@app/features/recipes/hooks/useGetUserRecipes';
 import { colorExtractionService } from '@app/shared/utility/colorExtractionService';
 import { useGetPublicRecipes } from '@app/features/recipes/hooks/useGetPublicRecipes';
 
 export function ColorInitializer() {
-  const { data: recipes } = useGetRecipes();
+  const { data: recipes } = useGetUserRecipes();
   const { data: publicRecipes } = useGetPublicRecipes();
 
   useEffect(() => {

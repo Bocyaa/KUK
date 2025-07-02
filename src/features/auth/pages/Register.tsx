@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import SwitchAuthLink from '@app/components/ui/SwitchAuthLink';
-import Input from '@app/components/ui/Input';
-import SubmitButton from '@app/components/ui/SubmitButton';
+import Input from '@app/shared/components/Input';
+import SubmitButton from '@app/shared/components/SubmitButton';
 import AuthDivider from '@app/components/ui/AuthDivider';
 
 import { useGoogleAuth } from '@app/features/auth/hooks/useGoogleAuth';

@@ -7,7 +7,7 @@ interface SectionBgProp {
 
 function SectionBg({ children }: SectionBgProp) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl dark:border dark:border-[#1c1c1c]">
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-[#e6e6e6] dark:border-transparent">
       {Array.isArray(children)
         ? children.map((child, index) => (
             <div

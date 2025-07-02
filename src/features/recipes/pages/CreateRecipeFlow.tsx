@@ -11,7 +11,7 @@ import StepHeader from '@app/components/ui/StepHeader';
 import AddRecipeStep1 from '@app/components/create/CreateRecipeStep1';
 import AddRecipeStep2 from '@app/components/create/CreateRecipeStep2';
 import AddRecipeStep3 from '@app/components/create/CreateRecipeStep3';
-import { useInvalidateRecipes } from '@app/features/recipes/hooks/useGetRecipes';
+import { useInvalidateRecipes } from '@app/features/recipes/hooks/useGetUserRecipes';
 import base64ToFile from '@app/shared/utility/base64ToFile';
 
 type RecipeFormData = {

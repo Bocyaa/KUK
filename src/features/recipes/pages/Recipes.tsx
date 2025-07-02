@@ -11,7 +11,7 @@ import RecipeTypes from '@app/shared/types/RecipeTypes';
 import MyCollections from '@app/components/recipes/MyCollections';
 import CollectionCard from '@app/components/recipes/CollectionCard';
 
-import { useGetRecipes } from '@app/features/recipes/hooks/useGetRecipes';
+import { useGetUserRecipes } from '@app/features/recipes/hooks/useGetUserRecipes';
 import { getRandomRecipes, getSortedRecipes } from '@app/shared/utility/recipeUtils';
 import { useGetCollectionsPreview } from '@app/features/collections/hooks/useGetCollectionsPreview';
 
@@ -19,7 +19,7 @@ function Recipes() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data: recipesData, isFetching: isLoadingRecipes } = useGetRecipes();
+  const { data: recipesData, isFetching: isLoadingRecipes } = useGetUserRecipes();
   const { data: collectionsData } = useGetCollectionsPreview(); // isFetching: isLoadingCollections
 
   const recipes = recipesData as RecipeTypes[];

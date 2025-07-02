@@ -1,5 +1,5 @@
 import React from 'react';
-import SpinnerBar from './SpinnerBar';
+import SpinnerBar from '../../components/ui/SpinnerBar';
 
 interface SubmitButtonProps {
   label: string;

@@ -19,14 +19,14 @@ import BottomActionPanel from '@app/components/ui/BottomActionPanel';
 
 import RecipeTypes from '@app/shared/types/RecipeTypes';
 import { getSortedRecipes } from '@app/shared/utility/recipeUtils';
-import { useGetRecipes } from '@app/features/recipes/hooks/useGetRecipes';
+import { useGetUserRecipes } from '@app/features/recipes/hooks/useGetUserRecipes';
 import { useDeleteRecipe } from '@app/features/recipes/hooks/useDeleteRecipe';
 import { Search } from 'lucide-react';
 import { truncateText } from '@app/shared/utility/truncateDescription';
 import GridCol2 from '@app/components/ui/GridCol2';
 
 function RecipesList() {
-  const { data, isFetching } = useGetRecipes();
+  const { data, isFetching } = useGetUserRecipes();
   const recipes = data as RecipeTypes[];
   const sortedRecipes = getSortedRecipes(recipes);
 

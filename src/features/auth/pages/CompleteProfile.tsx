@@ -4,9 +4,9 @@ import toast from 'react-hot-toast';
 import countryList from 'react-select-country-list';
 import debounce from 'lodash/debounce';
 
-import InputLabel from '@app/components/ui/InputLabel';
-import Input from '@app/components/ui/Input';
-import SubmitButton from '@app/components/ui/SubmitButton';
+import InputLabel from '@app/shared/components/InputLabel';
+import Input from '@app/shared/components/Input';
+import SubmitButton from '@app/shared/components/SubmitButton';
 
 import { supabase } from '@app/shared/lib/supabaseClient';
 import AuthLayout from '@app/features/auth/components/AuthLayout';
@@ -169,6 +169,8 @@ export default function CompleteProfile() {
           username: metadata?.username || userProfile?.username || '',
           birthdate: metadata?.birthdate || userProfile?.birthdate || '',
           country: metadata?.country || userProfile?.country || '',
+          email: user.email || '',
+          authProvider: metadata?.provider || user.app_metadata?.provider || 'email',
         }));
 
         setLoading(false);
@@ -315,7 +317,7 @@ export default function CompleteProfile() {
         </AuthCardBody>
       </AuthCard>
       <span className="px-2 py-3 text-xs font-medium text-[#8f8f8f] dark:text-[#afafaf]">
-        Introduce yourself to get better, more personalized user experience.
+        Introduce yourself to get better and more personalized user experience.
       </span>
     </AuthLayout>
   );

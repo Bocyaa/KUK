@@ -9,6 +9,7 @@ interface BackLinkProps {
 const ROUTES = {
   Collections: '/recipes/collections-list',
   Recipes: '/recipes',
+  Profile: '/profile',
 };
 
 function BackLink({ to = '', label }: BackLinkProps) {

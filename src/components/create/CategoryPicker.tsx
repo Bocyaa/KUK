@@ -3,7 +3,7 @@ import BackSecondaryCard from '../ui/BackSecondaryCard';
 import FormSection from '../form/FormSection';
 import FrontPrimaryCard from '../ui/FrontPrimaryCard';
 import LabelPlaceholder from './LabelPlaceholder';
-import Input from '../ui/Input';
+import Input from '../../shared/components/Input';
 
 type CategoryPickerProps = {
   form: {
