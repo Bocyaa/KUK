@@ -3,14 +3,14 @@ import React from 'react';
 interface AvatarProps {
   src?: string;
   alt?: string;
-  size?: number; // px
+  size?: number; // rem
   accent?: string;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ src, size = 96 }) => (
+const Avatar: React.FC<AvatarProps> = ({ src, size = 6 }) => (
   <div
-    className={`flex items-center justify-center rounded-full border border-[#e6e6e6] bg-[#f9f9f9] transition-all dark:border-transparent dark:bg-[#212121] md:hover:ring-2 md:hover:ring-blue-400`}
-    style={{ width: size, height: size }}
+    className={`flex items-center justify-center rounded-full transition-all md:hover:ring-2 md:hover:ring-blue-400`}
+    style={{ width: `${size}rem`, height: `${size}rem` }}
   >
     {src ? (
       <img
@@ -21,8 +21,8 @@ const Avatar: React.FC<AvatarProps> = ({ src, size = 96 }) => (
       />
     ) : (
       <svg
-        width={size * 0.5}
-        height={size * 0.5}
+        width={`${size * 0.8}rem`}
+        height={`${size * 0.8}rem`}
         viewBox="0 0 24 24"
         fill="none"
         className="text-gray-300"

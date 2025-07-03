@@ -56,25 +56,17 @@ function RecipeImageCard({
         <RecipeContentPanel>
           <div>
             <RecipeHeader recipe={recipe} />
-
             <RecipeDetails recipe={recipe} />
           </div>
 
           {/* Action buttons */}
           <div className="flex gap-2">
-            {/* Owner */}
             <div className="flex items-center justify-center rounded-full bg-white/20 p-1 shadow-sm">
-              <div className="flex gap-2">
-                <Avatar src={recipe.owner.avatar_url} size={32} />
-              </div>
+              <HeartIcon className="h-7 w-8 text-white" />
             </div>
 
             <div className="flex flex-1 items-center justify-center rounded-2xl bg-white py-2 shadow-sm dark:text-[#0d0d0d]">
               <span className="font-semibold">Cook</span>
-            </div>
-
-            <div className="flex items-center justify-center rounded-full bg-white/20 p-1 shadow-sm">
-              <HeartIcon className="h-7 w-8 text-white" />
             </div>
 
             {recipe.user_id === userId ? (

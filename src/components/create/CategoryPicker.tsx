@@ -52,7 +52,7 @@ function CategoryPicker({ form, updateForm }: CategoryPickerProps) {
   }
 
   return (
-    <FormSection>
+    <FormSection className="gap-3">
       <Input
         id="categories"
         label="Categories"
@@ -61,7 +61,6 @@ function CategoryPicker({ form, updateForm }: CategoryPickerProps) {
         onChange={(e) => setCategory(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={addCategory}
-        className="mb-3"
       />
       <BackSecondaryCard justify="start">
         {categories.length > 0 ? (

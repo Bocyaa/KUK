@@ -209,7 +209,7 @@ function Settings() {
                 <SpinnerBar height={3} width={80} />
               ) : (
                 <>
-                  <Avatar src={profile.avatar_url} size={96} />
+                  <Avatar src={profile.avatar_url} size={7} />
                   {profile.avatar_url ? (
                     <button
                       className="absolute right-0 top-0 rounded-full border bg-white p-1 shadow-sm dark:border-transparent"

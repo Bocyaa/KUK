@@ -24,6 +24,8 @@ import RecipesLayout from '@app/components/layout/RecipesLayout.tsx';
 import ExploreLayout from '@app/components/layout/ExploreLayout.tsx';
 import ProfileLayout from '@app/features/profile/components/ProfileLayout.tsx';
 import Settings from '@app/features/profile/pages/Settings.tsx';
+import PublicProfile from '@app/features/profile/pages/PublicProfile.tsx';
+import UserProfile from '@app/features/profile/pages/UserProfile.tsx';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -36,21 +38,34 @@ export default function AnimatedRoutes() {
           <Route path="recipes" element={<RecipesLayout />}>
             <Route index element={<Recipes />} />
             <Route path=":recipeId" element={<Recipe />} />
+            <Route path=":recipeId/:profileId" element={<PublicProfile />} />
             <Route path="recipes-list" element={<RecipesList />} />
             <Route path="recipes-list/:recipeId" element={<Recipe />} />
             <Route path="collections-list" element={<CollectionsList />} />
             <Route path="create-collection" element={<CreateCollection />} />
             <Route path="collection/:collectionId" element={<Collection />} />
             <Route path="collection/:collectionId/:recipeId" element={<Recipe />} />
+            <Route
+              path="collection/:collectionId/:recipeId/:profileId"
+              element={<PublicProfile />}
+            />
           </Route>
           <Route path="explore" element={<ExploreLayout />}>
             <Route index element={<Explore />} />
             <Route path=":recipeId" element={<Recipe />} />
+            <Route path=":profileId" element={<PublicProfile />} />
+            <Route path=":recipeId:/:profileId" element={<PublicProfile />} />
           </Route>
           <Route path="create-recipe" element={<CreateRecipeFlow />} />
           <Route path="profile" element={<ProfileLayout />}>
             <Route index element={<Profile />} />
             <Route path="settings" element={<Settings />} />
+            <Route path="user-profile" element={<UserProfile />} />
+            <Route path=":recipeId" element={<Recipe />} />
+            <Route
+              path=":collectionId/:recipeId/:profileId"
+              element={<PublicProfile />}
+            />
           </Route>
         </Route>
         <Route path="auth/callback" element={<AuthCallbackRedirect />} />

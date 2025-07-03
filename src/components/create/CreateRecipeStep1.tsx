@@ -59,7 +59,7 @@ function CreateRecipeStep1({ form, updateForm, onFileSelect }: Props) {
         onFileSelect={onFileSelect}
       />
 
-      <FormSection>
+      <FormSection className="gap-5">
         <Input
           label="Recipe Title"
           id="title"
@@ -68,7 +68,6 @@ function CreateRecipeStep1({ form, updateForm, onFileSelect }: Props) {
           value={form.title}
           onChange={(e) => updateForm({ title: e.target.value })}
           placeholder={titlePlaceholder}
-          className="mb-5"
         />
 
         <Input

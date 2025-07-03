@@ -59,8 +59,14 @@ function AddRecipeFlow() {
   const invalidateRecipes = useInvalidateRecipes();
 
   // State for multi-step navigation
-  const [step, setStep] = useState(1);
-  const [maxReachedStep, setMaxReachedStep] = useState(1);
+  const [step, setStep] = useState(() => {
+    const savedStep = localStorage.getItem('recipeStep');
+    return savedStep ? JSON.parse(savedStep) : 1;
+  });
+  const [maxReachedStep, setMaxReachedStep] = useState(() => {
+    const savedMaxStep = localStorage.getItem('recipeMaxStep');
+    return savedMaxStep ? JSON.parse(savedMaxStep) : 1;
+  });
 
   // Handler for clicking on step labels in the header
   const handleVisualStepClick = (stepId: number) => {
@@ -232,8 +238,10 @@ function AddRecipeFlow() {
   function handleReset() {
     setForm(initialForm);
     localStorage.removeItem('recipeForm');
+    localStorage.removeItem('recipeStep');
+    localStorage.removeItem('recipeMaxStep');
     setStep(1);
-    setMaxReachedStep(1); // Reset maxReachedStep
+    setMaxReachedStep(1);
   }
 
   useEffect(() => {
@@ -243,6 +251,11 @@ function AddRecipeFlow() {
     };
     localStorage.setItem('recipeForm', JSON.stringify(formForStorage));
   }, [form]);
+
+  useEffect(() => {
+    localStorage.setItem('recipeStep', JSON.stringify(step));
+    localStorage.setItem('recipeMaxStep', JSON.stringify(maxReachedStep));
+  }, [step, maxReachedStep]);
 
   return (
     <div className="px-4 py-2 pb-16">

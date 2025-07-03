@@ -7,14 +7,14 @@ interface SettingsButtonProps {
 }
 
 function SettingsButton({
-  className = 'rounded-full border dark:bg-[#212121] dark:border-transparent bg-white p-1 text-[#0094f6] shadow-md active:text-[#005994]',
+  className = 'rounded-full border dark:bg-[#212121] dark:border-transparent bg-white p-1 text-black dark:text-white shadow-md dark:active:text-white/50 active:text-black/50 cursor-pointer',
   navigateTo = 'settings',
 }: SettingsButtonProps) {
   const navigate = useNavigate();
 
   return (
     <button className={className} onClick={() => navigate(navigateTo)} type="button">
-      <Cog6ToothIcon className="h-6 w-6" />
+      <Cog6ToothIcon className="h-10 w-10" />
     </button>
   );
 }

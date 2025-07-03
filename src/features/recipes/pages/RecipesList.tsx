@@ -135,7 +135,7 @@ function RecipesList() {
         )}
       </Header>
 
-      <MainContent>
+      <MainContent className="flex flex-col gap-1">
         {isSelectMode ? (
           <>
             {sortedRecipes?.map((recipe) => (

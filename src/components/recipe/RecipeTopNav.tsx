@@ -46,7 +46,7 @@ function RecipeTopNav({ dominantColor }: RecipeHeaderProps) {
     >
       <button type="button" onClick={handleNavigation}>
         <div className="flex items-center justify-center rounded-full bg-white/20 p-1">
-          <ChevronLeft />
+          <ChevronLeft className="text-white" />
           <span className="pr-2 font-semibold text-white">{backButtonLabel}</span>
         </div>
       </button>

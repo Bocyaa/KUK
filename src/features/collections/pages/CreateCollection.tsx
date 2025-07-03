@@ -83,7 +83,7 @@ function CreateCollection() {
 
       {step === 'form' ? (
         <div className="flex flex-col">
-          <FormSection>
+          <FormSection className="gap-5">
             <Input
               label="Name"
               id="title"
@@ -92,7 +92,6 @@ function CreateCollection() {
               value={name}
               onChange={handleNameChange}
               placeholder="Collection name"
-              className="mb-5"
             />
 
             <button

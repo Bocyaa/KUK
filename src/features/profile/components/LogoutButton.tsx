@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRightStartOnRectangleIcon } from '@heroicons/react/24/outline';
 
 import { supabase } from '@app/shared/lib/supabaseClient';
-import { useInvalidateUserPofile } from '@app/shared/hooks/useGetUserProfile';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface LogoutButtonProps {
   className?: string;
@@ -14,12 +14,24 @@ function LogoutButton({
   redirectTo = '/login',
 }: LogoutButtonProps) {
   const navigate = useNavigate();
-  const invalidateUserProfile = useInvalidateUserPofile();
+  const queryClient = useQueryClient();
 
   async function handleLogOut() {
-    await supabase.auth.signOut();
-    invalidateUserProfile();
-    navigate(redirectTo);
+    try {
+      // Clear all cached data
+      queryClient.clear();
+
+      // Sign out from Supabase
+      await supabase.auth.signOut();
+
+      // Navigate to login page
+      navigate(redirectTo);
+    } catch (error) {
+      console.error('Error during logout:', error);
+
+      // Still navigate even if there's an error
+      navigate(redirectTo);
+    }
   }
 
   return (
