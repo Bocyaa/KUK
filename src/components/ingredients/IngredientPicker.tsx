@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Select from '@app/components/ingredients/Select';
-import FormSection from '@app/components/form/FormSection';
+import FormSection from '@app/shared/components/form/FormSection';
 import QuantityStepper from './QuantityStepper';
 
 import AddItemButton from './AddItemButton';

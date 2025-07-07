@@ -2,7 +2,7 @@ import Ingredient from '@app/shared/types/IngredientTypes';
 
 import IngredientPicker from '@app/components/ingredients/IngredientPicker';
 import PortionPicker from './PortionPicker';
-import FormSection from '../form/FormSection';
+import FormSection from '../../shared/components/form/FormSection';
 import TimePicker from './TimePicker';
 import CaloryPicker from './CaloryPicker';
 

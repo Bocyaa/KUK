@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 
 import Header from '@app/components/layout/Header';
 import Input from '@app/shared/components/Input';
-import FormSection from '@app/components/form/FormSection';
+import FormSection from '@app/shared/components/form/FormSection';
 import SpinnerBar from '@app/components/ui/SpinnerBar';
 import RecipeTypes from '@app/shared/types/RecipeTypes';
 import GridCol2 from '@app/components/ui/GridCol2';
@@ -10,6 +10,7 @@ import SelectRecipeCard from '@app/components/collections/SelectRecipeCardSquare
 
 import { useGetAllUserRecipes } from '@app/features/recipes/hooks/useGetAllUserRecipes';
 import { useCreateCollection } from '../hooks/useCreateCollection';
+import VisibilityToggle from '@app/shared/components/VisibilityToggle';
 
 type Collection = {
   id: string;
@@ -19,10 +20,13 @@ type Collection = {
 function CreateCollection() {
   const [step, setStep] = useState<'form' | 'addRecipes'>('form');
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [isPrivate, setIsPrivate] = useState(true);
+  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
+
   const [createdCollection, setCreatedCollection] = useState<Collection | null>(
     null,
   );
-  const [selectedRecipes, setSelectedRecipes] = useState<string[]>([]);
 
   const {
     createCollection,
@@ -36,8 +40,12 @@ function CreateCollection() {
     setName(e.target.value);
   }
 
+  function handleDescChange(e: ChangeEvent<HTMLInputElement>) {
+    setDescription(e.target.value);
+  }
+
   const handleCreateCollection = async () => {
-    const newCollection = await createCollection(name);
+    const newCollection = await createCollection(name, description, isPrivate);
     if (newCollection) {
       setCreatedCollection(newCollection);
       setStep('addRecipes');
@@ -94,6 +102,26 @@ function CreateCollection() {
               placeholder="Collection name"
             />
 
+            {/* Description input */}
+            <Input
+              label="Description"
+              id="description"
+              name="description"
+              type="text"
+              value={description}
+              onChange={handleDescChange}
+              placeholder="Collection Description"
+            />
+
+            {/* Visibility Toggle */}
+            <VisibilityToggle
+              label="Collection visibility"
+              privateMessage="Only visible to you."
+              publicMessage="This collection can be viewed and saved by other users."
+              isPrivate={isPrivate}
+              onToggle={() => setIsPrivate(!isPrivate)}
+            />
+
             <button
               onClick={handleCreateCollection}
               disabled={name.length < 2 || isProcessing}
@@ -127,6 +155,7 @@ function CreateCollection() {
               <>
                 {recipes?.map((recipe: RecipeTypes) => (
                   <SelectRecipeCard
+                    key={recipe.id}
                     recipe={recipe}
                     handleRecipeToggle={handleRecipeToggle}
                     selectedRecipes={selectedRecipes}

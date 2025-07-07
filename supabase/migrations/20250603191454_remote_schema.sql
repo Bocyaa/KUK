@@ -142,7 +142,8 @@ CREATE TABLE IF NOT EXISTS "public"."collections" (
     "user_id" "uuid",
     "name" "text" NOT NULL,
     "description" "text",
-    "created_at" timestamp without time zone DEFAULT "now"()
+    "created_at" timestamp without time zone DEFAULT "now"(),
+    "is_private": DEFAULT true
 );
 
 

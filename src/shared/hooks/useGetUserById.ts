@@ -21,5 +21,3 @@ export function useGetUserById(userId: string | undefined) {
     gcTime: 10 * 60 * 1000,
   });
 }
-
-// TODO: Implement Invalidation

@@ -1,4 +1,4 @@
-import FormInput from '../../form/FormInput';
+import FormInput from '../../../shared/components/form/FormInput';
 import SpinnerBar from '../../ui/SpinnerBar';
 
 interface Props {

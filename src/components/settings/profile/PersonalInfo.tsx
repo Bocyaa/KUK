@@ -2,8 +2,8 @@ import {
   useGetUserProfile,
   useInvalidateUserPofile,
 } from '@app/shared/hooks/useGetUserProfile';
-import FormInput from '../../form/FormInput';
-import FormSection from '../../form/FormSection';
+import FormInput from '../../../shared/components/form/FormInput';
+import FormSection from '../../../shared/components/form/FormSection';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import React, { useEffect, useState } from 'react';
 import { useUpdateUserProfile } from '@app/shared/hooks/useUpdateUserProfile';

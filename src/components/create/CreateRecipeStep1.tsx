@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import DifficultyPicker from '@app/components/create/DifficultyPicker';
 import ImagePicker from '@app/components/create/ImagePicker';
-import FormSection from '@app/components/form/FormSection';
+import FormSection from '@app/shared/components/form/FormSection';
 import Input from '../../shared/components/Input';
 import HelperText from './HelperText';
 

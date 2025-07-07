@@ -14,7 +14,11 @@ export function useCreateCollection() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  async function createCollection(name: string, description: string | null = null) {
+  async function createCollection(
+    name: string,
+    description: string | null = null,
+    isPrivate: boolean = false,
+  ) {
     if (!session?.user) return null;
 
     setIsLoading(true);
@@ -42,6 +46,7 @@ export function useCreateCollection() {
           user_id: session.user.id,
           name,
           description,
+          is_private: isPrivate,
         })
         .select()
         .single();

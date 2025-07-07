@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 
 import RecipeTypes from '@app/shared/types/RecipeTypes';
-import Avatar from '../settings/Avatar';
 import RecipeImage from './RecipeImage';
 import RecipeHeader from './RecipeHeader';
 import RecipeDetails from './RecipeDetails';

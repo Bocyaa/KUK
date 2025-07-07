@@ -54,7 +54,7 @@ export default function AnimatedRoutes() {
             <Route index element={<Explore />} />
             <Route path=":recipeId" element={<Recipe />} />
             <Route path=":profileId" element={<PublicProfile />} />
-            <Route path=":recipeId:/:profileId" element={<PublicProfile />} />
+            <Route path=":recipeId/:profileId" element={<PublicProfile />} />
           </Route>
           <Route path="create-recipe" element={<CreateRecipeFlow />} />
           <Route path="profile" element={<ProfileLayout />}>

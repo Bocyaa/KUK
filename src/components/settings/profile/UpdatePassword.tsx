@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import FormInput from '../../form/FormInput';
-import FormSection from '../../form/FormSection';
+import FormInput from '../../../shared/components/form/FormInput';
+import FormSection from '../../../shared/components/form/FormSection';
 import { useFormConfirm } from '@app/contexts/hooks/useFormConfirm';
 import { useAuth } from '@app/contexts/hooks/useAuth';
 import { useResetPassword } from '@app/hooks/auth/useResetPassword';

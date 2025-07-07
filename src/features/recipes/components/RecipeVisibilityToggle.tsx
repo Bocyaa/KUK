@@ -1,4 +1,4 @@
-import FormSection from '../form/FormSection';
+import FormSection from '../../../shared/components/form/FormSection';
 
 type Props = {
   form: {

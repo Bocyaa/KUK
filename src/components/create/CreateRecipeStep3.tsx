@@ -1,7 +1,7 @@
 import CategoryPicker from './CategoryPicker';
 import Ingredient from '@app/shared/types/IngredientTypes';
 import PricePicker from './PricePicker';
-import RecipeVisibilityToggle from './RecipeVisibilityToggle';
+import RecipeVisibilityToggle from '../../features/recipes/components/RecipeVisibilityToggle';
 
 type Props = {
   form: {

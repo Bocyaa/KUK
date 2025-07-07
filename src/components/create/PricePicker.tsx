@@ -1,7 +1,7 @@
 import Ingredient from '@app/shared/types/IngredientTypes';
 import BackSecondaryCard from '../ui/BackSecondaryCard';
 import FrontPrimaryCard from '../ui/FrontPrimaryCard';
-import FormSection from '../form/FormSection';
+import FormSection from '../../shared/components/form/FormSection';
 import { useEffect, useMemo, useState } from 'react';
 import LabelPlaceholder from './LabelPlaceholder';
 import PriceStepper from '@app/components/ingredients/PriceStepper';

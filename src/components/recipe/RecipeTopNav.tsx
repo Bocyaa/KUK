@@ -31,13 +31,23 @@ function RecipeTopNav({ dominantColor }: RecipeHeaderProps) {
     }
   };
 
-  const backButtonLabel =
-    String(previousPage.path)
-      .split('/')
-      .pop() // Get the last part of the path
-      ?.split('-') // Split by hyphen
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
-      .join(' ') || 'Back'; // Join words with a space or default to 'Back'
+  const backButtonLabel = (() => {
+    const pathSegments = String(previousPage.path).split('/').filter(Boolean);
+
+    // Check if this is a collection URL pattern
+    if (pathSegments.includes('collection')) {
+      return 'Collection';
+    }
+
+    // For regular recipe URLs, get the last meaningful segment
+    const lastSegment = pathSegments.pop();
+    return (
+      lastSegment
+        ?.split('-')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ') || 'Back'
+    );
+  })();
 
   return (
     <div
