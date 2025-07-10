@@ -7,7 +7,7 @@ function PublicProfile() {
 
   return (
     <div>
-      <div>Username: {user.username}</div>
+      <div>{user.username}</div>
     </div>
   );
 }
